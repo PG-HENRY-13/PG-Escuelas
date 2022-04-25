@@ -1,5 +1,6 @@
 # Henry Workshop - Typescript
 (Este es el workshop que usé para armar el boilerplate. Podemos aprovechar esto, el nombre de la base de datos es pghenry. Van a tener que cambiar las variables de entorno para poner sus nombres y claves de password.)
+Clonen esto a sus computadoras y trabajamos en branches
 
 ## Overview
 
