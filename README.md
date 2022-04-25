@@ -2,6 +2,19 @@
 (Este es el workshop que usé para armar el boilerplate. Podemos aprovechar esto, el nombre de la base de datos es pghenry. Van a tener que cambiar las variables de entorno para poner sus nombres y claves de password.)
 Clonen esto a sus computadoras y trabajamos en branches
 
+Creen el archivo .env en la carpeta API con esto 
+______________
+DB_USER="SU USUARIO"
+DB_PASSWORD="SU PASSWORD"
+DB_HOST="localhost"
+DB_NAME="pghenry"
+DB_PORT="5432"
+NODE_ENV="development"
+API_PORT="3001"
+API_HOST="localhost"
+CORS="http://localhost:3000"
+___________
+
 ## Overview
 
 En este workshop vamos a crear una aplicación utilizando React, Redux, express y Typescript.
