@@ -2,8 +2,35 @@
 (Este es el workshop que usé para armar el boilerplate. Podemos aprovechar esto, el nombre de la base de datos es pghenry. Van a tener que cambiar las variables de entorno para poner sus nombres y claves de password.)
 Clonen esto a sus computadoras y trabajamos en branches
 
+en api/src creen una carpeta lib
+DENTRO de la carpeta lib, creen un archivo config.ts con lo siguiente 
+
+```
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const config = {
+	dbUser: process.env.DB_USER || 'SU USER',
+	dbPassword: process.env.DB_PASSWORD || 'SU PASSWORD',
+	dbHost: process.env.DB_HOST || 'localhost',
+	dbName: process.env.DB_NAME || 'pghenry',
+	dbPort: process.env.DB_PORT || '5432',
+	dev: process.env.NODE_ENV !== 'production',
+	port: process.env.API_PORT || '3001',
+	host: process.env.API_host || 'localhost',
+	cors: process.env.CORS || 'localhost:3000',
+};
+
+export default config;
+
+```
+
+
 Creen el archivo .env en la carpeta API con esto 
 ______________
+
+```
 DB_USER="SU USUARIO"
 DB_PASSWORD="SU PASSWORD"
 DB_HOST="localhost"
@@ -13,6 +40,8 @@ NODE_ENV="development"
 API_PORT="3001"
 API_HOST="localhost"
 CORS="http://localhost:3000"
+
+```
 ___________
 
 ## Overview

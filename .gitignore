@@ -12,6 +12,7 @@
 /build
 
 # misc
+./api/src/lib/
 ./api/src/lib/config.ts
 .env
 .DS_Store
