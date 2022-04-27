@@ -16,7 +16,7 @@ enum GenderType {
 export class User extends Model<User> {
     @PrimaryKey
     @Column
-    cuil!: number;
+    cuil!: bigint;
     
     @Column
     name!: string;
@@ -31,7 +31,7 @@ export class User extends Model<User> {
     address!: string;
 
     @Column
-    phoneNumber!: number;
+    phoneNumber!: bigint;
 
     @Column
     emailAddress!: string;
