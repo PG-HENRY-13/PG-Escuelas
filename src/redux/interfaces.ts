@@ -25,15 +25,3 @@ export interface DeleteUsersAction {
   type: ActionTypes.deleteUsers;
   payload: number;
 }
-
-export interface User {
-  cuil: string;
-  name: string;
-  lastName: string;
-  password: string;
-  address: string;
-  phoneNumber: string;
-  emailAddress: string;
-  gender: string;
-  role: string;
-}
