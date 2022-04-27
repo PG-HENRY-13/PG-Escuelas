@@ -12,7 +12,7 @@ export const usersReducer = (
             return action.payload;
 
         case ActionTypes.deleteUsers:
-            return state.filter(user => user.id !== action.payload);
+            return state.filter(user => parseInt(user.cuil) !== action.payload);
 
         default:
             return state;

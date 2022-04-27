@@ -1,4 +1,4 @@
-import { DeleteUsersAction, FetchUsersAction, newUser } from "../interfaces";
+import { DeleteUsersAction, FetchUsersAction, User } from "../interfaces";
 
 export enum ActionTypes {
   fetchUsers,

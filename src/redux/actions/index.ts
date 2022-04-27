@@ -5,7 +5,6 @@ import {
   DeleteUsersAction,
   FetchUsersAction,
   User,
-  newUser,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/user";
@@ -42,7 +41,7 @@ export const deleteUsers = (userID: number) => {
   }
 };
 
-export const createUser = (newUser: newUser) => (dispatch: Dispatch) => {
+export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post("http://localhost:3001/api/user", newUser)
     .then((data) => {
