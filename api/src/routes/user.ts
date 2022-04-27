@@ -6,18 +6,22 @@ const router = Router();
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
 	User.findAll()
 		.then((users) => {
-			res.send(users);
+			return res.send(users);
 		})
-		.catch((error) => next(error));
+		.catch((error) => {
+			return res.status(404).send(error);
+		});
 });
 
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
 	const user = req.body;
 	User.create(user)
 		.then((createdUser) => {
-			res.send(createdUser);
+			return res.send(createdUser);
 		})
-		.catch((error) => next(error));
+		.catch((error) => {
+			return res.status(404).send(error);
+		});
 });
 
 router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
@@ -27,9 +31,11 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
 	if (removedUser) {
 		removedUser.destroy()
 			.then(() => {
-				res.status(202).send("Removed correctly")
+				return res.status(202).send("Removed correctly")
 			})
-			.catch((error: any) => next(error));
+			.catch((error: any) => {
+				return res.status(404).send(error);
+			});
 	}
 });
 

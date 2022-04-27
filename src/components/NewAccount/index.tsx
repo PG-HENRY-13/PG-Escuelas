@@ -1,10 +1,17 @@
 import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { deleteUsers, fetchUsers, createUser } from "../../redux/actions";
-import { StoreState, User } from "../../redux/interfaces";
 import { useState, useEffect } from "react";
+import validate from "./validate";
 
 export default function NewAccount(): JSX.Element {
+  let today = new Date();
+  let date =
+    today.getFullYear().toString().padStart(4, "0") +
+    "-" +
+    (today.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    today.getDate().toString().padStart(2, "0");
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
   const [data, setData] = useState({
@@ -15,8 +22,9 @@ export default function NewAccount(): JSX.Element {
     address: "",
     phoneNumber: "",
     emailAddress: "",
-    gender: "other",
-    role: "employee",
+    gender: "otro",
+    role: "empleado",
+    seniorityDate: date,
   });
 
   const [error, setError] = React.useState({
@@ -45,6 +53,7 @@ export default function NewAccount(): JSX.Element {
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -61,11 +70,9 @@ export default function NewAccount(): JSX.Element {
       <h1>Create New User</h1>
       <form onSubmit={submit}>
         <div>
-          <label>Cuil:</label>
-          <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
-          <br></br>
           <label>Nombre:</label>
           <input name="name" value={data.name} onChange={changeHandler}></input>
+          <span className="err">{error.name}</span>
           <br></br>
           <label>Apellido:</label>
           <input
@@ -73,11 +80,25 @@ export default function NewAccount(): JSX.Element {
             value={data.lastName}
             onChange={changeHandler}
           ></input>
+          <span className="err">{error.lastName}</span>
+          <br></br>
+          <label>Cuil:</label>
+          <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
+          <span className="err">{error.cuil}</span>
           <br></br>
           <label>Contraseña:</label>
           <input
             name="password"
             value={data.password}
+            onChange={changeHandler}
+          ></input>
+          <span className="err">{error.password}</span>
+          <br></br>
+          <label>Escalafon:</label>
+          <input
+            type="date"
+            name="seniorityDate"
+            value={data.seniorityDate}
             onChange={changeHandler}
           ></input>
           <br></br>
@@ -87,6 +108,7 @@ export default function NewAccount(): JSX.Element {
             value={data.address}
             onChange={changeHandler}
           ></input>
+          <span className="err">{error.address}</span>
           <br></br>
           <label>Numero de telefono:</label>
           <input
@@ -94,6 +116,7 @@ export default function NewAccount(): JSX.Element {
             value={data.phoneNumber}
             onChange={changeHandler}
           ></input>
+          <span className="err">{error.phoneNumber}</span>
           <br></br>
           <label>eMail:</label>
           <input
@@ -101,22 +124,23 @@ export default function NewAccount(): JSX.Element {
             value={data.emailAddress}
             onChange={changeHandler}
           ></input>
+          <span className="err">{error.emailAddress}</span>
           <br></br>
           <label>Genero:</label>
           <select name="gender" onChange={selectHandler} defaultValue="other">
-            <option value="other">Sin especificar</option>
-            <option value="female">Femenino</option>
-            <option value="male">Masculino</option>
+            <option value="otro">Sin especificar</option>
+            <option value="fem">Femenino</option>
+            <option value="masc">Masculino</option>
           </select>
           <br></br>
           <label>Rol:</label>
           <select name="role" onChange={selectHandler} defaultValue="employee">
-            <option value="employee">Empleado</option>
+            <option value="empleado">Empleado</option>
             <option value="admin">Admin</option>
-            <option value="manager">Manager</option>
+            <option value="gerente">Gerente</option>
           </select>
           <br></br>
-          <button className="barBtn" type="submit">
+          <button disabled={disabled} className="barBtn" type="submit">
             Create
           </button>
         </div>
