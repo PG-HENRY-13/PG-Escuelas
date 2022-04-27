@@ -10,14 +10,14 @@ import {
 
 enum RoleType {
     Admin = "admin",
-    Employee = "employee",
-    Manager = "manager",
+    Employee = "empleado",
+    Manager = "gerente",
 }
 
 enum GenderType {
-    Male = "male",
-    Female = "female",
-    Other = "other",
+    Male = "masc",
+    Female = "fem",
+    Other = "otro",
 }
 
 @Table
@@ -46,6 +46,10 @@ export class User extends Model<User> {
 
     @Column
     role!: RoleType; // Un enumerador que definí arriba con 3 casos
+
+    @CreatedAt
+    @Column
+    seniorityDate!: Date;   // Es lo que se llama fecha de escalafón
 
     @CreatedAt
     @Column
