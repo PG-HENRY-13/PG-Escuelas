@@ -5,9 +5,15 @@ export interface StoreState {
 }
 
 export interface User {
-    id: number;
-    name: string;
-    lastName: string;
+  cuil: string;
+  name: string;
+  lastName: string;
+  password: string;
+  address: string;
+  phoneNumber: string;
+  emailAddress: string;
+  gender: string;
+  role: string;
 }
 
 export interface FetchUsersAction {
