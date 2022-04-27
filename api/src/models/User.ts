@@ -22,9 +22,13 @@ enum GenderType {
 
 @Table
 export class User extends Model<User> {
-  @PrimaryKey
-  @Column
-  cuil!: string;
+    @PrimaryKey
+    @Column
+    cuil!: string;
+    
+    @Column
+    name!: string;
+
 
   @Column
   name!: string;
@@ -35,8 +39,8 @@ export class User extends Model<User> {
   @Column
   password!: string;
 
-  @Column
-  address!: string;
+    @Column
+    phoneNumber!: string;
 
   @Column
   phoneNumber!: string;
