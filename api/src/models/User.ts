@@ -1,15 +1,23 @@
-import { Model, Column, Table, CreatedAt, UpdatedAt, PrimaryKey } from 'sequelize-typescript';
+import {
+  Model,
+  Column,
+  Table,
+  CreatedAt,
+  UpdatedAt,
+  PrimaryKey,
+  DataType,
+} from "sequelize-typescript";
 
 enum RoleType {
-    Admin = "admin",
-    Employee = "employee",
-    Manager = "manager"
+  Admin = "admin",
+  Employee = "employee",
+  Manager = "manager",
 }
 
 enum GenderType {
-    Male = "male",
-    Female = "female",
-    Other = "other"
+  Male = "male",
+  Female = "female",
+  Other = "other",
 }
 
 @Table
@@ -21,32 +29,36 @@ export class User extends Model<User> {
     @Column
     name!: string;
 
-    @Column
-    lastName!: string;
 
-    @Column
-    password!: string;
+  @Column
+  name!: string;
 
-    @Column
-    address!: string;
+  @Column
+  lastName!: string;
+
+  @Column
+  password!: string;
 
     @Column
     phoneNumber!: string;
 
-    @Column
-    emailAddress!: string;
+  @Column
+  phoneNumber!: string;
 
-    @Column
-    gender!: GenderType; // Un enumerador que definí arriba con 3 casos
+  @Column
+  emailAddress!: string;
 
-    @Column
-    role!: RoleType; // Un enumerador que definí arriba con 3 casos
+  @Column
+  gender!: GenderType; // Un enumerador que definí arriba con 3 casos
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @Column
+  role!: RoleType; // Un enumerador que definí arriba con 3 casos
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
+  @CreatedAt
+  @Column
+  createdAt!: Date;
+
+  @UpdatedAt
+  @Column
+  updatedAt!: Date;
 }
