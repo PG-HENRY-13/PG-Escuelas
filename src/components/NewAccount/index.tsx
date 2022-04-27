@@ -2,10 +2,11 @@ import React from "react";
 import { connect, useDispatch } from "react-redux";
 import { deleteUsers, fetchUsers, createUser } from "../../redux/actions";
 import { StoreState, User } from "../../redux/interfaces";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function NewAccount(): JSX.Element {
   const dispatch = useDispatch();
+  const [disabled, setDisabled] = useState(true);
   const [data, setData] = useState({
     cuil: "",
     name: "",
@@ -17,6 +18,30 @@ export default function NewAccount(): JSX.Element {
     gender: "other",
     role: "employee",
   });
+
+  const [error, setError] = React.useState({
+    cuil: "Ingrese un Cuil valido",
+    name: "Ingrese un nombre",
+    lastName: "Ingrese un apellido",
+    password: "Al menos 8 caracteres",
+    address: "Ingrese una direccion",
+    phoneNumber: "Ingrese un numero valido",
+    emailAddress: "Ingrese una direccion de correo valida",
+  });
+
+  useEffect(() => {
+    if (
+      error.cuil ||
+      error.name ||
+      error.lastName ||
+      error.password ||
+      error.address ||
+      error.phoneNumber ||
+      error.emailAddress
+    )
+      setDisabled(true);
+    else setDisabled(false);
+  }, [error]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });

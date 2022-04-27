@@ -5,9 +5,15 @@ export interface StoreState {
 }
 
 export interface User {
-  id: number;
+  cuil: string;
   name: string;
   lastName: string;
+  password: string;
+  address: string;
+  phoneNumber: string;
+  emailAddress: string;
+  gender: string;
+  role: string;
 }
 
 export interface FetchUsersAction {
@@ -18,16 +24,4 @@ export interface FetchUsersAction {
 export interface DeleteUsersAction {
   type: ActionTypes.deleteUsers;
   payload: number;
-}
-
-export interface newUser {
-  cuil: string;
-  name: string;
-  lastName: string;
-  password: string;
-  address: string;
-  phoneNumber: string;
-  emailAddress: string;
-  gender: string;
-  role: string;
 }

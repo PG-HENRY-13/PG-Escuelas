@@ -1,12 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { ActionTypes } from "./types";
-import {
-  DeleteUsersAction,
-  FetchUsersAction,
-  User,
-  newUser,
-} from "../interfaces";
+import { DeleteUsersAction, FetchUsersAction, User } from "../interfaces";
 
 const url = "http://localhost:3001/api/user";
 
@@ -42,7 +37,7 @@ export const deleteUsers = (userID: number) => {
   }
 };
 
-export const createUser = (newUser: newUser) => (dispatch: Dispatch) => {
+export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post("http://localhost:3001/api/user", newUser)
     .then((data) => {
