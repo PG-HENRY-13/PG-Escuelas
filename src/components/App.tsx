@@ -7,7 +7,7 @@ import { StoreState, User } from '../redux/interfaces';
 interface AppProps {
     users: User[];
     fetchUsers(): any;
-    deleteUsers(userID: number): any;
+    deleteUsers(userCUIL: number): any;
 }
 
 function App(props: AppProps): JSX.Element {
@@ -18,9 +18,9 @@ function App(props: AppProps): JSX.Element {
             <button onClick={props.fetchUsers}>FETCH USERS!</button>
             {props.users.map((user: User) => {
                 return (
-                    <div key={user.id}>
-                        {user.id}) {user.name}
-                        <button onClick={() => props.deleteUsers(user.id)}>X</button>
+                    <div key={user.cuil}>
+                        {user.cuil}) {user.name}
+                        <button onClick={() => props.deleteUsers(parseInt(user.cuil))}>X</button>
                     </div>
                 );
             })}

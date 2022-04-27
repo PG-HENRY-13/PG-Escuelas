@@ -42,6 +42,9 @@ export class User extends Model<User> {
     emailAddress!: string;
 
     @Column
+    address!: string;
+
+    @Column
     gender!: GenderType; // Un enumerador que definí arriba con 3 casos
 
     @Column
