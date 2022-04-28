@@ -1,20 +1,33 @@
 import { Action, ActionTypes } from '../actions/types';
-import { User } from '../interfaces';
+import { StoreState, User } from '../interfaces';
 
-
+const initialState = {
+    users: [],
+    user: {
+        cuil: '',
+        name: '',
+        lastName: '',
+        password: '',
+        address: '',
+        phoneNumber: '',
+        emailAddress: '',
+        gender: '',
+        role: ''
+    }
+}
 
 export const usersReducer = (
-    state: User[] = [],
-    action: Action
+	state: StoreState = initialState,
+	action: Action
 ) => {
-    switch (action.type) {
-        case ActionTypes.fetchUsers:
-            return action.payload;
+	switch (action.type) {
+		case ActionTypes.fetchUsers:
+			return action.payload;
 
-        case ActionTypes.deleteUsers:
-            return state.filter(user => parseInt(user.cuil) !== action.payload);
+		case ActionTypes.deleteUsers:
+			return state.users.filter((user) => parseInt(user.cuil) !== action.payload);
 
-        default:
-            return state;
-    }
+		default:
+			return state;
+	}
 };
