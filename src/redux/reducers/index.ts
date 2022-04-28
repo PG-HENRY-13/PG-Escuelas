@@ -3,7 +3,7 @@ import { usersReducer } from "./users";
 import { StoreState } from "../interfaces";
 
 export const reducers = combineReducers({
-  user: usersReducer,
+  usersState: usersReducer,
 });
 
 /*export interface StoreState {
