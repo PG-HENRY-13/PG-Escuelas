@@ -25,3 +25,8 @@ export interface DeleteUsersAction {
   type: ActionTypes.deleteUsers;
   payload: number;
 }
+
+export interface CreateUserAction {
+  type: ActionTypes.createUser;
+  payload: User;
+}
