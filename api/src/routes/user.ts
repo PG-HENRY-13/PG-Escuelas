@@ -1,4 +1,5 @@
 import { Response, Request, Router, NextFunction } from 'express';
+import { json } from 'stream/consumers';
 import { User } from '../models/User';
 const router = Router();
 
@@ -40,22 +41,16 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 
-router.post('/updateUser'),async(req:Request,res:Response, next: NextFunction)=>{
-	
 
 
-
-}
-router.post('/:cuil'),async(req:Request,res:Response, next: NextFunction)=>{
-	// cuil,name,lastName,password,phoneNumber,emailAddress,address,gender
-    const cuil: number = parseInt(req.params.cuil, 10);
-
+router.post('/update', async (req: Request, res: Response, next: NextFunction) => {
   	try {
+
     	const userUpdate: User = req.body;
 		//ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
 		
-    	const existingUser = await User.findByPk(cuil);
-
+    	const existingUser = await User.findByPk(parseInt(userUpdate.cuil));
+		
     	if (existingUser) {
 			await User.update({
 				cuil: userUpdate.cuil,
@@ -69,22 +64,22 @@ router.post('/:cuil'),async(req:Request,res:Response, next: NextFunction)=>{
 
 			}, {
 				where: {
-					cuil: cuil,	
+					cuil: userUpdate.cuil,	
 				}
 			});
 
       		return res.status(200).json(userUpdate);
     	}
 		else{
-    		const newUser= await User.create(userUpdate);
-			res.status(201).json(newUser);
+    		
+			res.status(400).send("User not found");
 		}
 
     
   	} catch (e) {
-    res.status(400).send(e);
+    res.status(400).send("ERROR"+e);
   }
-}
+});
 
 
 export default router;
