@@ -1,4 +1,5 @@
 import { Response, Request, Router, NextFunction } from 'express';
+import { json } from 'stream/consumers';
 import { User } from '../models/User';
 const router = Router();
 
@@ -38,5 +39,47 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
 			});
 	}
 });
+
+
+
+
+router.post('/update', async (req: Request, res: Response, next: NextFunction) => {
+  	try {
+
+    	const userUpdate: User = req.body;
+		//ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
+		
+    	const existingUser = await User.findByPk(parseInt(userUpdate.cuil));
+		
+    	if (existingUser) {
+			await User.update({
+				cuil: userUpdate.cuil,
+				name: userUpdate.name,
+				lastName: userUpdate.lastName,
+				phoneNumber: userUpdate.phoneNumber,
+				emailAddress: userUpdate.emailAddress,
+				address: userUpdate.address,
+
+				//AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
+
+			}, {
+				where: {
+					cuil: userUpdate.cuil,	
+				}
+			});
+
+      		return res.status(200).json(userUpdate);
+    	}
+		else{
+    		
+			res.status(400).send("User not found");
+		}
+
+    
+  	} catch (e) {
+    res.status(400).send("ERROR"+e);
+  }
+});
+
 
 export default router;
