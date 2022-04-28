@@ -39,4 +39,52 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
+
+router.post('/updateUser'),async(req:Request,res:Response, next: NextFunction)=>{
+	
+
+
+
+}
+router.post('/:cuil'),async(req:Request,res:Response, next: NextFunction)=>{
+	// cuil,name,lastName,password,phoneNumber,emailAddress,address,gender
+    const cuil: number = parseInt(req.params.cuil, 10);
+
+  	try {
+    	const userUpdate: User = req.body;
+		//ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
+		
+    	const existingUser = await User.findByPk(cuil);
+
+    	if (existingUser) {
+			await User.update({
+				cuil: userUpdate.cuil,
+				name: userUpdate.name,
+				lastName: userUpdate.lastName,
+				phoneNumber: userUpdate.phoneNumber,
+				emailAddress: userUpdate.emailAddress,
+				address: userUpdate.address,
+
+				//AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
+
+			}, {
+				where: {
+					cuil: cuil,	
+				}
+			});
+
+      		return res.status(200).json(userUpdate);
+    	}
+		else{
+    		const newUser= await User.create(userUpdate);
+			res.status(201).json(newUser);
+		}
+
+    
+  	} catch (e) {
+    res.status(400).send(e);
+  }
+}
+
+
 export default router;
