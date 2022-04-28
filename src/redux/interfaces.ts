@@ -1,9 +1,13 @@
 import { ActionTypes } from './actions/types';
 
 export interface StoreState {
-	users: User[];
-	user: User;
+	users: any;
 }
+
+export interface UsersState{
+	users: User[],
+	user: User
+} 
 
 export interface User {
 	cuil: string;
