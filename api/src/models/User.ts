@@ -1,64 +1,69 @@
 import {
-    Model,
-    Column,
-    Table,
-    CreatedAt,
-    UpdatedAt,
-    PrimaryKey,
-    DataType,
+  Model,
+  Column,
+  Table,
+  CreatedAt,
+  UpdatedAt,
+  PrimaryKey,
+  BelongsToMany,
 } from "sequelize-typescript";
+import { Job } from "./Job";
+import { UsersJobs } from "./UsersJobs";
 
 enum RoleType {
-    Admin = "admin",
-    Employee = "empleado",
-    Manager = "gerente",
+  Admin = "admin",
+  Employee = "empleado",
+  Manager = "gerente",
 }
 
 enum GenderType {
-    Male = "masc",
-    Female = "fem",
-    Other = "otro",
+  Male = "masc",
+  Female = "fem",
+  Other = "otro",
 }
 
 @Table
 export class User extends Model<User> {
-    @PrimaryKey
-    @Column
-    cuil!: string;
+  @BelongsToMany(() => Job, () => UsersJobs)
+  jobs!: Job[];
 
-    @Column
-    name!: string;
+  @PrimaryKey
+  @Column
+  cuil!: string;
 
-    @Column
-    lastName!: string;
+  @Column
+  name!: string;
 
-    @Column
-    password!: string;
+  @Column
+  lastName!: string;
 
-    @Column
-    phoneNumber!: string;
+  @Column
+  password!: string;
 
-    @Column
-    emailAddress!: string;
+  @Column
+  phoneNumber!: string;
 
-    @Column
-    address!: string;
+  @Column
+  emailAddress!: string;
 
-    @Column
-    gender!: GenderType; // Un enumerador que definí arriba con 3 casos
+  @Column
+  address!: string;
 
-    @Column
-    role!: RoleType; // Un enumerador que definí arriba con 3 casos
+  @Column
+  gender!: GenderType; // Un enumerador que definí arriba con 3 casos
 
-    @CreatedAt
-    @Column
-    seniorityDate!: Date;   // Es lo que se llama fecha de escalafón
+  @Column
+  role!: RoleType; // Un enumerador que definí arriba con 3 casos
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @CreatedAt
+  @Column
+  seniorityDate!: Date; // Es lo que se llama fecha de escalafón
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
+  @CreatedAt
+  @Column
+  createdAt!: Date;
+
+  @UpdatedAt
+  @Column
+  updatedAt!: Date;
 }

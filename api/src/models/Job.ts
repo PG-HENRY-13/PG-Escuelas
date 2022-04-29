@@ -1,27 +1,39 @@
 import {
-    Model,
-    Column,
-    Table,
-    CreatedAt,
-    UpdatedAt,
-    PrimaryKey,
-    DataType,
+  Model,
+  Column,
+  Table,
+  CreatedAt,
+  UpdatedAt,
+  PrimaryKey,
+  DataType,
+  BelongsToMany,
 } from "sequelize-typescript";
+import { InferAttributes, InferCreationAttributes } from "sequelize/types";
+import { User } from "./User";
+import { UsersJobs } from "./UsersJobs";
+
+interface Job1 {
+  id: string;
+  name: string;
+}
 
 @Table
-export class Job extends Model<Job> {
-    @PrimaryKey
-    @Column
-    id!: string;
+export class Job extends Model<Job1> {
+  @BelongsToMany(() => User, () => UsersJobs)
+  users?: User[];
 
-    @Column
-    name!: string;
+  @PrimaryKey
+  @Column
+  id!: string;
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @Column
+  name!: string;
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
+  @CreatedAt
+  @Column
+  createdAt?: Date;
+
+  @UpdatedAt
+  @Column
+  updatedAt?: Date;
 }
