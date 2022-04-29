@@ -10,6 +10,8 @@ import {
   AssignJobToUserAction,
   FetchJobsAction,
   LoadUserAction,
+  UpdateUserAction,
+  FetchUserAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -23,6 +25,20 @@ export const fetchUsers = () => {
       type: ActionTypes.fetchUsers,
       payload: response.data,
     });
+  };
+};
+
+export const fetchUser = (cuil: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await axios.get<User>(url + "/" + cuil);
+      dispatch<FetchUserAction>({
+        type: ActionTypes.fetchUser,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -112,4 +128,20 @@ export const loadUser = (userCuil: number) => {
       payload: response.data,
     });
   };
+} 
+
+export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
+  axios
+    .put("url", newUser)
+    .then((data) => {
+      alert("Usuario actualizado correctamente");
+      dispatch<UpdateUserAction>({
+        type: ActionTypes.updateUser,
+        payload: data.data,
+      });
+    })
+    .catch((err: any) => {
+      alert("Error al actualizar usuario");
+      console.log("error: ", err);
+    });
 };
