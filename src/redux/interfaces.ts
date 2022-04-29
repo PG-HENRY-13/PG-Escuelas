@@ -2,6 +2,7 @@ import { ActionTypes } from "./actions/types";
 
 export interface StoreState {
   users: User[];
+  user: User;
 }
 
 export interface User {
@@ -12,6 +13,7 @@ export interface User {
   address: string;
   phoneNumber: string;
   emailAddress: string;
+  seniorityDate: string;
   gender: string;
   role: string;
 }
@@ -24,4 +26,9 @@ export interface FetchUsersAction {
 export interface DeleteUsersAction {
   type: ActionTypes.deleteUsers;
   payload: number;
+}
+
+export interface CreateUserAction {
+  type: ActionTypes.createUser;
+  payload: User;
 }
