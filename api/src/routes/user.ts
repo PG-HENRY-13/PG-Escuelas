@@ -13,18 +13,6 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-router.get("/:userID", (req: Request, res: Response, next: NextFunction) => {
-  const userID = req.params.userID;
-  User.findByPk(userID)
-    .then((user) => {
-      if (user) return res.status(202).send(user);
-      else res.status(404).send("The user does not exist");
-    })
-    .catch((err) => {
-      return res.status(err.code).send(err.message);
-    });
-});
-
 router.post("/", (req: Request, res: Response, next: NextFunction) => {
   const user = req.body;
   User.create(user)
