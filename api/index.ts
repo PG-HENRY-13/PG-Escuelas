@@ -10,3 +10,4 @@ sequelize
     });
   })
   .catch((err) => console.error(err));
+
