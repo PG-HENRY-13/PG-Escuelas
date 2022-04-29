@@ -1,28 +1,34 @@
-import { ActionTypes } from './actions/types';
+import { ActionTypes } from "./actions/types";
 
 export interface StoreState {
-	users: User[];
-	user: User;
+  users: User[];
+  user: User;
 }
 
 export interface User {
-	cuil: string;
-	name: string;
-	lastName: string;
-	password: string;
-	address: string;
-	phoneNumber: string;
-	emailAddress: string;
-	gender: string;
-	role: string;
+  cuil: string;
+  name: string;
+  lastName: string;
+  password: string;
+  address: string;
+  phoneNumber: string;
+  emailAddress: string;
+  seniorityDate: string;
+  gender: string;
+  role: string;
 }
 
 export interface FetchUsersAction {
-	type: ActionTypes.fetchUsers;
-	payload: User[];
+  type: ActionTypes.fetchUsers;
+  payload: User[];
 }
 
 export interface DeleteUsersAction {
-	type: ActionTypes.deleteUsers;
-	payload: number;
+  type: ActionTypes.deleteUsers;
+  payload: number;
+}
+
+export interface CreateUserAction {
+  type: ActionTypes.createUser;
+  payload: User;
 }
