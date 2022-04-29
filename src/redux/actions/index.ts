@@ -1,11 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { ActionTypes } from "./types";
-import {
-  DeleteUsersAction,
-  FetchUsersAction,
-  User,
-} from "../interfaces";
+import { DeleteUsersAction, FetchUsersAction, User } from "../interfaces";
 
 const url = "http://localhost:3001/api/user";
 

@@ -3,7 +3,7 @@ import { User } from "../models/User";
 const router = Router();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-  const role: any = req.body.role;
+  const role: any = req.query.role;
   if (role) {
     const usersFilter = await User.findAll({
       where: {
