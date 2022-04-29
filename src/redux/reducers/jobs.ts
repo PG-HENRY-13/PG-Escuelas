@@ -2,7 +2,17 @@ import { Action, ActionTypes } from "../actions/types";
 import { JobsStoreState, Job } from "../interfaces";
 
 const initialState: JobsStoreState = {
-  jobs: [{ id: "1012", name: "profe" }],
+  jobs: [
+    { id: "1012", name: "profe" },
+    { id: "1013", name: "profe inicial" },
+    { id: "1014", name: "profe primario" },
+    { id: "1015", name: "profe secundario" },
+    { id: "1016", name: "profe ingles" },
+    { id: "1017", name: "profe matematicas" },
+    { id: "1018", name: "profe asistente" },
+    { id: "2012", name: "profe suplente" },
+    { id: "3012", name: "profe gimnasia" },
+  ],
 };
 
 export const jobsReducer = (
