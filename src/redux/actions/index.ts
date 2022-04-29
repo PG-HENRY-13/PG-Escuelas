@@ -5,6 +5,7 @@ import {
   DeleteUsersAction,
   FetchUsersAction,
   User,
+  CreateUserAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/user";
@@ -45,15 +46,14 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post("http://localhost:3001/api/user", newUser)
     .then((data) => {
-      if (data.data === "Que hacer si ya existe, findOrcreate en el back") {
-        alert("La persona ya se encuentra registrada");
-        return;
-      } else {
-        alert("Usuario añadido correctamente");
-        dispatch({ type: ActionTypes.createUser, payload: data.data });
-      }
+      alert("Usuario añadido correctamente");
+      dispatch<CreateUserAction>({
+        type: ActionTypes.createUser,
+        payload: data.data,
+      });
     })
-    .catch((err) => {
+    .catch((err: any) => {
+      alert("Eror, el usuario ya existe en la db");
       console.log("error: ", err);
     });
 };
