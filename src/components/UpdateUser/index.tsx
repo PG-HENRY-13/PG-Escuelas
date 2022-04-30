@@ -67,6 +67,7 @@ export default function UpdateUser(): JSX.Element {
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   function submit(e: React.SyntheticEvent) {
