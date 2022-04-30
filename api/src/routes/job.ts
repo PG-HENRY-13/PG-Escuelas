@@ -1,18 +1,12 @@
-import { Response, Request, Router, NextFunction } from "express";
+import { Response, Request, Router, NextFunction, raw } from "express";
 import { json } from "stream/consumers";
 import { Job } from "../models/Job";
-<<<<<<< HEAD
 import { User } from "../models/User";
+import { UsersJobs } from "../models/UsersJobs";
 
 const router = Router();
 
 router.post("/", (req: Request, res: Response, next: NextFunction) => {
-=======
-const router = Router();
-
-router.post("/", (req: Request, res: Response, next: NextFunction) => {
-  console.log("body", req.body);
->>>>>>> 6df985113509dd7c036d011c7a890e4b4449d345
   const job = req.body;
   Job.create(job)
     .then((createdJob) => {
@@ -23,14 +17,28 @@ router.post("/", (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-<<<<<<< HEAD
 router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let { userCuil, jobID } = req.body;
+    let { userCuil, jobID, funcJer, basico, antig, zona, addRem, dedExcl } =
+      req.body;
     let userToAdd = await User.findByPk(userCuil);
     let jobToAdd = await Job.findByPk(jobID);
     await userToAdd?.$add("jobs", jobID);
     await jobToAdd?.$add("users", userCuil);
+    let middle = await UsersJobs.findOne({
+      where: {
+        UserCuil: userCuil,
+        JobId: jobID,
+      },
+    });
+    await middle?.update({
+      funcJer,
+      basico,
+      antig,
+      zona,
+      addRem,
+      dedExcl,
+    });
     let returnedUser = await User.findByPk(userCuil, {
       include: [Job],
     });
@@ -40,6 +48,4 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-=======
->>>>>>> 6df985113509dd7c036d011c7a890e4b4449d345
 export default router;
