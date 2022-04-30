@@ -5,15 +5,15 @@ import App from "./components/App";
 import store from "./redux/store";
 import NewAccount from "./components/NewAccount";
 import UserInfo from "./components/UserInfo";
-import Filters from "./components/Filters";
+import AssignJobs from "./components/AssignJobs/AssignJobs";
 
 ReactDOM.render(
   <Provider store={store}>
     <h1>Henry</h1>
     <App></App>
     <NewAccount></NewAccount>
-    <Filters></Filters>
     <UserInfo></UserInfo>
+    <AssignJobs></AssignJobs>
   </Provider>,
   document.querySelector("#root")
 );

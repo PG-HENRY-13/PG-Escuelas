@@ -5,14 +5,19 @@ import {
   DeleteUsersAction,
   FetchUsersAction,
   User,
-  FilterUsersAction,
+  Job,
+  CreateUserAction,
+  AssignJobToUserAction,
+  FetchJobsAction,
 } from "../interfaces";
 
-const url = "http://localhost:3001/api/user";
+const url = "http://localhost:3001/api/";
+const userUrl = url + "user";
+const jobUrl = url + "job";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<User[]>(url);
+    const response = await axios.get<User[]>(userUrl);
     dispatch<FetchUsersAction>({
       type: ActionTypes.fetchUsers,
       payload: response.data,
@@ -23,7 +28,7 @@ export const fetchUsers = () => {
 export const deleteUsers = (userID: number) => {
   try {
     return async (dispatch: Dispatch) => {
-      const response = await axios.delete<true>(url, {
+      const response = await axios.delete<true>(userUrl, {
         data: {
           userID: userID,
         },
@@ -44,7 +49,7 @@ export const deleteUsers = (userID: number) => {
 
 export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
-    .post("http://localhost:3001/api/user", newUser)
+    .post(userUrl, newUser)
     .then((data) => {
       alert("Usuario añadido correctamente");
       dispatch<CreateUserAction>({
@@ -58,16 +63,31 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
     });
 };
 
-export const filterUsers = (dispatch: Dispatch) => {
-  axios
-    .get("http://localhost:3001/api/role?role=admin")
-    .then((data) => {
-      dispatch<FilterUsersAction>({
-        type: ActionTypes.filterUsers,
-        payload: data.data,
-      });
-    })
-    .catch((err) => {
-      console.log("error: ", err);
+///// JOBS ACTIONS //////
+
+export const assignJobToUser = (userCuil: number, jobID: number) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.put<any>(jobUrl, {
+      // CAMBIAR EL ANY!!!!
+      data: {
+        userCuil: userCuil,
+        jobID: jobID,
+      },
     });
+    dispatch<AssignJobToUserAction>({
+      type: ActionTypes.assignJobToUser,
+      payload: response.data,
+    });
+  };
+};
+
+export const fetchJobs = () => {
+  console.log("fetchjobs");
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(userUrl); ///CAMBIAR EL ANY
+    dispatch<FetchJobsAction>({
+      type: ActionTypes.fetchJobs,
+      payload: response.data,
+    });
+  };
 };
