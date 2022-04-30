@@ -9,6 +9,7 @@ import {
   CreateUserAction,
   AssignJobToUserAction,
   FetchJobsAction,
+  LoadUserAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -66,19 +67,23 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
 ///// JOBS ACTIONS //////
 
 export const assignJobToUser = (userCuil: number, jobID: number) => {
-  return async (dispatch: Dispatch) => {
-    const response = await axios.put<any>(jobUrl, {
-      // CAMBIAR EL ANY!!!!
-      data: {
+  try {
+    console.log("lo que llega al action es user ", userCuil, "job ", jobID);
+    return async (dispatch: Dispatch) => {
+      const response = await axios.put<any>(jobUrl, {
+        // CAMBIAR EL ANY!!!!
         userCuil: userCuil,
         jobID: jobID,
-      },
-    });
-    dispatch<AssignJobToUserAction>({
-      type: ActionTypes.assignJobToUser,
-      payload: response.data,
-    });
-  };
+      });
+      dispatch<AssignJobToUserAction>({
+        type: ActionTypes.assignJobToUser,
+        payload: response.data,
+      });
+      alert("Trabajo asignado correctamente");
+    };
+  } catch (err) {
+    alert("Todo lo que podía salir mal lo ha hecho");
+  }
 };
 
 export const fetchJobs = () => {
@@ -87,6 +92,23 @@ export const fetchJobs = () => {
     const response = await axios.get<any>(userUrl); ///CAMBIAR EL ANY
     dispatch<FetchJobsAction>({
       type: ActionTypes.fetchJobs,
+      payload: response.data,
+    });
+  };
+};
+
+///////SEGURO DAVID YA LO HIZO PERO ES PA PROBAR
+
+export const loadUser = (userCuil: number) => {
+  console.log("llega el load con userCuil ", userCuil);
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(userUrl + "/" + userCuil, {
+      data: {
+        userCuil: userCuil,
+      },
+    }); ///CAMBIAR EL ANY
+    dispatch<LoadUserAction>({
+      type: ActionTypes.loadUser,
       payload: response.data,
     });
   };

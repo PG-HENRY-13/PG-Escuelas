@@ -32,6 +32,10 @@ export const usersReducer = (
           (user) => parseInt(user.cuil) !== action.payload
         ),
       };
+
+    case ActionTypes.loadUser:
+      return { ...state, user: action.payload };
+
     default:
       return state;
   }

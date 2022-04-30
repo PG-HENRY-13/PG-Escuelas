@@ -18,6 +18,7 @@ router.post("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.put("/", async (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body);
   try {
     let { userCuil, jobID, funcJer, basico, antig, zona, addRem, dedExcl } =
       req.body;
