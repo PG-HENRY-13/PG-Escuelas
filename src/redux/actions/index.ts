@@ -31,7 +31,7 @@ export const fetchUsers = () => {
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get<User>(url + "/" + cuil);
+      const response = await axios.get<User>(userUrl + '/' + cuil);
       dispatch<FetchUserAction>({
         type: ActionTypes.fetchUser,
         payload: response.data,
@@ -132,7 +132,7 @@ export const loadUser = (userCuil: number) => {
 
 export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
   axios
-    .put(url, newUser)
+    .put(userUrl, newUser)
     .then((data) => {
       alert("Usuario actualizado correctamente");
       dispatch<UpdateUserAction>({

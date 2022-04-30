@@ -148,6 +148,7 @@ export default function UpdateUser(): JSX.Element {
             onChange={selectHandler}
             defaultValue={data.gender}
           >
+            <option value={data.gender}>Elegir</option>
             <option value="otro">Sin especificar</option>
             <option value="fem">Femenino</option>
             <option value="masc">Masculino</option>
@@ -155,13 +156,14 @@ export default function UpdateUser(): JSX.Element {
           <br></br>
           <label>Rol: {data.role}</label>
           <select name="role" onChange={selectHandler} defaultValue={data.role}>
+            <option value={data.role}>Elegir</option>
             <option value="empleado">Empleado</option>
             <option value="admin">Admin</option>
             <option value="gerente">Gerente</option>
           </select>
           <br></br>
           <button disabled={disabled} className="barBtn" type="submit">
-            Create
+            Update
           </button>
         </div>
       </form>
