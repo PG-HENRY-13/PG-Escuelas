@@ -1,18 +1,11 @@
 import { Response, Request, Router, NextFunction } from "express";
 import { json } from "stream/consumers";
 import { Job } from "../models/Job";
-<<<<<<< HEAD
 import { User } from "../models/User";
 
 const router = Router();
 
 router.post("/", (req: Request, res: Response, next: NextFunction) => {
-=======
-const router = Router();
-
-router.post("/", (req: Request, res: Response, next: NextFunction) => {
-  console.log("body", req.body);
->>>>>>> 6df985113509dd7c036d011c7a890e4b4449d345
   const job = req.body;
   Job.create(job)
     .then((createdJob) => {
@@ -23,7 +16,6 @@ router.post("/", (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-<<<<<<< HEAD
 router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     let { userCuil, jobID } = req.body;
@@ -40,6 +32,4 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-=======
->>>>>>> 6df985113509dd7c036d011c7a890e4b4449d345
 export default router;
