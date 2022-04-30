@@ -5,10 +5,8 @@ import {
   CreatedAt,
   UpdatedAt,
   PrimaryKey,
-  DataType,
   BelongsToMany,
 } from "sequelize-typescript";
-import { InferAttributes, InferCreationAttributes } from "sequelize/types";
 import { User } from "./User";
 import { UsersJobs } from "./UsersJobs";
 

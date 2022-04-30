@@ -6,7 +6,6 @@ import {
   UpdatedAt,
   PrimaryKey,
   BelongsToMany,
-  DataType,
 } from "sequelize-typescript";
 import { Job } from "./Job";
 import { UsersJobs } from "./UsersJobs";

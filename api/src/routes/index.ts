@@ -4,7 +4,6 @@ import jobRoutes from "./job";
 import authentifyRoutes from "./authentify";
 import employeesRoutes from "./employees";
 import roleRoutes from "./role";
-
 const router = Router();
 
 router.use("/user", userRoutes);
