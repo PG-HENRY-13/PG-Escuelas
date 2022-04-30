@@ -1,9 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { ActionTypes } from "./types";
-<<<<<<< Updated upstream
-import { DeleteUsersAction, FetchUsersAction, User } from "../interfaces";
-=======
 import {
   DeleteUsersAction,
   FetchUsersAction,
@@ -13,7 +10,6 @@ import {
   AssignJobToUserAction,
   FetchJobsAction,
 } from "../interfaces";
->>>>>>> Stashed changes
 
 const url = "http://localhost:3001/api/";
 const userUrl = url + "user";
@@ -55,18 +51,6 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {
-<<<<<<< Updated upstream
-      if (data.data === "Que hacer si ya existe, findOrcreate en el back") {
-        alert("La persona ya se encuentra registrada");
-        return;
-      } else {
-        alert("Usuario añadido correctamente");
-        dispatch({ type: ActionTypes.createUser, payload: data.data });
-      }
-    })
-    .catch((err) => {
-      console.log("error: ", err);
-=======
       alert("Usuario añadido correctamente");
       dispatch<CreateUserAction>({
         type: ActionTypes.createUser,
@@ -89,7 +73,6 @@ export const assignJobToUser = (userCuil: number, jobID: number) => {
         userCuil: userCuil,
         jobID: jobID,
       },
->>>>>>> Stashed changes
     });
     dispatch<AssignJobToUserAction>({
       type: ActionTypes.assignJobToUser,

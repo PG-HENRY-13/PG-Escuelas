@@ -24,9 +24,6 @@ export interface FetchUsersAction {
 export interface DeleteUsersAction {
   type: ActionTypes.deleteUsers;
   payload: number;
-<<<<<<< Updated upstream
-}
-=======
 }
 
 export interface CreateUserAction {
@@ -53,4 +50,3 @@ export interface FetchJobsAction {
   type: ActionTypes.fetchJobs;
   payload: Job[];
 }
->>>>>>> Stashed changes
