@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { deleteUsers, fetchUser ,userUpdate} from "../../redux/actions";
+import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
 
@@ -12,7 +12,6 @@ export default function UpdateUser(): JSX.Element {
     (today.getMonth() + 1).toString().padStart(2, "0") +
     "-" +
     today.getDate().toString().padStart(2, "0");
-
 
   const dispatch = useDispatch();
   const userToUpdate = useSelector((state: any) => {
@@ -59,9 +58,7 @@ export default function UpdateUser(): JSX.Element {
 
   useEffect(() => {
     setData(userToUpdate);
-  },[userToUpdate])
-
-
+  }, [userToUpdate]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -80,8 +77,8 @@ export default function UpdateUser(): JSX.Element {
   const handlerClickSearch = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch(fetchUser(data.cuil) as any);
-   setDisabled(false);
-  }
+    setDisabled(false);
+  };
 
   return (
     <div>
@@ -113,7 +110,7 @@ export default function UpdateUser(): JSX.Element {
           ></input>
           <span className="err">{error.password}</span>
           <br></br>
-          <label>Escalafon:{data.seniorityDate.split('T')[0]}</label>
+          <label>Escalafon:{data.seniorityDate.split("T")[0]}</label>
           <input
             type="date"
             name="seniorityDate"
@@ -146,7 +143,11 @@ export default function UpdateUser(): JSX.Element {
           <span className="err">{error.emailAddress}</span>
           <br></br>
           <label>Genero: {data.gender}</label>
-          <select name="gender" onChange={selectHandler} defaultValue={data.gender}>
+          <select
+            name="gender"
+            onChange={selectHandler}
+            defaultValue={data.gender}
+          >
             <option value="otro">Sin especificar</option>
             <option value="fem">Femenino</option>
             <option value="masc">Masculino</option>
@@ -167,5 +168,3 @@ export default function UpdateUser(): JSX.Element {
     </div>
   );
 }
-
-
