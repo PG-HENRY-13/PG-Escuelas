@@ -67,20 +67,23 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
 ///// JOBS ACTIONS //////
 
 export const assignJobToUser = (userCuil: number, jobID: number) => {
-  console.log("lo que llega al action es user ", userCuil, "job ", jobID);
-  return async (dispatch: Dispatch) => {
-    const response = await axios.put<any>(jobUrl, {
-      // CAMBIAR EL ANY!!!!
-      data: {
+  try {
+    console.log("lo que llega al action es user ", userCuil, "job ", jobID);
+    return async (dispatch: Dispatch) => {
+      const response = await axios.put<any>(jobUrl, {
+        // CAMBIAR EL ANY!!!!
         userCuil: userCuil,
         jobID: jobID,
-      },
-    });
-    dispatch<AssignJobToUserAction>({
-      type: ActionTypes.assignJobToUser,
-      payload: response.data,
-    });
-  };
+      });
+      dispatch<AssignJobToUserAction>({
+        type: ActionTypes.assignJobToUser,
+        payload: response.data,
+      });
+      alert("Trabajo asignado correctamente");
+    };
+  } catch (err) {
+    alert("Todo lo que podía salir mal lo ha hecho");
+  }
 };
 
 export const fetchJobs = () => {
