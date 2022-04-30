@@ -19,7 +19,7 @@ export default function UpdateUser(): JSX.Element {
     return state.usersState.user;
   });
 
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [data, setData] = useState({
     cuil: "",
     name: "",
@@ -62,6 +62,7 @@ export default function UpdateUser(): JSX.Element {
   },[userToUpdate])
 
 
+
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
     setError(validate({ ...data, [e.target.name]: e.target.value }));
@@ -79,6 +80,7 @@ export default function UpdateUser(): JSX.Element {
   const handlerClickSearch = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch(fetchUser(data.cuil) as any);
+   setDisabled(false);
   }
 
   return (
@@ -111,7 +113,7 @@ export default function UpdateUser(): JSX.Element {
           ></input>
           <span className="err">{error.password}</span>
           <br></br>
-          <label>Escalafon:</label>
+          <label>Escalafon:{data.seniorityDate.split('T')[0]}</label>
           <input
             type="date"
             name="seniorityDate"
@@ -143,15 +145,15 @@ export default function UpdateUser(): JSX.Element {
           ></input>
           <span className="err">{error.emailAddress}</span>
           <br></br>
-          <label>Genero:</label>
+          <label>Genero: {data.gender}</label>
           <select name="gender" onChange={selectHandler} defaultValue={data.gender}>
             <option value="otro">Sin especificar</option>
             <option value="fem">Femenino</option>
             <option value="masc">Masculino</option>
           </select>
           <br></br>
-          <label>Rol:</label>
-          <select name="role" onChange={selectHandler} defaultValue="employee">
+          <label>Rol: {data.role}</label>
+          <select name="role" onChange={selectHandler} defaultValue={data.role}>
             <option value="empleado">Empleado</option>
             <option value="admin">Admin</option>
             <option value="gerente">Gerente</option>
@@ -165,7 +167,5 @@ export default function UpdateUser(): JSX.Element {
     </div>
   );
 }
-function updateUser(data: { cuil: string; name: string; lastName: string; password: string; address: string; phoneNumber: string; emailAddress: string; gender: string; role: string; seniorityDate: string; }): any {
-  throw new Error("Function not implemented.");
-}
+
 
