@@ -43,9 +43,10 @@ export default function AssignJobs(): JSX.Element {
         })}
       </select>
       <button
-        onClick={(e) =>
-          dispatch(assignJobToUser(loadedUser.cuil, input.jobId) as any)
-        }
+        onClick={(e) => {
+          console.log("despachando con ", loadedUser.cuil, " y ", input.jobId);
+          dispatch(assignJobToUser(loadedUser.cuil, input.jobId) as any);
+        }}
       >
         Assign Job
       </button>
