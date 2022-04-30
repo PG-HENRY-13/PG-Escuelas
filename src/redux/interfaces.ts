@@ -32,3 +32,8 @@ export interface CreateUserAction {
   type: ActionTypes.createUser;
   payload: User;
 }
+
+export interface FilterUsersAction {
+  type: ActionTypes.filterUsers;
+  payload: User[];
+}

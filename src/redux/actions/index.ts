@@ -5,7 +5,7 @@ import {
   DeleteUsersAction,
   FetchUsersAction,
   User,
-  CreateUserAction,
+  FilterUsersAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/user";
@@ -54,6 +54,20 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
     })
     .catch((err: any) => {
       alert("Eror, el usuario ya existe en la db");
+      console.log("error: ", err);
+    });
+};
+
+export const filterUsers = (dispatch: Dispatch) => {
+  axios
+    .get("http://localhost:3001/api/role?role=admin")
+    .then((data) => {
+      dispatch<FilterUsersAction>({
+        type: ActionTypes.filterUsers,
+        payload: data.data,
+      });
+    })
+    .catch((err) => {
       console.log("error: ", err);
     });
 };
