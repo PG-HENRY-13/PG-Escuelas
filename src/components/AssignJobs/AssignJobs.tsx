@@ -19,23 +19,33 @@ export default function AssignJobs(): JSX.Element {
     return state.jobsState.jobs;
   });
 
+  const [input, setInput] = useState({
+    cuil: "",
+    jobId: jobs[0].id,
+  });
+
+  const changeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
   // useEffect(() => {
   //   console.log("usefect");
   //   dispatch(fetchJobs() as any);
   //   // eslint-disable-next-line
   // }, []);
 
-  console.log("jobs es el state, ", jobs);
-
   return (
     <div>
-      <select name="job" id="job">
+      <p>Asignando cargos a {loadedUser.name}</p>
+      <select onChange={changeHandler} name="jobId" id="job">
         {jobs.map((job: Job) => {
-          return <option value="job.id">{job.name}</option>;
+          return <option value={job.id}>{job.name}</option>;
         })}
       </select>
       <button
-        onClick={(e) => dispatch(assignJobToUser(loadedUser.user, 12) as any)}
+        onClick={(e) =>
+          dispatch(assignJobToUser(loadedUser.cuil, input.jobId) as any)
+        }
       >
         Assign Job
       </button>

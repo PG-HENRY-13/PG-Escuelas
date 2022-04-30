@@ -4,6 +4,7 @@ import {
   FetchUsersAction,
   AssignJobToUserAction,
   FetchJobsAction,
+  LoadUserAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -12,6 +13,7 @@ export enum ActionTypes {
   createUser,
   assignJobToUser,
   fetchJobs,
+  loadUser,
 }
 
 export type Action =
@@ -19,4 +21,5 @@ export type Action =
   | DeleteUsersAction
   | CreateUserAction
   | AssignJobToUserAction
-  | FetchJobsAction;
+  | FetchJobsAction
+  | LoadUserAction;

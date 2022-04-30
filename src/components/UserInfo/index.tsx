@@ -1,7 +1,7 @@
 import React from "react";
 import { StoreState, User } from "../../redux/interfaces";
 import "../../styles/UserInfo.css";
-import { fetchUsers } from "../../redux/actions";
+import { fetchUsers, loadUser } from "../../redux/actions";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 export default function UserInfo(): JSX.Element {
@@ -9,6 +9,11 @@ export default function UserInfo(): JSX.Element {
   const loadedUsers = useSelector((state: any) => {
     return state.usersState.users;
   });
+
+  function putUserinState(cuil: number) {
+    dispatch(loadUser(cuil) as any);
+  }
+
   return (
     <div>
       <table>
@@ -16,6 +21,9 @@ export default function UserInfo(): JSX.Element {
           <tr>
             <th data-type="numeric">
               cuil <span className="resize-handle"></span>
+            </th>
+            <th data-type="any">
+              boton <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
               Nombre <span className="resize-handle"></span>
@@ -45,7 +53,10 @@ export default function UserInfo(): JSX.Element {
             return (
               <>
                 <tr>
-                  <td>{e.cuil}</td>
+                  <td>{e.cuil}</td>{" "}
+                  <button onClick={() => putUserinState(e.cuil)}>
+                    details
+                  </button>
                   <td>{e.name}</td>
                   <td>{e.lastName}</td>
                   <td>{e.phoneNumber}</td>
