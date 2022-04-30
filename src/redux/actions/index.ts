@@ -132,7 +132,7 @@ export const loadUser = (userCuil: number) => {
 
 export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
   axios
-    .put("url", newUser)
+    .put(url, newUser)
     .then((data) => {
       alert("Usuario actualizado correctamente");
       dispatch<UpdateUserAction>({

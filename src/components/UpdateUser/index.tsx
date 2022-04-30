@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { deleteUsers, fetchUser, fetchUsers } from "../../redux/actions";
+import { deleteUsers, fetchUser ,userUpdate} from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
 
@@ -57,6 +57,11 @@ export default function UpdateUser(): JSX.Element {
     else setDisabled(false);
   }, [error]);
 
+  useEffect(() => {
+    setData(userToUpdate);
+  },[userToUpdate])
+
+
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
     setError(validate({ ...data, [e.target.name]: e.target.value }));
@@ -68,13 +73,12 @@ export default function UpdateUser(): JSX.Element {
 
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(updateUser(data) as any);
+    dispatch(userUpdate(data) as any);
   }
 
   const handlerClickSearch = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch(fetchUser(data.cuil) as any);
-    setData(userToUpdate);
   }
 
   return (
@@ -140,7 +144,7 @@ export default function UpdateUser(): JSX.Element {
           <span className="err">{error.emailAddress}</span>
           <br></br>
           <label>Genero:</label>
-          <select name="gender" onChange={selectHandler} defaultValue="other">
+          <select name="gender" onChange={selectHandler} defaultValue={data.gender}>
             <option value="otro">Sin especificar</option>
             <option value="fem">Femenino</option>
             <option value="masc">Masculino</option>
