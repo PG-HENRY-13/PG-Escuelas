@@ -91,3 +91,17 @@ export const fetchJobs = () => {
     });
   };
 };
+
+/* export const filterUsers = (dispatch: Dispatch) => {
+  axios
+    .get("http://localhost:3001/api/role?role=admin")
+    .then((data) => {
+      dispatch<FilterUsersAction>({
+        type: ActionTypes.filterUsers,
+        payload: data.data,
+      });
+    })
+    .catch((err) => {
+      console.log("error: ", err);
+    });
+}; */
