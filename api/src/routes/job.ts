@@ -1,7 +1,8 @@
-import { Response, Request, Router, NextFunction } from "express";
+import { Response, Request, Router, NextFunction, raw } from "express";
 import { json } from "stream/consumers";
 import { Job } from "../models/Job";
 import { User } from "../models/User";
+import { UsersJobs } from "../models/UsersJobs";
 
 const router = Router();
 
@@ -18,11 +19,26 @@ router.post("/", (req: Request, res: Response, next: NextFunction) => {
 
 router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let { userCuil, jobID } = req.body;
+    let { userCuil, jobID, funcJer, basico, antig, zona, addRem, dedExcl } =
+      req.body;
     let userToAdd = await User.findByPk(userCuil);
     let jobToAdd = await Job.findByPk(jobID);
     await userToAdd?.$add("jobs", jobID);
     await jobToAdd?.$add("users", userCuil);
+    let middle = await UsersJobs.findOne({
+      where: {
+        UserCuil: userCuil,
+        JobId: jobID,
+      },
+    });
+    await middle?.update({
+      funcJer,
+      basico,
+      antig,
+      zona,
+      addRem,
+      dedExcl,
+    });
     let returnedUser = await User.findByPk(userCuil, {
       include: [Job],
     });
