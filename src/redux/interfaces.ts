@@ -24,4 +24,33 @@ export interface FetchUsersAction {
 export interface DeleteUsersAction {
   type: ActionTypes.deleteUsers;
   payload: number;
+<<<<<<< Updated upstream
 }
+=======
+}
+
+export interface CreateUserAction {
+  type: ActionTypes.createUser;
+  payload: User;
+}
+
+export interface AssignJobToUserAction {
+  type: ActionTypes.assignJobToUser;
+  payload: User;
+}
+
+////// JOB INTERFACES
+export interface JobsStoreState {
+  jobs: Job[];
+}
+
+export interface Job {
+  id: string;
+  name: string;
+}
+
+export interface FetchJobsAction {
+  type: ActionTypes.fetchJobs;
+  payload: Job[];
+}
+>>>>>>> Stashed changes
