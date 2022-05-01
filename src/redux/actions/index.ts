@@ -37,7 +37,9 @@ export const fetchUser = (cuil: string) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      alert('El usuario no existe');
+      // console.log(error);
+
     }
   };
 };
