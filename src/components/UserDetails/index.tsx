@@ -4,7 +4,7 @@ import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
 
-export default function UpdateUser(): JSX.Element {
+export default function UserDetails(): JSX.Element {
   let today = new Date();
   let date =
     today.getFullYear().toString().padStart(4, "0") +
@@ -41,21 +41,6 @@ export default function UpdateUser(): JSX.Element {
     phoneNumber: "Ingrese un numero valido",
     emailAddress: "Ingrese una direccion de correo valida",
   });
-
-  useEffect (() => {
-    setData({
-      cuil: "",
-      name: "",
-      lastName: "",
-      password: "",
-      address: "",
-      phoneNumber: "",
-      emailAddress: "",
-      gender: "otro",
-      role: "empleado",
-      seniorityDate: date,
-    });
-  },[])
 
   useEffect(() => {
     if (
