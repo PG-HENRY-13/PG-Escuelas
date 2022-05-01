@@ -6,6 +6,7 @@ import store from "./redux/store";
 import NewAccount from "./components/NewAccount";
 import UserInfo from "./components/UserInfo";
 import AssignJobs from "./components/AssignJobs/AssignJobs";
+import UpdateUser from "./components/UpdateUser";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -14,6 +15,7 @@ ReactDOM.render(
     <NewAccount></NewAccount>
     <UserInfo></UserInfo>
     <AssignJobs></AssignJobs>
+    <UpdateUser/>
   </Provider>,
   document.querySelector("#root")
 );
