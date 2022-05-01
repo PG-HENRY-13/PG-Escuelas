@@ -77,8 +77,10 @@ export default function UpdateUser(): JSX.Element {
 
   const handlerClickSearch = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(fetchUser(data.cuil) as any);
-    setDisabled(false);
+    if (data.cuil) {
+      dispatch(fetchUser(data.cuil) as any);
+      setDisabled(false);
+    }
   };
 
   return (

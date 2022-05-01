@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
 import "../../styles/UserInfo.css";
 import { fetchUsers, loadUser } from "../../redux/actions";
@@ -13,7 +13,9 @@ export default function UserInfo(): JSX.Element {
   function putUserinState(cuil: number) {
     dispatch(loadUser(cuil) as any);
   }
-
+  useEffect(() => {
+    dispatch(fetchUsers()as any);
+  }, []);
   return (
     <div>
       <table>
