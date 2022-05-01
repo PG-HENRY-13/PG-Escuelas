@@ -1,9 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
 import Login from "./Login";
 import NewAccount from "./NewAccount";
+import News from "./News";
 import UpdateUser from "./UpdateUser";
+import UserDetails from "./UserDetails";
 import UserInfo from "./UserInfo";
 
 export default function App(): JSX.Element {
@@ -14,14 +17,30 @@ export default function App(): JSX.Element {
         <Route
           index
           element={
-            <>
-              <UserInfo />
-            </>
+            
+            <News/>
           }
         />
-        <Route path="createuser" element={<NewAccount />} />
-        <Route path="updateuser" element={<UpdateUser />} />
-        <Route path="userlist" element={<UserInfo />} />
+        <Route path="createuser" element={
+        <div className="container">
+          <NewAccount />
+          <AssignJobs/>
+
+        </div>
+        } />
+        <Route path="updateuser" element={
+        <div className="container">
+          <UpdateUser />
+          <AssignJobs/>
+
+        </div>
+
+        } />
+        <Route path="userlist" element={
+        <div className='container'>
+          <UserInfo />
+        </div>
+        } />
       </Route>
       <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
