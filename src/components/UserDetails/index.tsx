@@ -1,9 +1,15 @@
 import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
+import {
+  deleteUsers,
+  fetchUser,
+  userUpdate,
+  loadUserJobs,
+} from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { Job } from "../../redux/interfaces";
 
 export default function UserDetails(): JSX.Element {
   const navigate = useNavigate();
@@ -19,6 +25,10 @@ export default function UserDetails(): JSX.Element {
   const dispatch = useDispatch();
   const userToUpdate = useSelector((state: any) => {
     return state.usersState.user;
+  });
+
+  const jobsToRender = useSelector((state: any) => {
+    return state.jobsState.userJobs;
   });
 
   const [disabled, setDisabled] = useState(false);
@@ -62,6 +72,10 @@ export default function UserDetails(): JSX.Element {
   useEffect(() => {
     setData(userToUpdate);
   }, [userToUpdate]);
+
+  useEffect(() => {
+    if (cuil) dispatch(loadUserJobs(cuil) as any);
+  }, []);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -166,6 +180,15 @@ export default function UserDetails(): JSX.Element {
             <option value="admin">Admin</option>
             <option value="gerente">Gerente</option>
           </select>
+          <br></br>
+          <h5>Trabajos:</h5>
+          {jobsToRender.length ? (
+            jobsToRender.map((job: Job) => {
+              return <h6>{job.name}</h6>;
+            })
+          ) : (
+            <span>Sin trabajos asignados</span>
+          )}
           <br></br>
           <Link to={"/admin/updateuser/" + cuil} className="barBtn">
             Editar Usuario

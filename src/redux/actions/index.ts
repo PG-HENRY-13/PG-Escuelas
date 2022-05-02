@@ -12,6 +12,7 @@ import {
   LoadUserAction,
   UpdateUserAction,
   FetchUserAction,
+  FetchUserJobs,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -145,4 +146,15 @@ export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
       alert("Error al actualizar usuario");
       console.log("error: ", err);
     });
+};
+
+export const loadUserJobs = (userCuil: string) => {
+  console.log("llega el load con userCuil ", userCuil);
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(jobUrl + "/" + userCuil); ///CAMBIAR EL ANY
+    dispatch<FetchUserJobs>({
+      type: ActionTypes.fetchUserJobs,
+      payload: response.data,
+    });
+  };
 };

@@ -92,6 +92,7 @@ export default function UserInfo(): JSX.Element {
                     <td>{e.address}</td>
                     <td>{e.emailAddress}</td>
                     <td>{e.gender}</td>
+                    <td>{e.jobs}</td>
                   </tr>
                 </>
               );
