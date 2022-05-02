@@ -12,6 +12,7 @@ import {
   LoadUserAction,
   UpdateUserAction,
   FetchUserAction,
+  FilterRolesAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -145,4 +146,21 @@ export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
       alert("Error al actualizar usuario");
       console.log("error: ", err);
     });
+};
+
+export const filterRoles = (roles: string) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(
+      "http://localhost:3001/api/role?role=" + roles,
+      {
+        data: {
+          role: roles,
+        },
+      }
+    );
+    dispatch<FilterRolesAction>({
+      type: ActionTypes.filterRoles,
+      payload: response.data,
+    });
+  };
 };

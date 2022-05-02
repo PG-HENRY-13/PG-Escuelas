@@ -47,6 +47,11 @@ export interface FetchUserAction {
   payload: User;
 }
 
+export interface FilterRolesAction {
+  type: ActionTypes.filterRoles;
+  payload: User[];
+}
+
 ////// JOB INTERFACES
 export interface JobsStoreState {
   jobs: Job[];

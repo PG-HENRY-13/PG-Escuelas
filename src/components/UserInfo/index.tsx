@@ -4,6 +4,7 @@ import { StoreState, User } from "../../redux/interfaces";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Filters from "../Filters";
 
 export default function UserInfo(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
