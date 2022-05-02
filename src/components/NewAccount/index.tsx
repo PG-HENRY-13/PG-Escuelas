@@ -67,7 +67,7 @@ export default function NewAccount(): JSX.Element {
 
   return (
     <div>
-      <h1>Create New User</h1>
+      <h1>Crear Nuevo Usuario</h1>
       <form onSubmit={submit}>
         <div>
           <label>Nombre:</label>

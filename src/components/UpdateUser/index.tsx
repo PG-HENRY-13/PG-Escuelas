@@ -100,7 +100,7 @@ export default function UpdateUser(): JSX.Element {
 
   return (
     <div>
-      <h1>Update User</h1>
+      <h1>Editar Usuario</h1>
       <form onSubmit={submit}>
         <div>
           <label>Cuil:</label>
