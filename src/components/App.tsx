@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
 import Login from "./Login";
@@ -13,34 +13,42 @@ export default function App(): JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path='/admin' element={<LayoutAdmin/>}>
+      <Route path="/admin" element={<LayoutAdmin />}>
+        <Route index element={<News />} />
         <Route
-          index
+          path="createuser"
           element={
-            
-            <News/>
+            <div className="container">
+              <NewAccount />
+              <AssignJobs />
+            </div>
           }
         />
-        <Route path="createuser" element={
-        <div className="container">
-          <NewAccount />
-          <AssignJobs/>
-
-        </div>
-        } />
-        <Route path="updateuser" element={
-        <div className="container">
-          <UpdateUser />
-          <AssignJobs/>
-
-        </div>
-
-        } />
-        <Route path="userlist" element={
-        <div className='container'>
-          <UserInfo />
-        </div>
-        } />
+        <Route
+          path="updateuser"
+          element={
+            <div className="container">
+              <UpdateUser />
+              <AssignJobs />
+            </div>
+          }
+        />
+        <Route
+          path="userlist/:cuil"
+          element={
+            <div className="container">
+              <UserDetails cuil={params} />
+            </div>
+          }
+        />
+        <Route
+          path="userlist"
+          element={
+            <div className="container">
+              <UserInfo />
+            </div>
+          }
+        />
       </Route>
       <Route path="*" element={<Navigate replace to="/" />} />
     </Routes>
