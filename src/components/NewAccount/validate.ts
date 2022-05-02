@@ -5,7 +5,7 @@ export default function validate(input: User) {
   if (input.hasOwnProperty("cuil")) {
     if (
       !/^\d+$/.test(input.cuil) ||
-      input.cuil.length > 11 ||
+      input.cuil.length > 12 ||
       input.cuil.length < 10
     )
       error.cuil = "Ingrese un Cuil valido";
