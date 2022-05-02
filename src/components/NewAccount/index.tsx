@@ -67,80 +67,90 @@ export default function NewAccount(): JSX.Element {
   }
 
   return (
-    <div>
+    <div className='container'>
       <h1>Crear Nuevo Usuario</h1>
       <form onSubmit={submit}>
         <div>
-          <label>Nombre:</label>
-          <input name="name" value={data.name} onChange={changeHandler}></input>
-          <span className="err">{error.name}</span>
-          <br></br>
-          <label>Apellido:</label>
-          <input
-            name="lastName"
-            value={data.lastName}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.lastName}</span>
-          <br></br>
-          <label>Cuil:</label>
-          <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
-          <span className="err">{error.cuil}</span>
-          <br></br>
-          <label>Contraseña:</label>
-          <input
-            name="password"
-            value={data.password}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.password}</span>
-          <br></br>
-          <label>Escalafon:</label>
-          <input
-            type="date"
-            name="seniorityDate"
-            value={data.seniorityDate}
-            onChange={changeHandler}
-          ></input>
-          <br></br>
-          <label>Direccion:</label>
-          <input
-            name="address"
-            value={data.address}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.address}</span>
-          <br></br>
-          <label>Numero de telefono:</label>
-          <input
-            name="phoneNumber"
-            value={data.phoneNumber}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.phoneNumber}</span>
-          <br></br>
-          <label>eMail:</label>
-          <input
-            name="emailAddress"
-            value={data.emailAddress}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.emailAddress}</span>
-          <br></br>
-          <label>Genero:</label>
-          <select name="gender" onChange={selectHandler} defaultValue="other">
-            <option value="otro">Sin especificar</option>
-            <option value="fem">Femenino</option>
-            <option value="masc">Masculino</option>
-          </select>
-          <br></br>
-          <label>Rol:</label>
-          <select name="role" onChange={selectHandler} defaultValue="employee">
-            <option value="empleado">Empleado</option>
-            <option value="admin">Admin</option>
-            <option value="gerente">Gerente</option>
-          </select>
-          <br></br>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Nombre:</label>
+            <input name="name" value={data.name} onChange={changeHandler}></input>
+            <span className="err">{error.name}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Apellido:</label>
+            <input
+              name="lastName"
+              value={data.lastName}
+              onChange={changeHandler}
+            ></input>
+            <span className="err">{error.lastName}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Cuil:</label>
+            <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
+            <span className="err">{error.cuil}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Contraseña:</label>
+            <input
+              name="password"
+              value={data.password}
+              onChange={changeHandler}
+            ></input>
+            <span className="err">{error.password}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Escalafon:</label>
+            <input
+              type="date"
+              name="seniorityDate"
+              value={data.seniorityDate}
+              onChange={changeHandler}
+            ></input>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Direccion:</label>
+            <input
+              name="address"
+              value={data.address}
+              onChange={changeHandler}
+            ></input>
+            <span className="err">{error.address}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Numero de telefono:</label>
+            <input
+              name="phoneNumber"
+              value={data.phoneNumber}
+              onChange={changeHandler}
+            ></input>
+            <span className="err">{error.phoneNumber}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">eMail:</label>
+            <input
+              name="emailAddress"
+              value={data.emailAddress}
+              onChange={changeHandler}
+            ></input>
+            <span className="err">{error.emailAddress}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Genero:</label>
+            <select name="gender" onChange={selectHandler} defaultValue="other">
+              <option value="otro">Sin especificar</option>
+              <option value="fem">Femenino</option>
+              <option value="masc">Masculino</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Rol:</label>
+            <select name="role" onChange={selectHandler} defaultValue="employee">
+              <option value="empleado">Empleado</option>
+              <option value="admin">Admin</option>
+              <option value="gerente">Gerente</option>
+            </select>
+          </div>
           <button disabled={disabled} className="barBtn" type="submit">
             Crear Usuario
           </button>
