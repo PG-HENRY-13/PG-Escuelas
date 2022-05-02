@@ -42,25 +42,26 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.post(
-  "/update",
+router.put(
+  "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userUpdate: User = req.body;
+      const userUpdate = req.body;
       //ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
 
-      const existingUser = await User.findByPk(parseInt(userUpdate.cuil));
+      const existingUser = await User.findByPk(userUpdate.cuil);
 
       if (existingUser) {
         await User.update(
           {
-            cuil: userUpdate.cuil,
             name: userUpdate.name,
             lastName: userUpdate.lastName,
             phoneNumber: userUpdate.phoneNumber,
             emailAddress: userUpdate.emailAddress,
             address: userUpdate.address,
-
+            seniorityDate: userUpdate.seniorityDate,
+            gender: userUpdate.gender,
+            role: userUpdate.role
             //AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
           },
           {

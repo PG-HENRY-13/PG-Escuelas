@@ -9,6 +9,9 @@ import {
   CreateUserAction,
   AssignJobToUserAction,
   FetchJobsAction,
+  LoadUserAction,
+  UpdateUserAction,
+  FetchUserAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -22,6 +25,21 @@ export const fetchUsers = () => {
       type: ActionTypes.fetchUsers,
       payload: response.data,
     });
+  };
+};
+
+export const fetchUser = (cuil: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await axios.get<User>(userUrl + "/" + cuil);
+      dispatch<FetchUserAction>({
+        type: ActionTypes.fetchUser,
+        payload: response.data,
+      });
+    } catch (error) {
+      alert("El usuario no existe");
+      // console.log(error);
+    }
   };
 };
 
@@ -66,19 +84,23 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
 ///// JOBS ACTIONS //////
 
 export const assignJobToUser = (userCuil: number, jobID: number) => {
-  return async (dispatch: Dispatch) => {
-    const response = await axios.put<any>(jobUrl, {
-      // CAMBIAR EL ANY!!!!
-      data: {
+  try {
+    console.log("lo que llega al action es user ", userCuil, "job ", jobID);
+    return async (dispatch: Dispatch) => {
+      const response = await axios.put<any>(jobUrl, {
+        // CAMBIAR EL ANY!!!!
         userCuil: userCuil,
         jobID: jobID,
-      },
-    });
-    dispatch<AssignJobToUserAction>({
-      type: ActionTypes.assignJobToUser,
-      payload: response.data,
-    });
-  };
+      });
+      dispatch<AssignJobToUserAction>({
+        type: ActionTypes.assignJobToUser,
+        payload: response.data,
+      });
+      alert("Trabajo asignado correctamente");
+    };
+  } catch (err) {
+    alert("Todo lo que podía salir mal lo ha hecho");
+  }
 };
 
 export const fetchJobs = () => {
@@ -90,4 +112,37 @@ export const fetchJobs = () => {
       payload: response.data,
     });
   };
+};
+
+///////SEGURO DAVID YA LO HIZO PERO ES PA PROBAR
+
+export const loadUser = (userCuil: number) => {
+  console.log("llega el load con userCuil ", userCuil);
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(userUrl + "/" + userCuil, {
+      data: {
+        userCuil: userCuil,
+      },
+    }); ///CAMBIAR EL ANY
+    dispatch<LoadUserAction>({
+      type: ActionTypes.loadUser,
+      payload: response.data,
+    });
+  };
+};
+
+export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
+  axios
+    .put(userUrl, newUser)
+    .then((data) => {
+      alert("Usuario actualizado correctamente");
+      dispatch<UpdateUserAction>({
+        type: ActionTypes.updateUser,
+        payload: data.data,
+      });
+    })
+    .catch((err: any) => {
+      alert("Error al actualizar usuario");
+      console.log("error: ", err);
+    });
 };

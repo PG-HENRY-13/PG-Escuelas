@@ -5,11 +5,21 @@ import {
   CreatedAt,
   UpdatedAt,
   PrimaryKey,
-  DataType,
+  BelongsToMany,
 } from "sequelize-typescript";
+import { User } from "./User";
+import { UsersJobs } from "./UsersJobs";
+
+interface Job1 {
+  id: string;
+  name: string;
+}
 
 @Table
-export class Job extends Model<Job> {
+export class Job extends Model<Job1> {
+  @BelongsToMany(() => User, () => UsersJobs)
+  users?: User[];
+
   @PrimaryKey
   @Column
   id!: string;
@@ -19,9 +29,9 @@ export class Job extends Model<Job> {
 
   @CreatedAt
   @Column
-  createdAt!: Date;
+  createdAt?: Date;
 
   @UpdatedAt
   @Column
-  updatedAt!: Date;
+  updatedAt?: Date;
 }

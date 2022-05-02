@@ -5,8 +5,10 @@ import {
   CreatedAt,
   UpdatedAt,
   PrimaryKey,
-  DataType,
+  BelongsToMany,
 } from "sequelize-typescript";
+import { Job } from "./Job";
+import { UsersJobs } from "./UsersJobs";
 
 enum RoleType {
   Admin = "admin",
@@ -22,6 +24,9 @@ enum GenderType {
 
 @Table
 export class User extends Model<User> {
+  @BelongsToMany(() => Job, () => UsersJobs)
+  jobs!: Job[];
+
   @PrimaryKey
   @Column
   cuil!: string;

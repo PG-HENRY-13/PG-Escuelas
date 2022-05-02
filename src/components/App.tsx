@@ -1,45 +1,48 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { connect } from "react-redux";
-import { deleteUsers, fetchUsers } from "../redux/actions";
-import { StoreState, User } from "../redux/interfaces";
-
-// interface AppProps {
-//   users: User[];
-//   fetchUsers(): any;
-//   deleteUsers(userCUIL: number): any;
-// }
+import { Routes, Route, Navigate } from "react-router-dom";
+import AssignJobs from "./AssignJobs/AssignJobs";
+import LayoutAdmin from "./Layouts";
+import Login from "./Login";
+import NewAccount from "./NewAccount";
+import News from "./News";
+import UpdateUser from "./UpdateUser";
+import UserDetails from "./UserDetails";
+import UserInfo from "./UserInfo";
 
 export default function App(): JSX.Element {
-  const dispatch = useDispatch();
-  const loadedUsers = useSelector((state: any) => {
-    return state.usersState.users;
-  });
-
-  //el any es temporal
   return (
-    <div>
-      <button onClick={(e) => dispatch(fetchUsers() as any)}>
-        FETCH USERS!
-      </button>
-      {loadedUsers.map((user: User) => {
-        return (
-          <div key={user.cuil}>
-            {user.cuil}) {user.name}
-            {/* <button onClick={() => props.deleteUsers(parseInt(user.cuil))}>
-              X
-            </button> */}
-          </div>
-        );
-      })}
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path='/admin' element={<LayoutAdmin/>}>
+        <Route
+          index
+          element={
+            
+            <News/>
+          }
+        />
+        <Route path="createuser" element={
+        <div className="container">
+          <NewAccount />
+          <AssignJobs/>
+
+        </div>
+        } />
+        <Route path="updateuser" element={
+        <div className="container">
+          <UpdateUser />
+          <AssignJobs/>
+
+        </div>
+
+        } />
+        <Route path="userlist" element={
+        <div className='container'>
+          <UserInfo />
+        </div>
+        } />
+      </Route>
+      <Route path="*" element={<Navigate replace to="/" />} />
+    </Routes>
   );
 }
-
-// const mapStateToProps = (state: StoreState): { users: User[] } => {
-//   return {
-//     users: state.users,
-//   };
-// };
-
-// export default connect(mapStateToProps, { fetchUsers, deleteUsers })(App);
