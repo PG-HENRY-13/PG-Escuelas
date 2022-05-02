@@ -9,6 +9,7 @@ import {
 } from "sequelize-typescript";
 import { Job } from "./Job";
 import { UsersJobs } from "./UsersJobs";
+import { User as UserI } from "../../../src/redux/interfaces";
 
 enum RoleType {
   Admin = "admin",
@@ -23,7 +24,7 @@ enum GenderType {
 }
 
 @Table
-export class User extends Model<User> {
+export class User extends Model<UserI> {
   @BelongsToMany(() => Job, () => UsersJobs)
   jobs!: Job[];
 
