@@ -38,6 +38,15 @@ export interface AssignJobToUserAction {
   payload: User;
 }
 
+export interface UpdateUserAction {
+  type: ActionTypes.updateUser;
+  payload: User;
+}
+export interface FetchUserAction {
+  type: ActionTypes.fetchUser;
+  payload: User;
+}
+
 ////// JOB INTERFACES
 export interface JobsStoreState {
   jobs: Job[];
@@ -53,7 +62,7 @@ export interface FetchJobsAction {
   payload: Job[];
 }
 
-export interface FilterUsersAction {
-  type: ActionTypes.filterUsers;
-  payload: User[];
+export interface LoadUserAction {
+  type: ActionTypes.loadUser;
+  payload: User;
 }

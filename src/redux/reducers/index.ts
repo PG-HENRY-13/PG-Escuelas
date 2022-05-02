@@ -7,3 +7,9 @@ export const reducers = combineReducers({
   usersState: usersReducer,
   jobsState: jobsReducer,
 });
+
+/*export interface StoreState {
+  users: User[];
+  user: User;
+}
+*/

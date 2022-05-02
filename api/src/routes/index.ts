@@ -12,5 +12,6 @@ router.use("/job", jobRoutes);
 router.use("/authentify", authentifyRoutes);
 router.use("/role", roleRoutes);
 router.use("/employees", employeesRoutes);
+router.use("/job", jobRoutes);
 
 export default router;

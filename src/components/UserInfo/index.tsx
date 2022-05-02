@@ -1,22 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
-import "../../styles/UserInfo.css";
-import { fetchUsers } from "../../redux/actions";
-import { connect } from "react-redux";
+// import "../../styles/UserInfo.css";
+import { fetchUsers, loadUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-interface UserInfoProps {
-  users: User[];
-  fetchUsers(): any;
-}
+export default function UserInfo(): JSX.Element {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filter = searchParams.get("filter") ?? "";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loadedUsers = useSelector((state: any) => {
+    return state.usersState.users;
+  });
 
-function UserInfo(props: UserInfoProps): JSX.Element {
+  function putUserinState(cuil: number) {
+    dispatch(loadUser(cuil) as any);
+    navigate("/admin/updateuser");
+  }
+  useEffect(() => {
+    dispatch(fetchUsers() as any);
+  }, []);
+
+  const handleFilter = (e: string) => {
+    setSearchParams({ filter: e });
+  };
+
   return (
     <div>
-      <table>
+      <div>
+        <input
+          type="text"
+          value={filter}
+          onChange={(e) => handleFilter(e.target.value)}
+        />
+      </div>
+      <table className="table table-striped table-hover">
         <thead>
           <tr>
             <th data-type="numeric">
               cuil <span className="resize-handle"></span>
+            </th>
+            <th data-type="any">
+              boton <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
               Nombre <span className="resize-handle"></span>
@@ -25,7 +51,7 @@ function UserInfo(props: UserInfoProps): JSX.Element {
               Apellido <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
-              phoneNumber <span className="resize-handle"></span>
+              Teléfono <span className="resize-handle"></span>
             </th>
             <th data-type="text-long">
               Cargo <span className="resize-handle"></span>
@@ -42,32 +68,36 @@ function UserInfo(props: UserInfoProps): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {props.users?.map((e) => {
-            return (
-              <>
-                <tr>
-                  <td>{e.cuil}</td>
-                  <td>{e.name}</td>
-                  <td>{e.lastName}</td>
-                  <td>{e.phoneNumber}</td>
-                  <td>{e.role}</td>
-                  <td>{e.address}</td>
-                  <td>{e.emailAddress}</td>
-                  <td>{e.gender}</td>
-                </tr>
-              </>
-            );
-          })}
+          {loadedUsers
+            .filter((user: User) => {
+              if (!filter) return true;
+              const name = user.name.toLowerCase();
+              return name.includes(filter.toLocaleLowerCase());
+            })
+            .map((e: any) => {
+              return (
+                <>
+                  <tr>
+                    <td>{e.cuil}</td>{" "}
+                    <button
+                      className="w-100"
+                      onClick={() => putUserinState(e.cuil)}
+                    >
+                      Editar
+                    </button>
+                    <td>{e.name}</td>
+                    <td>{e.lastName}</td>
+                    <td>{e.phoneNumber}</td>
+                    <td>{e.role}</td>
+                    <td>{e.address}</td>
+                    <td>{e.emailAddress}</td>
+                    <td>{e.gender}</td>
+                  </tr>
+                </>
+              );
+            })}
         </tbody>
       </table>
     </div>
   );
 }
-
-const mapStateToProps = (state: StoreState): { users: User[] } => {
-  return {
-    users: state.users,
-  };
-};
-
-export default connect(mapStateToProps, { fetchUsers })(UserInfo);
