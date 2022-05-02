@@ -83,7 +83,7 @@ export default function UserInfo(): JSX.Element {
                       className="w-100"
                       onClick={() => putUserinState(e.cuil)}
                     >
-                      Actualizar
+                      Editar
                     </button>
                     <td>{e.name}</td>
                     <td>{e.lastName}</td>
