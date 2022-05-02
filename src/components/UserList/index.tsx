@@ -4,7 +4,6 @@ import { StoreState, User } from "../../redux/interfaces";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Filters from "../Filters";
 
 export default function UserInfo(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,7 +16,7 @@ export default function UserInfo(): JSX.Element {
 
   function putUserinState(cuil: number) {
     dispatch(loadUser(cuil) as any);
-    navigate("/admin/updateuser");
+    navigate("/admin/userlist/" + cuil);
   }
   useEffect(() => {
     dispatch(fetchUsers() as any);
@@ -84,7 +83,7 @@ export default function UserInfo(): JSX.Element {
                       className="w-100"
                       onClick={() => putUserinState(e.cuil)}
                     >
-                      Editar
+                      Detalles
                     </button>
                     <td>{e.name}</td>
                     <td>{e.lastName}</td>
@@ -93,6 +92,7 @@ export default function UserInfo(): JSX.Element {
                     <td>{e.address}</td>
                     <td>{e.emailAddress}</td>
                     <td>{e.gender}</td>
+                    <td>{e.jobs}</td>
                   </tr>
                 </>
               );
