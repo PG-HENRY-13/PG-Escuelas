@@ -2,9 +2,11 @@ import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import validate from "../NewAccount/validate";
 
 export default function UpdateUser(): JSX.Element {
+  let { cuil } = useParams();
   let today = new Date();
   let date =
     today.getFullYear().toString().padStart(4, "0") +
@@ -55,6 +57,11 @@ export default function UpdateUser(): JSX.Element {
       role: "empleado",
       seniorityDate: date,
     });
+    if (cuil) {
+      dispatch(fetchUser(cuil) as any);
+      setDisabled(false);
+    }
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -72,7 +79,7 @@ export default function UpdateUser(): JSX.Element {
   }, [error]);
 
   useEffect(() => {
-    setData(userToUpdate);
+    if (cuil) setData(userToUpdate);
   }, [userToUpdate]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,8 +99,8 @@ export default function UpdateUser(): JSX.Element {
 
   const handlerClickSearch = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (data.cuil) {
-      dispatch(fetchUser(data.cuil) as any);
+    if (cuil) {
+      dispatch(fetchUser(cuil) as any);
       setDisabled(false);
     }
   };

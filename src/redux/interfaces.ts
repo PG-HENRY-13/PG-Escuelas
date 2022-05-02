@@ -55,6 +55,7 @@ export interface FilterRolesAction {
 ////// JOB INTERFACES
 export interface JobsStoreState {
   jobs: Job[];
+  userJobs: Job[];
 }
 
 export interface Job {

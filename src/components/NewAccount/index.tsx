@@ -25,6 +25,7 @@ export default function NewAccount(): JSX.Element {
     gender: "otro",
     role: "empleado",
     seniorityDate: date,
+    jobs: [],
   });
 
   const [error, setError] = React.useState({

@@ -13,7 +13,9 @@ import {
   UpdateUserAction,
   FetchUserAction,
   FetchUserJobs,
+
   FilterRolesAction,
+
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -160,6 +162,7 @@ export const loadUserJobs = (userCuil: string) => {
   };
 };
 
+
 export const filterRoles = (roles: string) => {
   return async (dispatch: Dispatch) => {
     const response = await axios.get<any>(
@@ -176,3 +179,4 @@ export const filterRoles = (roles: string) => {
     });
   };
 };
+
