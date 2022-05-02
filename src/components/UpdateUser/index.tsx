@@ -56,7 +56,7 @@ export default function UpdateUser(): JSX.Element {
       seniorityDate: date,
     });
     return () => {
-      dispatch();
+      // dispatch();
     };
   }, []);
 
