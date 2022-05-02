@@ -31,7 +31,6 @@ export default function UserDetails(): JSX.Element {
     return state.jobsState.userJobs;
   });
 
-  const [disabled, setDisabled] = useState(false);
   const [data, setData] = useState({
     cuil: "",
     name: "",
@@ -45,30 +44,6 @@ export default function UserDetails(): JSX.Element {
     seniorityDate: date,
   });
 
-  const [error, setError] = React.useState({
-    cuil: "Ingrese un Cuil valido",
-    name: "Ingrese un nombre",
-    lastName: "Ingrese un apellido",
-    password: "Al menos 8 caracteres",
-    address: "Ingrese una direccion",
-    phoneNumber: "Ingrese un numero valido",
-    emailAddress: "Ingrese una direccion de correo valida",
-  });
-
-  useEffect(() => {
-    if (
-      error.cuil ||
-      error.name ||
-      error.lastName ||
-      error.password ||
-      error.address ||
-      error.phoneNumber ||
-      error.emailAddress
-    )
-      setDisabled(true);
-    else setDisabled(false);
-  }, [error]);
-
   useEffect(() => {
     setData(userToUpdate);
   }, [userToUpdate]);
@@ -77,124 +52,57 @@ export default function UserDetails(): JSX.Element {
     if (cuil) dispatch(loadUserJobs(cuil) as any);
   }, []);
 
-  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-    setError(validate({ ...data, [e.target.name]: e.target.value }));
-  };
-
-  const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-    setError(validate({ ...data, [e.target.name]: e.target.value }));
-  };
-
-  function submit(e: React.SyntheticEvent) {
-    e.preventDefault();
-    dispatch(userUpdate(data) as any);
-  }
-
-  const handlerClickSearch = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (data.cuil) {
-      dispatch(fetchUser(data.cuil) as any);
-      setDisabled(false);
-    }
-  };
-
   return (
     <div>
       <h1>Datos de {data.name}</h1>
-      <form onSubmit={submit}>
-        <div>
-          <label>Cuil:</label>
-          <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
-          <span className="err">{error.cuil}</span>
-          <br></br>
-          <label>Nombre:</label>
-          <input name="name" value={data.name} onChange={changeHandler}></input>
-          <span className="err">{error.name}</span>
-          <br></br>
-          <label>Apellido:</label>
-          <input
-            name="lastName"
-            value={data.lastName}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.lastName}</span>
-          <br></br>
-          <label>Contraseña:</label>
-          <input
-            name="password"
-            value={data.password}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.password}</span>
-          <br></br>
-          <label>Escalafon:{data.seniorityDate.split("T")[0]}</label>
-          <input
-            type="date"
-            name="seniorityDate"
-            value={data.seniorityDate}
-            onChange={changeHandler}
-          ></input>
-          <br></br>
-          <label>Direccion:</label>
-          <input
-            name="address"
-            value={data.address}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.address}</span>
-          <br></br>
-          <label>Numero de telefono:</label>
-          <input
-            name="phoneNumber"
-            value={data.phoneNumber}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.phoneNumber}</span>
-          <br></br>
-          <label>eMail:</label>
-          <input
-            name="emailAddress"
-            value={data.emailAddress}
-            onChange={changeHandler}
-          ></input>
-          <span className="err">{error.emailAddress}</span>
-          <br></br>
-          <label>Genero: {data.gender}</label>
-          <select
-            name="gender"
-            onChange={selectHandler}
-            defaultValue={data.gender}
-          >
-            <option value={data.gender}>Elegir</option>
-            <option value="otro">Sin especificar</option>
-            <option value="fem">Femenino</option>
-            <option value="masc">Masculino</option>
-          </select>
-          <br></br>
-          <label>Rol: {data.role}</label>
-          <select name="role" onChange={selectHandler} defaultValue={data.role}>
-            <option value={data.role}>Elegir</option>
-            <option value="empleado">Empleado</option>
-            <option value="admin">Admin</option>
-            <option value="gerente">Gerente</option>
-          </select>
-          <br></br>
-          <h5>Trabajos:</h5>
-          {jobsToRender.length ? (
-            jobsToRender.map((job: Job) => {
-              return <h6>{job.name}</h6>;
-            })
-          ) : (
-            <span>Sin trabajos asignados</span>
-          )}
-          <br></br>
-          <Link to={"/admin/updateuser/" + cuil} className="barBtn">
-            Editar Usuario
-          </Link>
-        </div>
-      </form>
+      <div>
+        <label>Cuil: {data.cuil}</label>
+        <br></br>
+        <label>Nombre: {data.name}</label>
+        <br></br>
+        <label>Apellido: {data.lastName}</label>
+        <br></br>
+        <label>Contraseña: {data.password}</label>
+        <br></br>
+        <label>Escalafon:{data.seniorityDate.split("T")[0]}</label>
+        <br></br>
+        <label>Direccion: {data.address}</label>
+        <br></br>
+        <label>Numero de telefono: {data.phoneNumber}</label>
+        <br></br>
+        <label>eMail: {data.emailAddress}</label>
+        <br></br>
+        <label>
+          Genero:{" "}
+          {data.gender === "masc"
+            ? "Masculino"
+            : data.gender === "fem"
+            ? "Femenino"
+            : "Sin especificar"}
+        </label>
+        <br></br>
+        <label>
+          Rol:{" "}
+          {data.role === "empleado"
+            ? "Empleado"
+            : data.role === "admin"
+            ? "Admin"
+            : "Gerente"}
+        </label>
+        <br></br>
+        <h5>Trabajos:</h5>
+        {jobsToRender.length ? (
+          jobsToRender.map((job: Job) => {
+            return <h6>- {job.name}</h6>;
+          })
+        ) : (
+          <span>Sin trabajos asignados</span>
+        )}
+        <br></br>
+        <Link to={"/admin/updateuser/" + cuil} className="barBtn">
+          Editar Usuario
+        </Link>
+      </div>
     </div>
   );
 }
