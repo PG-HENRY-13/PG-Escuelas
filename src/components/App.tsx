@@ -8,7 +8,6 @@ import News from "./News";
 import UpdateUser from "./UpdateUser";
 import UserDetails from "./UserDetails";
 import UserInfo from "./UserInfo";
-import Filters from "./Filters";
 
 export default function App(): JSX.Element {
   return (
@@ -38,7 +37,6 @@ export default function App(): JSX.Element {
           path="userlist"
           element={
             <div className="container">
-              <Filters />
               <UserInfo />
             </div>
           }
