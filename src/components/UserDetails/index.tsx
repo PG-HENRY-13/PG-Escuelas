@@ -5,6 +5,7 @@ import {
   fetchUser,
   userUpdate,
   loadUserJobs,
+  loadUser,
 } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
@@ -50,6 +51,7 @@ export default function UserDetails(): JSX.Element {
 
   useEffect(() => {
     if (cuil) dispatch(loadUserJobs(cuil) as any);
+    if (cuil) dispatch(loadUser(Number(cuil)) as any);
   }, []);
 
   return (
