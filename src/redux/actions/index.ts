@@ -9,6 +9,7 @@ import {
   CreateUserAction,
   AssignJobToUserAction,
   FetchJobsAction,
+  FilterUsersAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -92,16 +93,16 @@ export const fetchJobs = () => {
   };
 };
 
-/* export const filterUsers = (dispatch: Dispatch) => {
-  axios
-    .get("http://localhost:3001/api/role?role=admin")
-    .then((data) => {
-      dispatch<FilterUsersAction>({
-        type: ActionTypes.filterUsers,
-        payload: data.data,
-      });
-    })
-    .catch((err) => {
-      console.log("error: ", err);
+export const filterUsers = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(
+      "http://localhost:3001/api/role?role=admin"
+    );
+    console.log(response.data, "2");
+    dispatch<FilterUsersAction>({
+      type: ActionTypes.filterUsers,
+      payload: response.data,
     });
-}; */
+    console.log("response:", response.data);
+  };
+};

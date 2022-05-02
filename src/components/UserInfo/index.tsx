@@ -2,13 +2,14 @@ import React from "react";
 import { StoreState, User } from "../../redux/interfaces";
 import "../../styles/UserInfo.css";
 import { fetchUsers } from "../../redux/actions";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-export default function UserInfo(): JSX.Element {
-  const dispatch = useDispatch();
-  const loadedUsers = useSelector((state: any) => {
-    return state.usersState.users;
-  });
+interface UserInfoProps {
+  users: User[];
+  fetchUsers(): any;
+}
+
+function UserInfo(props: UserInfoProps): JSX.Element {
   return (
     <div>
       <table>
@@ -41,7 +42,7 @@ export default function UserInfo(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {loadedUsers.map((e: any) => {
+          {props.users?.map((e) => {
             return (
               <>
                 <tr>
@@ -62,3 +63,11 @@ export default function UserInfo(): JSX.Element {
     </div>
   );
 }
+
+const mapStateToProps = (state: StoreState): { users: User[] } => {
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps, { fetchUsers })(UserInfo);

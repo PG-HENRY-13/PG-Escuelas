@@ -32,6 +32,11 @@ export const usersReducer = (
           (user) => parseInt(user.cuil) !== action.payload
         ),
       };
+    case ActionTypes.filterUsers:
+      return {
+        ...state,
+        users: action.payload,
+      };
     default:
       return state;
   }

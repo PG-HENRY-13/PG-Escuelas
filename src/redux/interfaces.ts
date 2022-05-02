@@ -52,3 +52,8 @@ export interface FetchJobsAction {
   type: ActionTypes.fetchJobs;
   payload: Job[];
 }
+
+export interface FilterUsersAction {
+  type: ActionTypes.filterUsers;
+  payload: User[];
+}
