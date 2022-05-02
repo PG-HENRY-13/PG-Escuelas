@@ -39,12 +39,39 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
       dedExcl,
     });
     let returnedUser = await User.findByPk(userCuil, {
-      include: [Job],
+      include: {
+        model: Job,
+        attributes: ["name", "id"],
+        through: {
+          attributes: [],
+        },
+      },
     });
     return res.status(200).send(returnedUser); //Devuelve el usuario junto con el trabajo agregado
   } catch (err) {
     return res.status(404).send(err);
   }
 });
+
+router.get(
+  "/:userCuil",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userCuil = req.params.userCuil;
+      let returnedUser = await User.findByPk(userCuil, {
+        include: {
+          model: Job,
+          attributes: ["name", "id"],
+          through: {
+            attributes: [],
+          },
+        },
+      });
+      return res.status(200).send(returnedUser?.jobs);
+    } catch (err) {
+      res.status(404).send("Error: " + err);
+    }
+  }
+);
 
 export default router;
