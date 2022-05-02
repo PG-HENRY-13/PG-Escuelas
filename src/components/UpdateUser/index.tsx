@@ -42,7 +42,7 @@ export default function UpdateUser(): JSX.Element {
     emailAddress: "Ingrese una direccion de correo valida",
   });
 
-  useEffect (() => {
+  useEffect(() => {
     setData({
       cuil: "",
       name: "",
@@ -55,7 +55,7 @@ export default function UpdateUser(): JSX.Element {
       role: "empleado",
       seniorityDate: date,
     });
-  },[])
+  }, []);
 
   useEffect(() => {
     if (
@@ -181,7 +181,7 @@ export default function UpdateUser(): JSX.Element {
           </select>
           <br></br>
           <button disabled={disabled} className="barBtn" type="submit">
-            Update
+            Guardar Cambios
           </button>
         </div>
       </form>
