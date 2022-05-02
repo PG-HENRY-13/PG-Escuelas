@@ -7,7 +7,7 @@ import NewAccount from "./NewAccount";
 import News from "./News";
 import UpdateUser from "./UpdateUser";
 import UserDetails from "./UserDetails";
-import UserInfo from "./UserInfo";
+import UserInfo from "./UserList";
 
 export default function App(): JSX.Element {
   return (
@@ -37,7 +37,7 @@ export default function App(): JSX.Element {
           path="userlist/:cuil"
           element={
             <div className="container">
-              <UserDetails cuil={params} />
+              <UserDetails />
             </div>
           }
         />

@@ -55,6 +55,9 @@ export default function UpdateUser(): JSX.Element {
       role: "empleado",
       seniorityDate: date,
     });
+    return () => {
+      dispatch();
+    };
   }, []);
 
   useEffect(() => {

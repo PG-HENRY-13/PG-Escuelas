@@ -3,8 +3,11 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function UserDetails(): JSX.Element {
+  const navigate = useNavigate();
+  let { cuil } = useParams();
   let today = new Date();
   let date =
     today.getFullYear().toString().padStart(4, "0") +
@@ -85,13 +88,12 @@ export default function UserDetails(): JSX.Element {
 
   return (
     <div>
-      <h1>Update User</h1>
+      <h1>Datos de {data.name}</h1>
       <form onSubmit={submit}>
         <div>
           <label>Cuil:</label>
           <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
           <span className="err">{error.cuil}</span>
-          <button onClick={handlerClickSearch}>Consultar</button>
           <br></br>
           <label>Nombre:</label>
           <input name="name" value={data.name} onChange={changeHandler}></input>
@@ -165,9 +167,9 @@ export default function UserDetails(): JSX.Element {
             <option value="gerente">Gerente</option>
           </select>
           <br></br>
-          <button disabled={disabled} className="barBtn" type="submit">
-            Update
-          </button>
+          <Link to={"/admin/updateuser"} className="barBtn">
+            Editar Usuario
+          </Link>
         </div>
       </form>
     </div>
