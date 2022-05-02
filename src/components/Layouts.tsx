@@ -1,29 +1,36 @@
 import React from "react";
-import {NavLink, Outlet} from 'react-router-dom'
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function LayoutAdmin(): JSX.Element {
   return (
-  <main>
+    <main>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <NavLink className='nav-link' to='/'>Inicio</NavLink>
+            <NavLink className="nav-link" to="/">
+              Inicio
+            </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className='nav-link' to='/admin/createuser'>Crear Usuario Nuevo</NavLink>
+            <NavLink className="nav-link" to="/admin/createuser">
+              Crear Usuario Nuevo
+            </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className='nav-link' to='/admin/updateuser'>Actualizar usuario</NavLink>
+            <NavLink className="nav-link" to="/admin/updateuser">
+              Editar usuario
+            </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className='nav-link' to='/admin/userlist'>Ver lista de usuarios</NavLink>
+            <NavLink className="nav-link" to="/admin/userlist">
+              Ver lista de usuarios
+            </NavLink>
           </li>
         </ul>
       </nav>
       <section>
-          <Outlet/>
+        <Outlet />
       </section>
-  </main>
-  )
-  ;
+    </main>
+  );
 }
