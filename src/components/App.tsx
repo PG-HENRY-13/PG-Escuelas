@@ -25,6 +25,15 @@ export default function App(): JSX.Element {
           }
         />
         <Route
+          path="updateuser/:cuil"
+          element={
+            <div className="container">
+              <UpdateUser />
+              <AssignJobs />
+            </div>
+          }
+        />
+        <Route
           path="updateuser"
           element={
             <div className="container">
@@ -50,7 +59,7 @@ export default function App(): JSX.Element {
           }
         />
       </Route>
-      <Route path="*" element={<Navigate replace to="/" />} />
+      <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );
 }
