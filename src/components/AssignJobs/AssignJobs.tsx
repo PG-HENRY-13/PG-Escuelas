@@ -47,7 +47,7 @@ export default function AssignJobs(): JSX.Element {
           dispatch(assignJobToUser(loadedUser.cuil, input.jobId) as any);
         }}
       >
-        Assignar Cargo
+        Asignar Cargo
       </button>
     </div>
   );
