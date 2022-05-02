@@ -51,7 +51,7 @@ sequelize
       {
         cuil: "1234567891234",
         name: "Pruebita",
-        lastName: "Pruebón",
+        lastName: "Pruebon",
         password: "unacontrase",
         address: "sí tiene 8",
         phoneNumber: "01113131313",
