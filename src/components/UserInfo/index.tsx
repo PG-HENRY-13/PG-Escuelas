@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function UserInfo(): JSX.Element {
-  const [searchParams,setSearchParams] = useSearchParams();
-  const filter = searchParams.get('filter') ?? '';
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filter = searchParams.get("filter") ?? "";
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loadedUsers = useSelector((state: any) => {
@@ -16,20 +16,24 @@ export default function UserInfo(): JSX.Element {
 
   function putUserinState(cuil: number) {
     dispatch(loadUser(cuil) as any);
-    navigate('/admin/updateuser')
+    navigate("/admin/updateuser");
   }
   useEffect(() => {
     dispatch(fetchUsers() as any);
   }, []);
 
   const handleFilter = (e: string) => {
-    setSearchParams({filter: e});
-  }
+    setSearchParams({ filter: e });
+  };
 
   return (
     <div>
       <div>
-        <input type="text" value={filter} onChange={(e)=> handleFilter(e.target.value)} />
+        <input
+          type="text"
+          value={filter}
+          onChange={(e) => handleFilter(e.target.value)}
+        />
       </div>
       <table className="table table-striped table-hover">
         <thead>
@@ -47,7 +51,7 @@ export default function UserInfo(): JSX.Element {
               Apellido <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
-              phoneNumber <span className="resize-handle"></span>
+              Teléfono <span className="resize-handle"></span>
             </th>
             <th data-type="text-long">
               Cargo <span className="resize-handle"></span>
@@ -64,34 +68,34 @@ export default function UserInfo(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {loadedUsers.filter(
-            ((user: User) => {
+          {loadedUsers
+            .filter((user: User) => {
               if (!filter) return true;
               const name = user.name.toLowerCase();
               return name.includes(filter.toLocaleLowerCase());
             })
-          ).map((e: any) => {
-            return (
-              <>
-                <tr>
-                  <td>{e.cuil}</td>{" "}
-                  <button
-                    className="w-100"
-                    onClick={() => putUserinState(e.cuil)}
-                  >
-                    Actualizar
-                  </button>
-                  <td>{e.name}</td>
-                  <td>{e.lastName}</td>
-                  <td>{e.phoneNumber}</td>
-                  <td>{e.role}</td>
-                  <td>{e.address}</td>
-                  <td>{e.emailAddress}</td>
-                  <td>{e.gender}</td>
-                </tr>
-              </>
-            );
-          })}
+            .map((e: any) => {
+              return (
+                <>
+                  <tr>
+                    <td>{e.cuil}</td>{" "}
+                    <button
+                      className="w-100"
+                      onClick={() => putUserinState(e.cuil)}
+                    >
+                      Actualizar
+                    </button>
+                    <td>{e.name}</td>
+                    <td>{e.lastName}</td>
+                    <td>{e.phoneNumber}</td>
+                    <td>{e.role}</td>
+                    <td>{e.address}</td>
+                    <td>{e.emailAddress}</td>
+                    <td>{e.gender}</td>
+                  </tr>
+                </>
+              );
+            })}
         </tbody>
       </table>
     </div>
