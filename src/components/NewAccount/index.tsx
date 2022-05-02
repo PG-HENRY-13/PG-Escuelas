@@ -141,7 +141,7 @@ export default function NewAccount(): JSX.Element {
           </select>
           <br></br>
           <button disabled={disabled} className="barBtn" type="submit">
-            Create
+            Crear Usuario
           </button>
         </div>
       </form>
