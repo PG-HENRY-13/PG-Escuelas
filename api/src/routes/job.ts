@@ -1,5 +1,4 @@
 import { Response, Request, Router, NextFunction, raw } from "express";
-import { json } from "stream/consumers";
 import { Job } from "../models/Job";
 import { User } from "../models/User";
 import { UsersJobs } from "../models/UsersJobs";
@@ -18,7 +17,6 @@ router.post("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.put("/", async (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body);
   try {
     let { userCuil, jobID, funcJer, basico, antig, zona, addRem, dedExcl } =
       req.body;

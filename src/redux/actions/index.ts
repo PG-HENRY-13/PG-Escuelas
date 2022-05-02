@@ -31,15 +31,14 @@ export const fetchUsers = () => {
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get<User>(userUrl + '/' + cuil);
+      const response = await axios.get<User>(userUrl + "/" + cuil);
       dispatch<FetchUserAction>({
         type: ActionTypes.fetchUser,
         payload: response.data,
       });
     } catch (error) {
-      alert('El usuario no existe');
+      alert("El usuario no existe");
       // console.log(error);
-
     }
   };
 };
@@ -130,7 +129,7 @@ export const loadUser = (userCuil: number) => {
       payload: response.data,
     });
   };
-} 
+};
 
 export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
   axios
