@@ -11,7 +11,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 export default function FilterUser(): JSX.Element {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const role = searchParams.get("role") ?? "";
 
   const handleFilter = (e: string) => {
     setSearchParams({ role: e });
