@@ -57,24 +57,36 @@ export default function UserDetails(): JSX.Element {
   return (
     <div>
       <h1>Datos de {data.name}</h1>
-      <div className='container'>
-        <label className='col-sm-2 control-label'>Cuil: {data.cuil}</label>
+      <div className="container">
+        <label className="col-sm-2 control-label">Cuil: {data.cuil}</label>
         <br></br>
-        <label className='col-sm-2 control-label'>Nombre: {data.name}</label>
+        <label className="col-sm-2 control-label">Nombre: {data.name}</label>
         <br></br>
-        <label className='col-sm-2 control-label'>Apellido: {data.lastName}</label>
+        <label className="col-sm-2 control-label">
+          Apellido: {data.lastName}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Contraseña: {data.password}</label>
+        <label className="col-sm-2 control-label">
+          Contraseña: {data.password}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Escalafon:{data.seniorityDate.split("T")[0]}</label>
+        <label className="col-sm-2 control-label">
+          Escalafon:{data.seniorityDate.split("T")[0]}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Direccion: {data.address}</label>
+        <label className="col-sm-2 control-label">
+          Direccion: {data.address}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Numero de telefono: {data.phoneNumber}</label>
+        <label className="col-sm-2 control-label">
+          Numero de telefono: {data.phoneNumber}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>eMail: {data.emailAddress}</label>
+        <label className="col-sm-2 control-label">
+          eMail: {data.emailAddress}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>
+        <label className="col-sm-2 control-label">
           Genero:{" "}
           {data.gender === "masc"
             ? "Masculino"
@@ -83,7 +95,7 @@ export default function UserDetails(): JSX.Element {
             : "Sin especificar"}
         </label>
         <br></br>
-        <label className='col-sm-2 control-label'>
+        <label className="col-sm-2 control-label">
           Rol:{" "}
           {data.role === "empleado"
             ? "Empleado"
