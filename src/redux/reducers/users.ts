@@ -50,6 +50,11 @@ export const usersReducer = (
         ...state,
         user: action.payload,
       };
+    case ActionTypes.filterRoles:
+      return {
+        ...state,
+        users: action.payload,
+      };
 
     default:
       return state;
