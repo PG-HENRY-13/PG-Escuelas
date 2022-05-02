@@ -167,7 +167,7 @@ export default function UserDetails(): JSX.Element {
             <option value="gerente">Gerente</option>
           </select>
           <br></br>
-          <Link to={"/admin/updateuser"} className="barBtn">
+          <Link to={"/admin/updateuser/" + cuil} className="barBtn">
             Editar Usuario
           </Link>
         </div>
