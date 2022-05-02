@@ -67,6 +67,11 @@ export interface FetchJobsAction {
   payload: Job[];
 }
 
+export interface FetchUserJobs {
+  type: ActionTypes.fetchUserJobs;
+  payload: Job[];
+}
+
 export interface LoadUserAction {
   type: ActionTypes.loadUser;
   payload: User;
