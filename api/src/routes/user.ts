@@ -1,6 +1,7 @@
 import { Response, Request, Router, NextFunction } from "express";
 import { json } from "stream/consumers";
 import { User } from "../models/User";
+import { Job } from "../models/Job";
 const router = Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
@@ -54,43 +55,40 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.put(
-  "/",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userUpdate = req.body;
-      //ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
+router.put("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userUpdate = req.body;
+    //ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
 
-      const existingUser = await User.findByPk(userUpdate.cuil);
+    const existingUser = await User.findByPk(userUpdate.cuil);
 
-      if (existingUser) {
-        await User.update(
-          {
-            name: userUpdate.name,
-            lastName: userUpdate.lastName,
-            phoneNumber: userUpdate.phoneNumber,
-            emailAddress: userUpdate.emailAddress,
-            address: userUpdate.address,
-            seniorityDate: userUpdate.seniorityDate,
-            gender: userUpdate.gender,
-            role: userUpdate.role
-            //AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
+    if (existingUser) {
+      await User.update(
+        {
+          name: userUpdate.name,
+          lastName: userUpdate.lastName,
+          phoneNumber: userUpdate.phoneNumber,
+          emailAddress: userUpdate.emailAddress,
+          address: userUpdate.address,
+          seniorityDate: userUpdate.seniorityDate,
+          gender: userUpdate.gender,
+          role: userUpdate.role,
+          //AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
+        },
+        {
+          where: {
+            cuil: userUpdate.cuil,
           },
-          {
-            where: {
-              cuil: userUpdate.cuil,
-            },
-          }
-        );
+        }
+      );
 
-        return res.status(200).json(userUpdate);
-      } else {
-        res.status(400).send("User not found");
-      }
-    } catch (e) {
-      res.status(400).send("ERROR" + e);
+      return res.status(200).json(userUpdate);
+    } else {
+      res.status(400).send("User not found");
     }
+  } catch (e) {
+    res.status(400).send("ERROR" + e);
   }
-);
+});
 
 export default router;

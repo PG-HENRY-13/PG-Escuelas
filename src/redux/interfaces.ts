@@ -50,6 +50,7 @@ export interface FetchUserAction {
 ////// JOB INTERFACES
 export interface JobsStoreState {
   jobs: Job[];
+  userJobs: Job[];
 }
 
 export interface Job {
@@ -62,8 +63,12 @@ export interface FetchJobsAction {
   payload: Job[];
 }
 
+export interface FetchUserJobs {
+  type: ActionTypes.fetchUserJobs;
+  payload: Job[];
+}
+
 export interface LoadUserAction {
   type: ActionTypes.loadUser;
   payload: User;
 }
-
