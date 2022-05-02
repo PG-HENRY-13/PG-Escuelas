@@ -57,6 +57,17 @@ export default function UpdateUser(): JSX.Element {
       role: "empleado",
       seniorityDate: date,
     });
+    setError(
+      {
+        cuil: "",
+        name: "",
+        lastName: "",
+        password: "",
+        address: "",
+        phoneNumber: "",
+        emailAddress: "",
+      }
+    );
     if (cuil) {
       dispatch(fetchUser(cuil) as any);
       setDisabled(false);
