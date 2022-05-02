@@ -36,7 +36,7 @@ app.use((err: error, req: Request, res: Response, next: NextFunction) => {
 app.use("/api", routes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("hola typescript!");
+  res.send("PG ESCUELAS!");
 });
 
 export default app;
