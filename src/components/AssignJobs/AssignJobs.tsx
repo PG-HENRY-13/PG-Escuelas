@@ -36,12 +36,16 @@ export default function AssignJobs(): JSX.Element {
 
   return (
     <div>
-      <p>Asignando cargos a {loadedUser.name}</p>
-      <select onChange={changeHandler} name="jobId" id="job">
-        {jobs.map((job: Job) => {
-          return <option value={job.id}>{job.name}</option>;
-        })}
-      </select>
+      <div className="form-group">
+        <br />
+        <label className='col-sm-2 control-label'>Asignando cargos a {loadedUser.name}</label>
+        <select onChange={changeHandler} name="jobId" id="job">
+          {jobs.map((job: Job) => {
+            return <option value={job.id}>{job.name}</option>;
+          })}
+        </select>
+      </div>
+      <br />
       <button
         onClick={(e) => {
           dispatch(assignJobToUser(loadedUser.cuil, input.jobId) as any);
