@@ -71,8 +71,15 @@ export default function UserInfo(): JSX.Element {
           {loadedUsers
             .filter((user: User) => {
               if (!filter) return true;
-              const name = user.name.toLowerCase();
-              return name.includes(filter.toLocaleLowerCase());
+              const Fullname =
+                user.name.toLowerCase() + " " + user.lastName.toLowerCase();
+              const ReverseFullname =
+                user.lastName.toLowerCase() + " " + user.name.toLowerCase();
+              return Fullname.includes(filter.toLocaleLowerCase())
+                ? user
+                : ReverseFullname.includes(filter.toLocaleLowerCase())
+                ? user
+                : false;
             })
             .map((e: any) => {
               return (
