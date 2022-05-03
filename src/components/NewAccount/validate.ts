@@ -10,18 +10,18 @@ export default function validate(input: User) {
     )
       error.cuil = "Ingrese un Cuil valido";
   }
+  var namePattern = /^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$/;
   if (input.hasOwnProperty("name")) {
-    let algo = /^[A-Za-z]+$/;
-    if (!/^[A-Za-z]+$/.test(input.name)) error.name = "Ingrese un nombre";
+    if (!namePattern.test(input.name)) error.name = "Ingrese un nombre válido";
   }
   if (input.hasOwnProperty("lastName")) {
-    if (!/^[A-Za-z]+$/.test(input.lastName))
-      error.lastName = "Ingrese un apellido";
+    if (!namePattern.test(input.lastName))
+      error.lastName = "Ingrese un apellido válido";
   }
   if (input.hasOwnProperty("password")) {
-    if (input.password.length < 8)
+    if (input.password.length < 5)
       error.password = "Contraseña demasiado corta";
-    else if (input.password.length > 12)
+    else if (input.password.length > 15)
       error.password = "Contraseña demasiado larga";
   }
   if (input.hasOwnProperty("address")) {
@@ -33,7 +33,7 @@ export default function validate(input: User) {
         input.phoneNumber
       )
     )
-      error.phoneNumber = "Ingrese un numero valido";
+      error.phoneNumber = "Ingrese un número valido";
   }
   if (input.hasOwnProperty("emailAddress")) {
     if (
@@ -41,7 +41,7 @@ export default function validate(input: User) {
         input.emailAddress
       )
     )
-      error.emailAddress = "Ingrese una direccion de correo valida";
+      error.emailAddress = "Ingrese una dirección de correo válida";
   }
   return error;
 }
