@@ -3,6 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { deleteUsers, fetchUsers, createUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "./validate";
+import "../../styles/NewAccount.css";
 
 export default function NewAccount(): JSX.Element {
   let today = new Date();
@@ -48,9 +49,27 @@ export default function NewAccount(): JSX.Element {
       error.phoneNumber ||
       error.emailAddress
     )
+    
       setDisabled(true);
     else setDisabled(false);
   }, [error]);
+
+
+  useEffect(() => {
+    
+    setError({
+      cuil: "",
+      name: "",
+      lastName: "",
+      password: "",
+      address: "",
+      phoneNumber: "",
+      emailAddress: "",
+    });
+    
+    return () => {};
+  }, []);
+
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -67,18 +86,28 @@ export default function NewAccount(): JSX.Element {
   }
 
   return (
-    <div className='container'>
-      <h1>Crear Nuevo Usuario</h1>
+    <div className="usersform-container">
+      <div className="na-title">
+        <h1>Crear Nuevo Usuario</h1>
+      </div>
       <form onSubmit={submit}>
-        <div>
+        <div className="form-container">
           <div className="form-group">
             <label className="col-sm-2 control-label">Nombre:</label>
-            <input name="name" value={data.name} onChange={changeHandler}></input>
+            <input
+              className="form-control"
+              name="name"
+              value={data.name}
+              onChange={changeHandler}
+            ></input>
+
             <span className="err">{error.name}</span>
           </div>
+
           <div className="form-group">
             <label className="col-sm-2 control-label">Apellido:</label>
             <input
+              className="form-control"
               name="lastName"
               value={data.lastName}
               onChange={changeHandler}
@@ -87,12 +116,18 @@ export default function NewAccount(): JSX.Element {
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Cuil:</label>
-            <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
+            <input
+              className="form-control"
+              name="cuil"
+              value={data.cuil}
+              onChange={changeHandler}
+            ></input>
             <span className="err">{error.cuil}</span>
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Contraseña:</label>
             <input
+              className="form-control"
               name="password"
               value={data.password}
               onChange={changeHandler}
@@ -102,6 +137,7 @@ export default function NewAccount(): JSX.Element {
           <div className="form-group">
             <label className="col-sm-2 control-label">Escalafon:</label>
             <input
+              className="form-control"
               type="date"
               name="seniorityDate"
               value={data.seniorityDate}
@@ -111,6 +147,7 @@ export default function NewAccount(): JSX.Element {
           <div className="form-group">
             <label className="col-sm-2 control-label">Direccion:</label>
             <input
+              className="form-control"
               name="address"
               value={data.address}
               onChange={changeHandler}
@@ -118,8 +155,9 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.address}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">Numero de telefono:</label>
+            <label className="col-sm-2 control-label">teléfono:</label>
             <input
+              className="form-control"
               name="phoneNumber"
               value={data.phoneNumber}
               onChange={changeHandler}
@@ -127,8 +165,9 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.phoneNumber}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">eMail:</label>
+            <label className="col-sm-3 control-label">eMail:</label>
             <input
+              className="form-control"
               name="emailAddress"
               value={data.emailAddress}
               onChange={changeHandler}
@@ -136,8 +175,13 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.emailAddress}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">Genero:</label>
-            <select name="gender" onChange={selectHandler} defaultValue="other">
+            <label className="col-sm-2 control-label">Género:</label>
+            <select
+              className="form-select"
+              name="gender"
+              onChange={selectHandler}
+              defaultValue="other"
+            >
               <option value="otro">Sin especificar</option>
               <option value="fem">Femenino</option>
               <option value="masc">Masculino</option>
@@ -145,13 +189,20 @@ export default function NewAccount(): JSX.Element {
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Rol:</label>
-            <select name="role" onChange={selectHandler} defaultValue="employee">
+            <select
+              className="form-select"
+              name="role"
+              onChange={selectHandler}
+              defaultValue="employee"
+            >
               <option value="empleado">Empleado</option>
               <option value="admin">Admin</option>
               <option value="gerente">Gerente</option>
             </select>
           </div>
-          <button disabled={disabled} className="barBtn" type="submit">
+        </div>
+        <div className="form-button-container">
+          <button disabled={disabled} className="button" type="submit">
             Crear Usuario
           </button>
         </div>

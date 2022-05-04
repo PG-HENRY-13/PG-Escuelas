@@ -1,0 +1,25 @@
+.navbar-expand-lg {
+  background-color: var(--main-nav-color);
+}
+
+.nav-link {
+  margin-left: 30px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: white;
+  text-decoration: none;
+  transform: scale(1.04);
+}
+
+.nav-link:focus {
+  color: rgb(148, 148, 148);
+  text-decoration: none;
+  transform: scale(1.04);
+}
+
+:root {
+  --main-nav-color: #212121;
+}
