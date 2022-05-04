@@ -58,6 +58,7 @@ export default function UserDetails(): JSX.Element {
     <div className="user-detail-container">
       <div className="na-title">
       <h1>Datos de {data.name}</h1>
+
       </div>
       <div className='user-detail-inside'>
         <div className="labels-container">
@@ -78,6 +79,7 @@ export default function UserDetails(): JSX.Element {
         <label className='detail-label'>eMail: {data.emailAddress}</label>
         <br></br>
         <label className='detail-label'>
+
           Genero:{" "}
           {data.gender === "masc"
             ? "Masculino"
@@ -86,7 +88,7 @@ export default function UserDetails(): JSX.Element {
             : "Sin especificar"}
         </label>
         <br></br>
-        <label className='col-sm-2 control-label'>
+        <label className="col-sm-2 control-label">
           Rol:{" "}
           {data.role === "empleado"
             ? "Empleado"
