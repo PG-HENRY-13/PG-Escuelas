@@ -1,28 +1,32 @@
-import { User } from "../../redux/interfaces";
+import { User, UserForm } from "../../redux/interfaces";
 
-export default function validate(input: User) {
+export default function validate(input: UserForm) {
   let error: any = {};
   if (input.hasOwnProperty("cuil")) {
     if (
       !/^\d+$/.test(input.cuil) ||
-      input.cuil.length > 12 ||
+      input.cuil.length > 11 ||
       input.cuil.length < 10
     )
       error.cuil = "Ingrese un Cuil valido";
   }
-  var namePattern = /^([A-Z]{1}[a-zñáéíóú]+[\s]*)+$/;
   if (input.hasOwnProperty("name")) {
-    if (!namePattern.test(input.name)) error.name = "Ingrese un nombre válido";
+    let algo = /^[A-Za-z]+$/;
+    if (!/^[A-Za-z]+$/.test(input.name)) error.name = "Ingrese un nombre";
   }
   if (input.hasOwnProperty("lastName")) {
-    if (!namePattern.test(input.lastName))
-      error.lastName = "Ingrese un apellido válido";
+    if (!/^[A-Za-z]+$/.test(input.lastName))
+      error.lastName = "Ingrese un apellido";
   }
   if (input.hasOwnProperty("password")) {
-    if (input.password.length < 5)
+    if (input.password.length < 8)
       error.password = "Contraseña demasiado corta";
-    else if (input.password.length > 15)
+    else if (input.password.length > 12)
       error.password = "Contraseña demasiado larga";
+  }
+  if (input.hasOwnProperty("password2")) {
+    if (input.password !== input.password2)
+      error.password2 = "Las contraseñas deben coincidir";
   }
   if (input.hasOwnProperty("address")) {
     if (!input.address.length) error.address = "Ingrese una direccion valida";
@@ -33,7 +37,7 @@ export default function validate(input: User) {
         input.phoneNumber
       )
     )
-      error.phoneNumber = "Ingrese un número valido";
+      error.phoneNumber = "Ingrese un numero valido";
   }
   if (input.hasOwnProperty("emailAddress")) {
     if (
@@ -41,7 +45,7 @@ export default function validate(input: User) {
         input.emailAddress
       )
     )
-      error.emailAddress = "Ingrese una dirección de correo válida";
+      error.emailAddress = "Ingrese una direccion de correo valida";
   }
   return error;
 }
