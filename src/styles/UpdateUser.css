@@ -1,0 +1,9 @@
+.button-consult {
+  background-color: var(--main-button-color);
+  border: 0;
+  border-radius: 20px;
+  color: white;
+  width: 100%;
+  padding: 5px;
+  margin-top: 30px;
+}

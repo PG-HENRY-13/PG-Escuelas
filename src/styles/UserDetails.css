@@ -1,0 +1,21 @@
+.user-detail-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.user-detail-inside {
+  display: grid;
+  grid-auto-columns: max-content;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0px;
+  grid-auto-rows: minmax(50px, auto);
+  background-color: rgb(204, 204, 204);
+}
+
+.labels-container {
+  grid-row: span 4;
+  grid-column: span 2;
+  margin: 30px 50px 5px 50px;
+  justify-content: center;
+}
