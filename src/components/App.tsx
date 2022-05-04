@@ -7,7 +7,7 @@ import NewAccount from "./NewAccount";
 import News from "./News";
 import UpdateUser from "./UpdateUser";
 import UserDetails from "./UserDetails";
-import UserInfo from "./UserList";
+import UserList from "./UserList";
 
 export default function App(): JSX.Element {
   return (
@@ -43,7 +43,7 @@ export default function App(): JSX.Element {
           path="userlist"
           element={
             <div className="container">
-              <UserInfo />
+              <UserList />
             </div>
           }
         />

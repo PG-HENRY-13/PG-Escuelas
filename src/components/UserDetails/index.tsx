@@ -49,7 +49,7 @@ export default function UserDetails(): JSX.Element {
           </label>
           <br></br>
           <label className="detail-label">
-            Numero de telefono: {userToUpdate.phoneNumber}
+            Número de telefono: {userToUpdate.phoneNumber}
           </label>
           <br></br>
           <label className="detail-label">

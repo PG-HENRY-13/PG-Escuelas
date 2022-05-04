@@ -14,6 +14,7 @@ import {
   FetchUserAction,
   FetchUserJobs,
   FilterRolesAction,
+  UserForm,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -62,7 +63,7 @@ export const deleteUsers = (userID: number) => {
   }
 };
 
-export const createUser = (newUser: User) => (dispatch: Dispatch) => {
+export const createUser = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {

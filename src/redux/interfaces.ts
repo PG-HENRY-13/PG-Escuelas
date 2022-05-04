@@ -22,6 +22,20 @@ export interface JobAssing {
   name: string;
 }
 
+export interface UserForm {
+  cuil: string;
+  name: string;
+  lastName: string;
+  password: string;
+  password2: string;
+  address: string;
+  phoneNumber: string;
+  emailAddress: string;
+  seniorityDate: string;
+  gender: string;
+  role: string;
+}
+
 export interface FetchUsersAction {
   type: ActionTypes.fetchUsers;
   payload: User[];
