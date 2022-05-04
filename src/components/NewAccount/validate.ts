@@ -19,9 +19,9 @@ export default function validate(input: UserForm) {
       error.lastName = "Ingrese un apellido";
   }
   if (input.hasOwnProperty("password")) {
-    if (input.password.length < 8)
+    if (input.password.length < 5)
       error.password = "Contraseña demasiado corta";
-    else if (input.password.length > 12)
+    else if (input.password.length > 15)
       error.password = "Contraseña demasiado larga";
   }
   if (input.hasOwnProperty("password2")) {
