@@ -12,20 +12,16 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
         JobId,
       },
     });
-    res.send(usersFilter);
+    const cuils = usersFilter.map((e) => e.UserCuil);
+    const users = await User.findAll({
+      where: { cuil: cuils } as any,
+    });
+    res.json(users);
   } else {
     console.log("2");
-    const usersJob = await UsersJobs.findAll();
-    res.send(usersJob);
-  }
-});
-/*  const users = await User.findAll({
-        where: {
-    };
-    where
-
+    const users = await User.findAll();
     res.send(users);
   }
-}); */
+});
 
 export default router;
