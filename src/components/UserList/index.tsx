@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
-import "../../styles/UserInfo.css";
+import "../../styles/UserList.css";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function UserInfo(): JSX.Element {
+export default function UserList(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get("filter") ?? "";
   const navigate = useNavigate();
