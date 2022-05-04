@@ -13,9 +13,8 @@ import {
   UpdateUserAction,
   FetchUserAction,
   FetchUserJobs,
-
   FilterRolesAction,
-
+  UserForm,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -69,7 +68,7 @@ export const deleteUsers = (userID: number) => {
   }
 };
 
-export const createUser = (newUser: User) => (dispatch: Dispatch) => {
+export const createUser = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {
@@ -162,7 +161,6 @@ export const loadUserJobs = (userCuil: string) => {
   };
 };
 
-
 export const filterRoles = (roles: string) => {
   return async (dispatch: Dispatch) => {
     const response = await axios.get<any>(
@@ -179,4 +177,3 @@ export const filterRoles = (roles: string) => {
     });
   };
 };
-
