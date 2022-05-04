@@ -20,6 +20,7 @@ export default function NewAccount(): JSX.Element {
     name: "",
     lastName: "",
     password: "",
+    password2: "",
     address: "",
     phoneNumber: "",
     emailAddress: "",
@@ -34,6 +35,7 @@ export default function NewAccount(): JSX.Element {
     name: "Ingrese un nombre",
     lastName: "Ingrese un apellido",
     password: "Al menos 8 caracteres",
+    password2: "Las contraseñas deben coincidir",
     address: "Ingrese una direccion",
     phoneNumber: "Ingrese un numero valido",
     emailAddress: "Ingrese una direccion de correo valida",
@@ -45,31 +47,29 @@ export default function NewAccount(): JSX.Element {
       error.name ||
       error.lastName ||
       error.password ||
+      error.password2 ||
       error.address ||
       error.phoneNumber ||
       error.emailAddress
     )
-    
       setDisabled(true);
     else setDisabled(false);
   }, [error]);
 
-
   useEffect(() => {
-    
     setError({
       cuil: "",
       name: "",
       lastName: "",
       password: "",
+      password2: "",
       address: "",
       phoneNumber: "",
       emailAddress: "",
     });
-    
+
     return () => {};
   }, []);
-
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -128,6 +128,7 @@ export default function NewAccount(): JSX.Element {
             <label className="col-sm-2 control-label">Contraseña:</label>
             <input
               className="form-control"
+              type="password"
               name="password"
               value={data.password}
               onChange={changeHandler}
@@ -135,7 +136,22 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.password}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">Escalafon:</label>
+            <label className="col-sm-2 control-label">
+              Repita la contraseña:
+            </label>
+            <input
+              className="form-control"
+              type="password"
+              name="password2"
+              value={data.password2}
+              onChange={changeHandler}
+            ></input>
+            <span className="err">{error.password2}</span>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              Fecha de Escalafón:
+            </label>
             <input
               className="form-control"
               type="date"
@@ -155,7 +171,7 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.address}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">teléfono:</label>
+            <label className="col-sm-2 control-label">Teléfono:</label>
             <input
               className="form-control"
               name="phoneNumber"
@@ -165,7 +181,7 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.phoneNumber}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-3 control-label">eMail:</label>
+            <label className="col-sm-3 control-label">E-mail:</label>
             <input
               className="form-control"
               name="emailAddress"
