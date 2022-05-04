@@ -79,7 +79,7 @@ export default function UpdateUser(): JSX.Element {
   }, [error]);
 
   useEffect(() => {
-    if (cuil) setData(userToUpdate);
+    if (cuil || data.cuil) setData(userToUpdate);
   }, [userToUpdate]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,30 +99,36 @@ export default function UpdateUser(): JSX.Element {
 
   const handlerClickSearch = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (cuil) {
-      dispatch(fetchUser(cuil) as any);
-      setDisabled(false);
-    }
+    dispatch(fetchUser(data.cuil) as any);
+    setDisabled(false);
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       <h1>Editar Usuario</h1>
       <form onSubmit={submit}>
         <div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Cuil:</label>
-            <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Cuil:</label>
+            <input
+              name="cuil"
+              value={data.cuil}
+              onChange={changeHandler}
+            ></input>
             <button onClick={handlerClickSearch}>Consultar</button>
             <span className="err">{error.cuil}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Nombre:</label>
-            <input name="name" value={data.name} onChange={changeHandler}></input>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Nombre:</label>
+            <input
+              name="name"
+              value={data.name}
+              onChange={changeHandler}
+            ></input>
             <span className="err">{error.name}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Apellido:</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Apellido:</label>
             <input
               name="lastName"
               value={data.lastName}
@@ -130,8 +136,8 @@ export default function UpdateUser(): JSX.Element {
             ></input>
             <span className="err">{error.lastName}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Contraseña:</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Contraseña:</label>
             <input
               name="password"
               value={data.password}
@@ -139,8 +145,10 @@ export default function UpdateUser(): JSX.Element {
             ></input>
             <span className="err">{error.password}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Escalafon:{data.seniorityDate.split("T")[0]}</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              Escalafon:{data.seniorityDate.split("T")[0]}
+            </label>
             <input
               type="date"
               name="seniorityDate"
@@ -148,8 +156,8 @@ export default function UpdateUser(): JSX.Element {
               onChange={changeHandler}
             ></input>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Direccion:</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Direccion:</label>
             <input
               name="address"
               value={data.address}
@@ -157,8 +165,10 @@ export default function UpdateUser(): JSX.Element {
             ></input>
             <span className="err">{error.address}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Numero de telefono:</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              Numero de telefono:
+            </label>
             <input
               name="phoneNumber"
               value={data.phoneNumber}
@@ -166,8 +176,8 @@ export default function UpdateUser(): JSX.Element {
             ></input>
             <span className="err">{error.phoneNumber}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>eMail:</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">eMail:</label>
             <input
               name="emailAddress"
               value={data.emailAddress}
@@ -175,8 +185,10 @@ export default function UpdateUser(): JSX.Element {
             ></input>
             <span className="err">{error.emailAddress}</span>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Genero: {data.gender}</label>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              Genero: {data.gender}
+            </label>
             <select
               name="gender"
               onChange={selectHandler}
@@ -188,9 +200,13 @@ export default function UpdateUser(): JSX.Element {
               <option value="masc">Masculino</option>
             </select>
           </div>
-          <div className='form-group'>
-            <label className='col-sm-2 control-label'>Rol: {data.role}</label>
-            <select name="role" onChange={selectHandler} defaultValue={data.role}>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">Rol: {data.role}</label>
+            <select
+              name="role"
+              onChange={selectHandler}
+              defaultValue={data.role}
+            >
               <option value={data.role}>Elegir</option>
               <option value="empleado">Empleado</option>
               <option value="admin">Admin</option>
