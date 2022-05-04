@@ -5,7 +5,6 @@ const router = Router();
 
 router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   const JobId: any = req.query.JobId;
-  console.log("1");
   if (JobId) {
     const usersFilter = await UsersJobs.findAll({
       where: {
@@ -18,7 +17,6 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     });
     res.json(users);
   } else {
-    console.log("2");
     const users = await User.findAll();
     res.send(users);
   }

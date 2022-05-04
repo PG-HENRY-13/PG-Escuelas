@@ -13,9 +13,8 @@ import {
   UpdateUserAction,
   FetchUserAction,
   FetchUserJobs,
-
   FilterRolesAction,
-
+  FilterJobsAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -110,7 +109,7 @@ export const assignJobToUser = (userCuil: number, jobID: number) => {
 export const fetchJobs = () => {
   console.log("fetchjobs");
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(userUrl); ///CAMBIAR EL ANY
+    const response = await axios.get<any>("http://localhost:3001/api/job/"); ///CAMBIAR EL ANY
     dispatch<FetchJobsAction>({
       type: ActionTypes.fetchJobs,
       payload: response.data,
@@ -162,7 +161,6 @@ export const loadUserJobs = (userCuil: string) => {
   };
 };
 
-
 export const filterRoles = (roles: string) => {
   return async (dispatch: Dispatch) => {
     const response = await axios.get<any>(
@@ -180,3 +178,19 @@ export const filterRoles = (roles: string) => {
   };
 };
 
+export const filterJobs = (JobId: string) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(
+      "http://localhost:3001/api/filterjobs?JobId=" + JobId,
+      {
+        data: {
+          JobId: JobId,
+        },
+      }
+    );
+    dispatch<FilterJobsAction>({
+      type: ActionTypes.filterJobs,
+      payload: response.data,
+    });
+  };
+};

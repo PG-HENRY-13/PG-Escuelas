@@ -4,6 +4,7 @@ import "../../styles/UserInfo.css";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Filters from "../Filters";
 
 export default function UserInfo(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,6 +32,7 @@ export default function UserInfo(): JSX.Element {
       <div className="na-title">
         <h1>Listado de usuarios</h1>
       </div>
+      <Filters />
       <div className="userlist-search-container">
         <h4>Busqueda por nombre</h4>
         <input
