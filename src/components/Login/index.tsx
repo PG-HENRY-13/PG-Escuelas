@@ -1,9 +1,11 @@
 import { NavLink } from "react-router-dom";
+import "../../styles/Login.css";
 
 export default function Login(): JSX.Element {
   return (
-    <div className="container w-25">
-      <h2 className="text-center">Ingrese CUIL y Contraseña</h2>
+    <div className="login-container">
+    <div className="login-container-inside">
+      <h2 className="text-center">ACCESO CON CUIL</h2>
       <form>
         <div className="mb-3">
           <label htmlFor="user" className="form-label">
@@ -18,7 +20,7 @@ export default function Login(): JSX.Element {
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
+            Contraseña
           </label>
           <input
             type="password"
@@ -28,11 +30,12 @@ export default function Login(): JSX.Element {
         </div>
 
         <NavLink to="/admin">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="button">
             Ingresar
           </button>
         </NavLink>
       </form>
+    </div>
     </div>
   );
 }

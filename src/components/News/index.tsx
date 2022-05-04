@@ -1,8 +1,9 @@
 import React from "react";
+import "../../styles/News.css"
 
 export default function News() {
   return (
-    <div>
+    <div className="news-container">
       <div
         id="carouselExampleIndicators"
         className="carousel slide"

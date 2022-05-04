@@ -1,0 +1,52 @@
+.usersform-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.na-title {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.form-container {
+  display: grid;
+  grid-auto-columns: max-content;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0px;
+  grid-auto-rows: minmax(50px, auto);
+}
+
+.form-group {
+  grid-row: span 3;
+  grid-column: span 1;
+  margin: 30px 50px 5px 50px;
+
+  justify-content: center;
+}
+
+.form-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.err {
+  position: absolute;
+  font-size: 16px;
+  color: rgb(255, 89, 89);
+}
+
+.button:disabled {
+  border: 1px solid #999999;
+  background-color: transparent;
+  color: #666666;
+}
+
+.form-select {
+  width: 200px;
+}

@@ -9,6 +9,8 @@ import {
   fetchUsers,
 } from "../../redux/actions";
 import { Job, StoreState, User } from "../../redux/interfaces";
+import "../../styles/AssingJobs.css"
+
 
 export default function AssignJobs(): JSX.Element {
   const dispatch = useDispatch();
@@ -36,23 +38,29 @@ export default function AssignJobs(): JSX.Element {
 
   return (
     <div>
-      <div className="form-group">
+      <div className="form-jobs">
         <br />
-        <label className='col-sm-2 control-label'>Asignando cargos a {loadedUser.name}</label>
-        <select onChange={changeHandler} name="jobId" id="job">
+        <label className='jobs-label'>Asignando cargos a {loadedUser.name}</label>
+        <div className="form-select-container">
+        <select className="form-select" onChange={changeHandler} name="jobId" id="job">
           {jobs.map((job: Job) => {
             return <option value={job.id}>{job.name}</option>;
           })}
         </select>
-      </div>
+        </div>
       <br />
+      
+      <div className="button-container">
       <button
+        className="button"
         onClick={(e) => {
           dispatch(assignJobToUser(loadedUser.cuil, input.jobId) as any);
         }}
       >
         Asignar Cargo
       </button>
+      </div>
+      </div>
     </div>
   );
 }
