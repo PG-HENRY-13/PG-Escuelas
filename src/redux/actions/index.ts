@@ -13,9 +13,7 @@ import {
   UpdateUserAction,
   FetchUserAction,
   FetchUserJobs,
-
   FilterRolesAction,
-
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -34,16 +32,11 @@ export const fetchUsers = () => {
 
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      const response = await axios.get<User>(userUrl + "/" + cuil);
-      dispatch<FetchUserAction>({
-        type: ActionTypes.fetchUser,
-        payload: response.data,
-      });
-    } catch (error) {
-      alert("El usuario no existe");
-      // console.log(error);
-    }
+    const response = await axios.get<User>(userUrl + "/" + cuil);
+    dispatch<FetchUserAction>({
+      type: ActionTypes.fetchUser,
+      payload: response.data,
+    });
   };
 };
 
@@ -87,7 +80,7 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
 
 ///// JOBS ACTIONS //////
 
-export const assignJobToUser = (userCuil: number, jobID: number) => {
+export const assignJobToUser = (userCuil: string, jobID: string) => {
   try {
     console.log("lo que llega al action es user ", userCuil, "job ", jobID);
     return async (dispatch: Dispatch) => {
@@ -162,7 +155,6 @@ export const loadUserJobs = (userCuil: string) => {
   };
 };
 
-
 export const filterRoles = (roles: string) => {
   return async (dispatch: Dispatch) => {
     const response = await axios.get<any>(
@@ -179,4 +171,3 @@ export const filterRoles = (roles: string) => {
     });
   };
 };
-

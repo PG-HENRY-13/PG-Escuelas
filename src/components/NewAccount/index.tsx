@@ -1,8 +1,9 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { deleteUsers, fetchUsers, createUser } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "./validate";
+import AssignJobs from "../AssignJobs/AssignJobs";
 
 export default function NewAccount(): JSX.Element {
   let today = new Date();
@@ -14,6 +15,7 @@ export default function NewAccount(): JSX.Element {
     today.getDate().toString().padStart(2, "0");
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
+  const [showAssing, setAssing] = useState(false);
   const [data, setData] = useState({
     cuil: "",
     name: "",
@@ -64,16 +66,21 @@ export default function NewAccount(): JSX.Element {
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(createUser(data) as any);
+    setAssing(true);
   }
 
   return (
-    <div className='container'>
+    <div className="container">
       <h1>Crear Nuevo Usuario</h1>
       <form onSubmit={submit}>
         <div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Nombre:</label>
-            <input name="name" value={data.name} onChange={changeHandler}></input>
+            <input
+              name="name"
+              value={data.name}
+              onChange={changeHandler}
+            ></input>
             <span className="err">{error.name}</span>
           </div>
           <div className="form-group">
@@ -87,7 +94,11 @@ export default function NewAccount(): JSX.Element {
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Cuil:</label>
-            <input name="cuil" value={data.cuil} onChange={changeHandler}></input>
+            <input
+              name="cuil"
+              value={data.cuil}
+              onChange={changeHandler}
+            ></input>
             <span className="err">{error.cuil}</span>
           </div>
           <div className="form-group">
@@ -118,7 +129,9 @@ export default function NewAccount(): JSX.Element {
             <span className="err">{error.address}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">Numero de telefono:</label>
+            <label className="col-sm-2 control-label">
+              Numero de telefono:
+            </label>
             <input
               name="phoneNumber"
               value={data.phoneNumber}
@@ -145,7 +158,11 @@ export default function NewAccount(): JSX.Element {
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Rol:</label>
-            <select name="role" onChange={selectHandler} defaultValue="employee">
+            <select
+              name="role"
+              onChange={selectHandler}
+              defaultValue="employee"
+            >
               <option value="empleado">Empleado</option>
               <option value="admin">Admin</option>
               <option value="gerente">Gerente</option>
@@ -156,6 +173,11 @@ export default function NewAccount(): JSX.Element {
           </button>
         </div>
       </form>
+      {showAssing ? (
+        <AssignJobs name={data.name} cuil={data.cuil}></AssignJobs>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

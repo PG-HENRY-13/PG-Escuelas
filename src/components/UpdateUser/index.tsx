@@ -3,6 +3,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import AssignJobs from "../AssignJobs/AssignJobs";
 import validate from "../NewAccount/validate";
 
 export default function UpdateUser(): JSX.Element {
@@ -80,6 +81,7 @@ export default function UpdateUser(): JSX.Element {
 
   useEffect(() => {
     if (cuil || data.cuil) setData(userToUpdate);
+    setError(validate(data));
   }, [userToUpdate]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,12 +99,6 @@ export default function UpdateUser(): JSX.Element {
     dispatch(userUpdate(data) as any);
   }
 
-  const handlerClickSearch = (e: React.MouseEvent) => {
-    e.preventDefault();
-    dispatch(fetchUser(data.cuil) as any);
-    setDisabled(false);
-  };
-
   return (
     <div className="container">
       <h1>Editar Usuario</h1>
@@ -115,7 +111,6 @@ export default function UpdateUser(): JSX.Element {
               value={data.cuil}
               onChange={changeHandler}
             ></input>
-            <button onClick={handlerClickSearch}>Consultar</button>
             <span className="err">{error.cuil}</span>
           </div>
           <div className="form-group">
@@ -218,6 +213,7 @@ export default function UpdateUser(): JSX.Element {
           </button>
         </div>
       </form>
+      <AssignJobs name={data.name} cuil={cuil ? cuil : data.cuil}></AssignJobs>
     </div>
   );
 }

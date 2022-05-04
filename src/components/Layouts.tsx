@@ -17,11 +17,6 @@ export default function LayoutAdmin(): JSX.Element {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/updateuser">
-              Editar usuario
-            </NavLink>
-          </li>
-          <li className="nav-item">
             <NavLink className="nav-link" to="/admin/userlist">
               Ver lista de usuarios
             </NavLink>

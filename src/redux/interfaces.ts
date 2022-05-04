@@ -17,6 +17,10 @@ export interface User {
   gender: string;
   role: string;
 }
+export interface JobAssing {
+  cuil: string;
+  name: string;
+}
 
 export interface FetchUsersAction {
   type: ActionTypes.fetchUsers;
