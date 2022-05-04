@@ -21,7 +21,7 @@ export default function validate(input: UserForm) {
   if (input.hasOwnProperty("password")) {
     if (input.password.length < 5)
       error.password = "Contraseña demasiado corta";
-    else if (input.password.length > 15)
+    else if (input.password.length > 12)
       error.password = "Contraseña demasiado larga";
   }
   if (input.hasOwnProperty("password2")) {
