@@ -37,7 +37,7 @@ export default function NewAccount(): JSX.Element {
     password: "Al menos 8 caracteres",
     password2: "Las contraseñas deben coincidir",
     address: "Ingrese una direccion",
-    phoneNumber: "Ingrese un numero valido",
+    phoneNumber: "Ingrese un número valido",
     emailAddress: "Ingrese una direccion de correo valida",
   });
 

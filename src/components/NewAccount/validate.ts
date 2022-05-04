@@ -37,7 +37,7 @@ export default function validate(input: UserForm) {
         input.phoneNumber
       )
     )
-      error.phoneNumber = "Ingrese un numero valido";
+      error.phoneNumber = "Ingrese un número valido";
   }
   if (input.hasOwnProperty("emailAddress")) {
     if (

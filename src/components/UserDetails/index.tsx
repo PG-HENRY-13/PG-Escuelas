@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import validate from "../NewAccount/validate";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
-import "../../styles/UserDetails.css"
+import "../../styles/UserDetails.css";
 export default function UserDetails(): JSX.Element {
   const navigate = useNavigate();
   let { cuil } = useParams();
@@ -57,59 +57,61 @@ export default function UserDetails(): JSX.Element {
   return (
     <div className="user-detail-container">
       <div className="na-title">
-      <h1>Datos de {data.name}</h1>
-
+        <h1>Datos de {data.name}</h1>
       </div>
-      <div className='user-detail-inside'>
+      <div className="user-detail-inside">
         <div className="labels-container">
-        <label className='detail-label'>Cuil: {data.cuil}</label>
-        <br></br>
-        <label className='detail-label'>Nombre: {data.name}</label>
-        <br></br>
-        <label className='detail-label'>Apellido: {data.lastName}</label>
-        <br></br>
-        <label className='detail-label'>Contraseña: {data.password}</label>
-        <br></br>
-        <label className='detail-label'>Escalafon:{data.seniorityDate.split("T")[0]}</label>
-        <br></br>
-        <label className='detail-label'>Direccion: {data.address}</label>
-        <br></br>
-        <label className='detail-label'>Numero de telefono: {data.phoneNumber}</label>
-        <br></br>
-        <label className='detail-label'>eMail: {data.emailAddress}</label>
-        <br></br>
-        <label className='detail-label'>
-
-          Genero:{" "}
-          {data.gender === "masc"
-            ? "Masculino"
-            : data.gender === "fem"
-            ? "Femenino"
-            : "Sin especificar"}
-        </label>
-        <br></br>
-        <label className="col-sm-2 control-label">
-          Rol:{" "}
-          {data.role === "empleado"
-            ? "Empleado"
-            : data.role === "admin"
-            ? "Admin"
-            : "Gerente"}
-        </label>
-        <br></br>
-        <h5>Trabajos:</h5>
-        {jobsToRender.length ? (
-          jobsToRender.map((job: Job) => {
-            return <h6>- {job.name}</h6>;
-          })
-        ) : (
-          <span>Sin trabajos asignados</span>
-        )}
-        <br></br>
-        <Link to={"/admin/updateuser/" + cuil} className="barBtn">
-          Editar Usuario
-        </Link>
-      </div>
+          <label className="detail-label">Cuil: {data.cuil}</label>
+          <br></br>
+          <label className="detail-label">Nombre: {data.name}</label>
+          <br></br>
+          <label className="detail-label">Apellido: {data.lastName}</label>
+          <br></br>
+          <label className="detail-label">Contraseña: {data.password}</label>
+          <br></br>
+          <label className="detail-label">
+            Escalafon:{data.seniorityDate.split("T")[0]}
+          </label>
+          <br></br>
+          <label className="detail-label">Direccion: {data.address}</label>
+          <br></br>
+          <label className="detail-label">
+            Número de telefono: {data.phoneNumber}
+          </label>
+          <br></br>
+          <label className="detail-label">eMail: {data.emailAddress}</label>
+          <br></br>
+          <label className="detail-label">
+            Genero:{" "}
+            {data.gender === "masc"
+              ? "Masculino"
+              : data.gender === "fem"
+              ? "Femenino"
+              : "Sin especificar"}
+          </label>
+          <br></br>
+          <label className="col-sm-2 control-label">
+            Rol:{" "}
+            {data.role === "empleado"
+              ? "Empleado"
+              : data.role === "admin"
+              ? "Admin"
+              : "Gerente"}
+          </label>
+          <br></br>
+          <h5>Trabajos:</h5>
+          {jobsToRender.length ? (
+            jobsToRender.map((job: Job) => {
+              return <h6>- {job.name}</h6>;
+            })
+          ) : (
+            <span>Sin trabajos asignados</span>
+          )}
+          <br></br>
+          <Link to={"/admin/updateuser/" + cuil} className="barBtn">
+            Editar Usuario
+          </Link>
+        </div>
       </div>
     </div>
   );

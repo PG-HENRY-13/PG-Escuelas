@@ -41,9 +41,9 @@ export default function UpdateUser(): JSX.Element {
     name: "Ingrese un nombre",
     lastName: "Ingrese un apellido",
     password: "Al menos 8 caracteres",
-    password2: "Las contraseñas deben coincidir",
+    password2: "Al menos 8 caracteres",
     address: "Ingrese una direccion",
-    phoneNumber: "Ingrese un numero valido",
+    phoneNumber: "Ingrese un número valido",
     emailAddress: "Ingrese una direccion de correo valida",
   });
 
@@ -84,7 +84,6 @@ export default function UpdateUser(): JSX.Element {
       error.name ||
       error.lastName ||
       error.password ||
-      error.password2 ||
       error.address ||
       error.phoneNumber ||
       error.emailAddress
@@ -166,7 +165,6 @@ export default function UpdateUser(): JSX.Element {
             <label className="col-sm-2 control-label">Contraseña:</label>
             <input
               className="form-control"
-              type="password"
               name="password"
               value={data.password}
               onChange={changeHandler}
@@ -174,21 +172,8 @@ export default function UpdateUser(): JSX.Element {
             <span className="err">{error.password}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">
-              Repita la contraseña:
-            </label>
-            <input
-              className="form-control"
-              type="password"
-              name="password2"
-              value={data.password2}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.password2}</span>
-          </div>
-          <div className="form-group">
             <label className="col-sm-6 control-label">
-              Fecha de Escalafon: {data.seniorityDate.split("T")[0]}
+              Escalafon:{data.seniorityDate.split("T")[0]}
             </label>
             <input
               className="form-control"
