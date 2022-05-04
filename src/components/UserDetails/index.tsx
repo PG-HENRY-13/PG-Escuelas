@@ -1,28 +1,12 @@
 import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import {
-  deleteUsers,
-  fetchUser,
-  userUpdate,
-  loadUserJobs,
-  loadUser,
-} from "../../redux/actions";
+import { loadUserJobs, loadUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
-import validate from "../NewAccount/validate";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
 
 export default function UserDetails(): JSX.Element {
-  const navigate = useNavigate();
   let { cuil } = useParams();
-  let today = new Date();
-  let date =
-    today.getFullYear().toString().padStart(4, "0") +
-    "-" +
-    (today.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    today.getDate().toString().padStart(2, "0");
-
   const dispatch = useDispatch();
   const userToUpdate = useSelector((state: any) => {
     return state.usersState.user;
@@ -32,23 +16,6 @@ export default function UserDetails(): JSX.Element {
     return state.jobsState.userJobs;
   });
 
-  const [data, setData] = useState({
-    cuil: "",
-    name: "",
-    lastName: "",
-    password: "",
-    address: "",
-    phoneNumber: "",
-    emailAddress: "",
-    gender: "otro",
-    role: "empleado",
-    seniorityDate: date,
-  });
-
-  useEffect(() => {
-    setData(userToUpdate);
-  }, [userToUpdate]);
-
   useEffect(() => {
     if (cuil) dispatch(loadUserJobs(cuil) as any);
     if (cuil) dispatch(loadUser(Number(cuil)) as any);
@@ -56,38 +23,54 @@ export default function UserDetails(): JSX.Element {
 
   return (
     <div>
-      <h1>Datos de {data.name}</h1>
-      <div className='container'>
-        <label className='col-sm-2 control-label'>Cuil: {data.cuil}</label>
+      <h1>Datos de {userToUpdate.name}</h1>
+      <div className="container">
+        <label className="col-sm-2 control-label">
+          Cuil: {userToUpdate.cuil}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Nombre: {data.name}</label>
+        <label className="col-sm-2 control-label">
+          Nombre: {userToUpdate.name}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Apellido: {data.lastName}</label>
+        <label className="col-sm-2 control-label">
+          Apellido: {userToUpdate.lastName}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Contraseña: {data.password}</label>
+        <label className="col-sm-2 control-label">
+          Contraseña: {userToUpdate.password}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Escalafon:{data.seniorityDate.split("T")[0]}</label>
+        <label className="col-sm-2 control-label">
+          Escalafon:{userToUpdate.seniorityDate.split("T")[0]}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Direccion: {data.address}</label>
+        <label className="col-sm-2 control-label">
+          Direccion: {userToUpdate.address}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>Numero de telefono: {data.phoneNumber}</label>
+        <label className="col-sm-2 control-label">
+          Numero de telefono: {userToUpdate.phoneNumber}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>eMail: {data.emailAddress}</label>
+        <label className="col-sm-2 control-label">
+          eMail: {userToUpdate.emailAddress}
+        </label>
         <br></br>
-        <label className='col-sm-2 control-label'>
+        <label className="col-sm-2 control-label">
           Genero:{" "}
-          {data.gender === "masc"
+          {userToUpdate.gender === "masc"
             ? "Masculino"
-            : data.gender === "fem"
+            : userToUpdate.gender === "fem"
             ? "Femenino"
             : "Sin especificar"}
         </label>
         <br></br>
-        <label className='col-sm-2 control-label'>
+        <label className="col-sm-2 control-label">
           Rol:{" "}
-          {data.role === "empleado"
+          {userToUpdate.role === "empleado"
             ? "Empleado"
-            : data.role === "admin"
+            : userToUpdate.role === "admin"
             ? "Admin"
             : "Gerente"}
         </label>
