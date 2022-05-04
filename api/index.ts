@@ -49,9 +49,9 @@ sequelize
         role: RoleType.Admin,
       },
       {
-        cuil: "1234567891234",
+        cuil: "200422352811",
         name: "Pruebita",
-        lastName: "Pruebón",
+        lastName: "Pruebon",
         password: "unacontrase",
         address: "sí tiene 8",
         phoneNumber: "01113131313",

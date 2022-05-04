@@ -5,6 +5,7 @@ import {
   CreatedAt,
   UpdatedAt,
   PrimaryKey,
+  DataType,
   BelongsToMany,
 } from "sequelize-typescript";
 import { User } from "./User";

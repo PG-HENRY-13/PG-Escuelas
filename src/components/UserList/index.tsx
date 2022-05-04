@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
-// import "../../styles/UserInfo.css";
+import "../../styles/UserInfo.css";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -27,20 +27,26 @@ export default function UserInfo(): JSX.Element {
   };
 
   return (
-    <div>
-      <div>
+    <div className="userlist-filter-container">
+      <div className="na-title">
+        <h1>Listado de usuarios</h1>
+      </div>
+      <div className="userlist-search-container">
+        <h4>Busqueda por nombre</h4>
         <input
+          className="form-control"
           type="text"
           value={filter}
+          placeholder="Buscar"
           onChange={(e) => handleFilter(e.target.value)}
         />
       </div>
-      <table className="table table-striped table-hover">
+      <table className="table">
         <thead>
           <tr>
-            <th data-type="numeric">
+            <div data-type="numeric">
               cuil <span className="resize-handle"></span>
-            </th>
+            </div>
             <th data-type="any">
               boton <span className="resize-handle"></span>
             </th>
@@ -87,7 +93,7 @@ export default function UserInfo(): JSX.Element {
                   <tr>
                     <td>{e.cuil}</td>{" "}
                     <button
-                      className="w-100"
+                      id="userlist-button"
                       onClick={() => putUserinState(e.cuil)}
                     >
                       Detalles
