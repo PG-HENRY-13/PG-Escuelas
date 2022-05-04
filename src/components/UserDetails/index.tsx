@@ -12,7 +12,6 @@ import validate from "../NewAccount/validate";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
 import "../../styles/UserDetails.css";
-import Filters from "../Filters";
 export default function UserDetails(): JSX.Element {
   const navigate = useNavigate();
   let { cuil } = useParams();
@@ -57,9 +56,6 @@ export default function UserDetails(): JSX.Element {
 
   return (
     <div className="user-detail-container">
-      <div>
-        <Filters />
-      </div>
       <div className="na-title">
         <h1>Datos de {data.name}</h1>
       </div>
@@ -80,7 +76,7 @@ export default function UserDetails(): JSX.Element {
           <label className="detail-label">Direccion: {data.address}</label>
           <br></br>
           <label className="detail-label">
-            Numero de telefono: {data.phoneNumber}
+            Número de telefono: {data.phoneNumber}
           </label>
           <br></br>
           <label className="detail-label">eMail: {data.emailAddress}</label>
