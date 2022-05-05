@@ -44,9 +44,9 @@ export default function UserList(): JSX.Element {
       <table className="table">
         <thead>
           <tr>
-            <div data-type="numeric">
+            <th data-type="numeric">
               cuil <span className="resize-handle"></span>
-            </div>
+            </th>
             <th data-type="any">
               boton <span className="resize-handle"></span>
             </th>
