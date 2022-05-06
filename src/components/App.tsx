@@ -9,6 +9,7 @@ import UpdateUser from "./UpdateUser";
 import UserDetails from "./UserDetails";
 import UserList from "./UserList";
 
+
 export default function App(): JSX.Element {
   return (
     <Routes>
@@ -59,6 +60,9 @@ export default function App(): JSX.Element {
           }
         />
       </Route>
+
+      
+
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );

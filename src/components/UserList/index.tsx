@@ -5,14 +5,17 @@ import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+
 export default function UserList(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get("filter") ?? "";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const loadedUsers = useSelector((state: any) => {
     return state.usersState.users;
   });
+
 
   function putUserinState(cuil: number) {
     dispatch(loadUser(cuil) as any);
@@ -81,6 +84,7 @@ export default function UserList(): JSX.Element {
               return name.includes(filter.toLocaleLowerCase());
             })
             .map((e: any) => {
+              
               return (
                 <>
                   <tr>
