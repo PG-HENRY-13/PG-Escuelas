@@ -14,7 +14,7 @@ import {
   FetchUserAction,
   FetchUserJobs,
   FilterRolesAction,
-  FilterJobsAction,
+  UserForm,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -68,7 +68,7 @@ export const deleteUsers = (userID: number) => {
   }
 };
 
-export const createUser = (newUser: User) => (dispatch: Dispatch) => {
+export const createUser = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {
@@ -173,23 +173,6 @@ export const filterRoles = (roles: string) => {
     );
     dispatch<FilterRolesAction>({
       type: ActionTypes.filterRoles,
-      payload: response.data,
-    });
-  };
-};
-
-export const filterJobs = (JobId: string) => {
-  return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(
-      "http://localhost:3001/api/filterjobs?JobId=" + JobId,
-      {
-        data: {
-          JobId: JobId,
-        },
-      }
-    );
-    dispatch<FilterJobsAction>({
-      type: ActionTypes.filterJobs,
       payload: response.data,
     });
   };

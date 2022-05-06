@@ -56,6 +56,14 @@ export default function UserDetails(): JSX.Element {
 
   return (
     <div className="user-detail-container">
+      <div className="back-img-container">
+        <Link to="/admin/userlist">
+          <img
+            className="back-img"
+            src="http://cdn.onlinewebfonts.com/svg/img_490217.png"
+          ></img>
+        </Link>
+      </div>
       <div className="na-title">
         <h1>Datos de {data.name}</h1>
       </div>
@@ -70,7 +78,7 @@ export default function UserDetails(): JSX.Element {
           <label className="detail-label">Contraseña: {data.password}</label>
           <br></br>
           <label className="detail-label">
-            Escalafon:{data.seniorityDate.split("T")[0]}
+            Escalafon: {data.seniorityDate.split("T")[0]}
           </label>
           <br></br>
           <label className="detail-label">Direccion: {data.address}</label>
@@ -90,7 +98,7 @@ export default function UserDetails(): JSX.Element {
               : "Sin especificar"}
           </label>
           <br></br>
-          <label className="col-sm-2 control-label">
+          <label className="detail-label">
             Rol:{" "}
             {data.role === "empleado"
               ? "Empleado"
@@ -99,18 +107,22 @@ export default function UserDetails(): JSX.Element {
               : "Gerente"}
           </label>
           <br></br>
-          <h5>Trabajos:</h5>
-          {jobsToRender.length ? (
-            jobsToRender.map((job: Job) => {
-              return <h6>- {job.name}</h6>;
-            })
-          ) : (
-            <span>Sin trabajos asignados</span>
-          )}
-          <br></br>
-          <Link to={"/admin/updateuser/" + cuil} className="barBtn">
-            Editar Usuario
-          </Link>
+          <div className="detail-jobs-container">
+            <label className="detail-label">Trabajos:</label>
+            {jobsToRender.length ? (
+              jobsToRender.map((job: Job) => {
+                return <span className="detail-label">- {job.name}</span>;
+              })
+            ) : (
+              <span className="detail-label">Sin trabajos asignados</span>
+            )}
+            <br></br>
+          </div>
+          <div className="edit-user-link">
+            <Link to={"/admin/updateuser/" + cuil}>
+              <button className="button">Editar Usuario</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

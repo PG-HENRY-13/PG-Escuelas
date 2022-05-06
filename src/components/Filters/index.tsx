@@ -1,6 +1,6 @@
 import React from "react";
-import { StoreState, User, JobsStoreState } from "../../redux/interfaces";
-import "../../styles/UserInfo.css";
+import { StoreState, User } from "../../redux/interfaces";
+import "../../styles/UserList.css";
 import { fetchUsers } from "../../redux/actions";
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
