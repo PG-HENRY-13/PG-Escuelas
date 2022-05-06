@@ -16,7 +16,7 @@ enum RoleType {
 }
 
 sequelize
-  .sync({ force: false, logging: false })
+  .sync({ force: true, logging: false })
   .then(() => {
     console.log("base de datos conectada! :D");
     app.listen(3001, function () {

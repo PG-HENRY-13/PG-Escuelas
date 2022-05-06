@@ -108,21 +108,20 @@ export default function UserDetails(): JSX.Element {
           </label>
           <br></br>
           <div className="detail-jobs-container">
-          <label className="detail-label">Trabajos:</label>
-          {jobsToRender.length ? (
-            jobsToRender.map((job: Job) => {
-              return <span className="detail-label">- {job.name}</span>;
-            })
-          ) : (
-            <span className="detail-label">Sin trabajos asignados</span>
-          )}
-          <br></br>
+            <label className="detail-label">Trabajos:</label>
+            {jobsToRender.length ? (
+              jobsToRender.map((job: Job) => {
+                return <span className="detail-label">- {job.name}</span>;
+              })
+            ) : (
+              <span className="detail-label">Sin trabajos asignados</span>
+            )}
+            <br></br>
           </div>
           <div className="edit-user-link">
-          <Link to={"/admin/updateuser/" + cuil}>
-            <button className="button">Editar Usuario</button>
-           
-          </Link>
+            <Link to={"/admin/updateuser/" + cuil}>
+              <button className="button">Editar Usuario</button>
+            </Link>
           </div>
         </div>
       </div>
