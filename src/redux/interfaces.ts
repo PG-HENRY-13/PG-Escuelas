@@ -79,6 +79,11 @@ export interface FilterRolesAction {
   payload: User[];
 }
 
+export interface FilterJobsAction {
+  type: ActionTypes.filterJobs;
+  payload: User[];
+}
+
 ////// JOB INTERFACES
 export interface JobsStoreState {
   jobs: Job[];

@@ -18,6 +18,14 @@ export default function UserDetails(): JSX.Element {
 
   return (
     <div className="user-detail-container">
+      <div className="back-img-container">
+        <Link to="/admin/userlist">
+          <img
+            className="back-img"
+            src="http://cdn.onlinewebfonts.com/svg/img_490217.png"
+          ></img>
+        </Link>
+      </div>
       <div className="na-title">
         <h1>Datos de {userToUpdate.name}</h1>
       </div>
@@ -60,7 +68,7 @@ export default function UserDetails(): JSX.Element {
               : "Sin especificar"}
           </label>
           <br></br>
-          <label className="col-sm-2 control-label">
+          <label className="detail-label">
             Rol:{" "}
             {userToUpdate.role === "empleado"
               ? "Empleado"

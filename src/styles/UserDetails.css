@@ -5,17 +5,59 @@
 }
 
 .user-detail-inside {
-  display: grid;
-  grid-auto-columns: max-content;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 0px;
-  grid-auto-rows: minmax(50px, auto);
-  background-color: rgb(204, 204, 204);
+  
+  width: 900px;
+  background-color: #e0e0e0;
+  box-shadow: 15px 15px 30px #6e6e6e, -15px -15px 30px #e0e0e0;
+  margin-bottom: 100px;
+  border-radius: 20px;
 }
 
 .labels-container {
-  grid-row: span 4;
-  grid-column: span 2;
   margin: 30px 50px 5px 50px;
+  display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.back-img-container {
+  position: absolute;
+  left: 0;
+  margin-top: 45px;
+  margin-left: 40px;
+}
+.back-img {
+  width: 50px;
+  height: 50px;
+}
+
+.back-img:hover {
+  transform: scale(1.1);
+}
+
+
+.detail-label{
+  padding: 5px;
+  padding-bottom: 25px;
+  font-size: large;
+  font-weight: bold;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+.detail-jobs-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: no-wrap;
+}
+
+
+.edit-user-link{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
 }

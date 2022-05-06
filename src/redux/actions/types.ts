@@ -7,8 +7,9 @@ import {
   LoadUserAction,
   UpdateUserAction,
   FetchUserAction,
-  FilterRolesAction,
   UpdateFormUserAction,
+  FilterRolesAction,
+  FilterJobsAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -23,6 +24,8 @@ export enum ActionTypes {
   updateUser,
   filterRoles,
   updateFormUser,
+  fetchUserJobs,
+  filterJobs,
 }
 
 export type Action =
@@ -35,4 +38,6 @@ export type Action =
   | LoadUserAction
   | UpdateUserAction
   | FilterRolesAction
-  | UpdateFormUserAction;
+  | UpdateFormUserAction
+  | FilterRolesAction
+  | FilterJobsAction;
