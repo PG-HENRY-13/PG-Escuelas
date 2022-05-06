@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
-import "../../styles/UserInfo.css";
+import "../../styles/UserList.css";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function UserInfo(): JSX.Element {
+export default function UserList(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get("filter") ?? "";
   const navigate = useNavigate();
@@ -44,9 +44,9 @@ export default function UserInfo(): JSX.Element {
       <table className="table">
         <thead>
           <tr>
-            <div data-type="numeric">
+            <th data-type="numeric">
               cuil <span className="resize-handle"></span>
-            </div>
+            </th>
             <th data-type="any">
               boton <span className="resize-handle"></span>
             </th>
