@@ -14,12 +14,14 @@ import {
   FetchUserAction,
   FetchUserJobs,
   FilterRolesAction,
-  UserForm,
+  FilterJobsAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
 const userUrl = url + "user";
 const jobUrl = url + "job";
+const filterJobsUrl = url + "filterjobs?JobId=";
+const filterRolesUrl = url + "role?role=";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
@@ -68,7 +70,7 @@ export const deleteUsers = (userID: number) => {
   }
 };
 
-export const createUser = (newUser: UserForm) => (dispatch: Dispatch) => {
+export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {
@@ -109,7 +111,7 @@ export const assignJobToUser = (userCuil: number, jobID: number) => {
 export const fetchJobs = () => {
   console.log("fetchjobs");
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>("http://localhost:3001/api/job/"); ///CAMBIAR EL ANY
+    const response = await axios.get<any>(jobUrl); ///CAMBIAR EL ANY
     dispatch<FetchJobsAction>({
       type: ActionTypes.fetchJobs,
       payload: response.data,
@@ -163,16 +165,27 @@ export const loadUserJobs = (userCuil: string) => {
 
 export const filterRoles = (roles: string) => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(
-      "http://localhost:3001/api/role?role=" + roles,
-      {
-        data: {
-          role: roles,
-        },
-      }
-    );
+    const response = await axios.get<any>(filterRolesUrl + roles, {
+      data: {
+        role: roles,
+      },
+    });
     dispatch<FilterRolesAction>({
       type: ActionTypes.filterRoles,
+      payload: response.data,
+    });
+  };
+};
+
+export const filterJobs = (JobId: string) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(filterJobsUrl + JobId, {
+      data: {
+        JobId: JobId,
+      },
+    });
+    dispatch<FilterJobsAction>({
+      type: ActionTypes.filterJobs,
       payload: response.data,
     });
   };
