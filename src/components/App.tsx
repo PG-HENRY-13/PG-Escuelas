@@ -20,7 +20,6 @@ export default function App(): JSX.Element {
           element={
             <div className="container">
               <NewAccount />
-              <AssignJobs />
             </div>
           }
         />
@@ -29,16 +28,6 @@ export default function App(): JSX.Element {
           element={
             <div className="container">
               <UpdateUser />
-              <AssignJobs />
-            </div>
-          }
-        />
-        <Route
-          path="updateuser"
-          element={
-            <div className="container">
-              <UpdateUser />
-              <AssignJobs />
             </div>
           }
         />

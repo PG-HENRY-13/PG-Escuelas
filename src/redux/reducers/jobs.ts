@@ -13,7 +13,6 @@ const initialState: JobsStoreState = {
     { id: "2012", name: "profe suplente" },
     { id: "3012", name: "profe gimnasia" },
   ],
-  userJobs: [],
 };
 
 export const jobsReducer = (
@@ -27,8 +26,6 @@ export const jobsReducer = (
     case ActionTypes.fetchJobs:
       return { ...state, jobs: action.payload };
 
-    case ActionTypes.fetchUserJobs:
-      return { ...state, userJobs: action.payload };
     default:
       return state;
   }

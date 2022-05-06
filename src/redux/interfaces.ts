@@ -3,6 +3,7 @@ import { ActionTypes } from "./actions/types";
 export interface StoreState {
   users: User[];
   user: User;
+  userForm: UserForm;
 }
 
 export interface User {
@@ -30,6 +31,12 @@ export interface UserForm {
   seniorityDate: string;
   gender: string;
   role: string;
+  jobs: Job[];
+}
+export interface JobAssing {
+  cuil: string;
+  name: string;
+  removableJobs: boolean;
 }
 
 export interface FetchUsersAction {
@@ -44,7 +51,7 @@ export interface DeleteUsersAction {
 
 export interface CreateUserAction {
   type: ActionTypes.createUser;
-  payload: User;
+  payload: UserForm;
 }
 
 export interface AssignJobToUserAction {
@@ -56,6 +63,12 @@ export interface UpdateUserAction {
   type: ActionTypes.updateUser;
   payload: User;
 }
+
+export interface UpdateFormUserAction {
+  type: ActionTypes.updateFormUser;
+  payload: UserForm;
+}
+
 export interface FetchUserAction {
   type: ActionTypes.fetchUser;
   payload: User;
@@ -74,7 +87,6 @@ export interface FilterJobsAction {
 ////// JOB INTERFACES
 export interface JobsStoreState {
   jobs: Job[];
-  userJobs: Job[];
 }
 
 export interface Job {
@@ -87,12 +99,7 @@ export interface FetchJobsAction {
   payload: Job[];
 }
 
-export interface FetchUserJobs {
-  type: ActionTypes.fetchUserJobs;
-  payload: Job[];
-}
-
 export interface LoadUserAction {
   type: ActionTypes.loadUser;
-  payload: User;
+  payload: UserForm;
 }
