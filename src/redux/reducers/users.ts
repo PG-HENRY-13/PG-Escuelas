@@ -15,6 +15,20 @@ const initialState: StoreState = {
     gender: "",
     role: "",
   },
+  userForm: {
+    cuil: "",
+    name: "",
+    lastName: "",
+    password: "",
+    password2: "",
+    address: "",
+    phoneNumber: "",
+    emailAddress: "",
+    seniorityDate: "",
+    gender: "",
+    role: "",
+    jobs: [],
+  },
 };
 
 export const usersReducer = (
@@ -34,7 +48,7 @@ export const usersReducer = (
       };
 
     case ActionTypes.loadUser:
-      return { ...state, user: action.payload };
+      return { ...state, userForm: action.payload };
     case ActionTypes.createUser:
       return {
         ...state,
@@ -54,6 +68,11 @@ export const usersReducer = (
       return {
         ...state,
         users: action.payload,
+      };
+    case ActionTypes.updateFormUser:
+      return {
+        ...state,
+        userForm: action.payload,
       };
 
     default:

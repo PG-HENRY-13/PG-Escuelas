@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { createUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createUser, updateFormUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "./validate";
 import AssignJobs from "../AssignJobs/AssignJobs";
@@ -16,20 +16,8 @@ export default function NewAccount(): JSX.Element {
     today.getDate().toString().padStart(2, "0");
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
-  const [showAssing, setAssing] = useState(false);
-  const [data, setData] = useState({
-    cuil: "",
-    name: "",
-    lastName: "",
-    password: "",
-    password2: "",
-    address: "",
-    phoneNumber: "",
-    emailAddress: "",
-    gender: "otro",
-    role: "empleado",
-    seniorityDate: date,
-    jobs: [],
+  const data = useSelector((state: any) => {
+    return state.usersState.userForm;
   });
 
   const [error, setError] = React.useState({
@@ -69,23 +57,23 @@ export default function NewAccount(): JSX.Element {
       phoneNumber: "",
       emailAddress: "",
     });
-
+    dispatch(updateFormUser("empty"));
     return () => {};
   }, []);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
     setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
 
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(createUser(data) as any);
-    setAssing(true);
+    dispatch(updateFormUser("empty"));
   }
 
   return (
@@ -225,11 +213,11 @@ export default function NewAccount(): JSX.Element {
           </button>
         </div>
       </form>
-      {showAssing ? (
-        <AssignJobs name={data.name} cuil={data.cuil}></AssignJobs>
-      ) : (
-        ""
-      )}
+      <AssignJobs
+        name={data.name}
+        cuil={data.cuil}
+        removableJobs={true}
+      ></AssignJobs>
     </div>
   );
 }

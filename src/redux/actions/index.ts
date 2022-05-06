@@ -12,9 +12,9 @@ import {
   LoadUserAction,
   UpdateUserAction,
   FetchUserAction,
-  FetchUserJobs,
   FilterRolesAction,
   UserForm,
+  UpdateFormUserAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -28,6 +28,29 @@ export const fetchUsers = () => {
       type: ActionTypes.fetchUsers,
       payload: response.data,
     });
+  };
+};
+
+export const updateFormUser = (data: UserForm | string) => {
+  return <UpdateFormUserAction>{
+    type: ActionTypes.updateFormUser,
+    payload:
+      data === "empty"
+        ? {
+            cuil: "",
+            name: "",
+            lastName: "",
+            password: "",
+            password2: "",
+            address: "",
+            phoneNumber: "",
+            emailAddress: "",
+            seniorityDate: "",
+            gender: "",
+            role: "",
+            jobs: [],
+          }
+        : data,
   };
 };
 
@@ -129,7 +152,7 @@ export const loadUser = (userCuil: number) => {
   };
 };
 
-export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
+export const userUpdate = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .put(userUrl, newUser)
     .then((data) => {
@@ -143,17 +166,6 @@ export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
       alert("Error al actualizar usuario");
       console.log("error: ", err);
     });
-};
-
-export const loadUserJobs = (userCuil: string) => {
-  console.log("llega el load con userCuil ", userCuil);
-  return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(jobUrl + "/" + userCuil); ///CAMBIAR EL ANY
-    dispatch<FetchUserJobs>({
-      type: ActionTypes.fetchUserJobs,
-      payload: response.data,
-    });
-  };
 };
 
 export const filterRoles = (roles: string) => {

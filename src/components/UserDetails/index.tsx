@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { loadUserJobs, loadUser } from "../../redux/actions";
+import { loadUser, updateFormUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
@@ -9,15 +9,10 @@ export default function UserDetails(): JSX.Element {
   let { cuil } = useParams();
   const dispatch = useDispatch();
   const userToUpdate = useSelector((state: any) => {
-    return state.usersState.user;
-  });
-
-  const jobsToRender = useSelector((state: any) => {
-    return state.jobsState.userJobs;
+    return state.usersState.userForm;
   });
 
   useEffect(() => {
-    if (cuil) dispatch(loadUserJobs(cuil) as any);
     if (cuil) dispatch(loadUser(Number(cuil)) as any);
   }, []);
 
@@ -75,8 +70,8 @@ export default function UserDetails(): JSX.Element {
           </label>
           <br></br>
           <h5>Trabajos:</h5>
-          {jobsToRender.length ? (
-            jobsToRender.map((job: Job) => {
+          {userToUpdate.jobs.length ? (
+            userToUpdate.jobs.map((job: Job) => {
               return <h6>- {job.name}</h6>;
             })
           ) : (
