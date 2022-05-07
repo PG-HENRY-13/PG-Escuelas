@@ -6,9 +6,11 @@ import {
   UpdatedAt,
   PrimaryKey,
   BelongsToMany,
+  HasMany
 } from "sequelize-typescript";
 import { Job } from "./Job";
 import { UsersJobs } from "./UsersJobs";
+import { Paycheck } from "./Paycheck";
 import { User as UserI } from "../../../src/redux/interfaces";
 
 enum RoleType {
@@ -27,6 +29,9 @@ enum GenderType {
 export class User extends Model<UserI> {
   @BelongsToMany(() => Job, () => UsersJobs)
   jobs!: Job[];
+
+  @HasMany(() => Paycheck)
+  paychecks!: Paycheck[];
 
   @PrimaryKey
   @Column

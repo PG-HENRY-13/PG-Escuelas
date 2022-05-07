@@ -55,6 +55,11 @@ export const usersReducer = (
         ...state,
         users: action.payload,
       };
+    case ActionTypes.filterJobs:
+      return {
+        ...state,
+        users: action.payload,
+      };
 
     default:
       return state;

@@ -74,4 +74,9 @@ router.get(
   }
 );
 
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  const returnedJobs = await Job.findAll();
+  return res.status(200).send(returnedJobs);
+});
+
 export default router;

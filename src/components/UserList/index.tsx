@@ -4,6 +4,7 @@ import "../../styles/UserList.css";
 import { fetchUsers, loadUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Filters from "../Filters";
 
 
 export default function UserList(): JSX.Element {
@@ -34,6 +35,7 @@ export default function UserList(): JSX.Element {
       <div className="na-title">
         <h1>Listado de usuarios</h1>
       </div>
+      <Filters />
       <div className="userlist-search-container">
         <h4>Busqueda por nombre</h4>
         <input
