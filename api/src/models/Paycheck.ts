@@ -7,15 +7,21 @@ import {
   Default,
   PrimaryKey,
   DataType,
-  HasOne
+  HasOne,
+  ForeignKey,
+  BelongsTo,
 } from "sequelize-typescript";
 
-import {User} from "./User";
+import { User } from "./User";
 
 @Table
 export class Paycheck extends Model<Paycheck> {
-  @HasOne(() => User)
+  @BelongsTo(() => User)
   user!: User[];
+
+  @ForeignKey(() => User)
+  @Column
+  userCuil!: string;
 
   @Column
   date!: Date;
@@ -27,6 +33,7 @@ export class Paycheck extends Model<Paycheck> {
   @Column
   hasSigned!: boolean;
 
+  @PrimaryKey
   @CreatedAt
   @Column
   createdAt!: Date;

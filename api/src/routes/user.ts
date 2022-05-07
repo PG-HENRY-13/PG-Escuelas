@@ -16,7 +16,15 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 router.get("/:userID", (req: Request, res: Response, next: NextFunction) => {
   const userID = req.params.userID;
-  User.findByPk(userID)
+  User.findByPk(userID, {
+    include: {
+      model: Job,
+      attributes: ["name", "id"],
+      through: {
+        attributes: [],
+      },
+    },
+  })
     .then((user) => {
       if (user) return res.status(202).send(user);
       else res.status(404).send("The user does not exist");
@@ -26,15 +34,33 @@ router.get("/:userID", (req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-router.post("/", (req: Request, res: Response, next: NextFunction) => {
-  const user = req.body;
-  User.create(user)
-    .then((createdUser) => {
-      return res.send(createdUser);
-    })
-    .catch((error) => {
-      return res.status(404).send(error);
+router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { jobs } = req.body;
+    const user = req.body;
+    console.log("llegue al user");
+    const [newUser, created] = await User.findOrCreate({
+      where: {
+        name: req.body.name,
+      },
+      defaults: {
+        ...user,
+      },
     });
+    if (jobs.length && created) {
+      await Promise.all(
+        jobs.map(async (job: any) => {
+          let jobToAdd = await Job.findByPk(job.id);
+          await newUser?.$add("jobs", job.id);
+          await jobToAdd?.$add("users", user.cuil);
+        })
+      );
+    }
+    if (!created) return res.status(404).send("El usuario ya existe en la db");
+    return res.status(200).send("Usuario añadido a la db");
+  } catch (err) {
+    res.status(404).send("error: " + err);
+  }
 });
 
 router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
@@ -58,6 +84,7 @@ router.delete("/", async (req: Request, res: Response, next: NextFunction) => {
 router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userUpdate = req.body;
+    const { jobs } = req.body;
     //ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
 
     const existingUser = await User.findByPk(userUpdate.cuil);
@@ -81,6 +108,15 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
           },
         }
       );
+      if (jobs.length) {
+        await Promise.all(
+          jobs.map(async (job: any) => {
+            let jobToAdd = await Job.findByPk(job.id);
+            await existingUser?.$add("jobs", job.id);
+            await jobToAdd?.$add("users", userUpdate.cuil);
+          })
+        );
+      }
 
       return res.status(200).json(userUpdate);
     } else {

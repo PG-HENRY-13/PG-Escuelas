@@ -12,8 +12,9 @@ import {
   LoadUserAction,
   UpdateUserAction,
   FetchUserAction,
-  FetchUserJobs,
   FilterRolesAction,
+  UserForm,
+  UpdateFormUserAction,
   FilterJobsAction,
 } from "../interfaces";
 
@@ -33,18 +34,36 @@ export const fetchUsers = () => {
   };
 };
 
+export const updateFormUser = (data: UserForm | string) => {
+  return <UpdateFormUserAction>{
+    type: ActionTypes.updateFormUser,
+    payload:
+      data === "empty"
+        ? {
+            cuil: "",
+            name: "",
+            lastName: "",
+            password: "",
+            password2: "",
+            address: "",
+            phoneNumber: "",
+            emailAddress: "",
+            seniorityDate: "",
+            gender: "",
+            role: "",
+            jobs: [],
+          }
+        : data,
+  };
+};
+
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
-    try {
-      const response = await axios.get<User>(userUrl + "/" + cuil);
-      dispatch<FetchUserAction>({
-        type: ActionTypes.fetchUser,
-        payload: response.data,
-      });
-    } catch (error) {
-      alert("El usuario no existe");
-      // console.log(error);
-    }
+    const response = await axios.get<User>(userUrl + "/" + cuil);
+    dispatch<FetchUserAction>({
+      type: ActionTypes.fetchUser,
+      payload: response.data,
+    });
   };
 };
 
@@ -88,7 +107,7 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
 
 ///// JOBS ACTIONS //////
 
-export const assignJobToUser = (userCuil: number, jobID: number) => {
+export const assignJobToUser = (userCuil: string, jobID: string) => {
   try {
     console.log("lo que llega al action es user ", userCuil, "job ", jobID);
     return async (dispatch: Dispatch) => {
@@ -136,7 +155,7 @@ export const loadUser = (userCuil: number) => {
   };
 };
 
-export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
+export const userUpdate = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .put(userUrl, newUser)
     .then((data) => {
@@ -150,17 +169,6 @@ export const userUpdate = (newUser: User) => (dispatch: Dispatch) => {
       alert("Error al actualizar usuario");
       console.log("error: ", err);
     });
-};
-
-export const loadUserJobs = (userCuil: string) => {
-  console.log("llega el load con userCuil ", userCuil);
-  return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(jobUrl + "/" + userCuil); ///CAMBIAR EL ANY
-    dispatch<FetchUserJobs>({
-      type: ActionTypes.fetchUserJobs,
-      payload: response.data,
-    });
-  };
 };
 
 export const filterRoles = (roles: string) => {

@@ -1,8 +1,9 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { deleteUsers, fetchUsers, createUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { createUser, updateFormUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import validate from "./validate";
+import AssignJobs from "../AssignJobs/AssignJobs";
 import "../../styles/NewAccount.css";
 
 export default function NewAccount(): JSX.Element {
@@ -15,19 +16,8 @@ export default function NewAccount(): JSX.Element {
     today.getDate().toString().padStart(2, "0");
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
-  const [data, setData] = useState({
-    cuil: "",
-    name: "",
-    lastName: "",
-    password: "",
-    password2: "",
-    address: "",
-    phoneNumber: "",
-    emailAddress: "",
-    gender: "otro",
-    role: "empleado",
-    seniorityDate: date,
-    jobs: [],
+  const data = useSelector((state: any) => {
+    return state.usersState.userForm;
   });
 
   const [error, setError] = React.useState({
@@ -67,22 +57,23 @@ export default function NewAccount(): JSX.Element {
       phoneNumber: "",
       emailAddress: "",
     });
-
+    dispatch(updateFormUser("empty"));
     return () => {};
   }, []);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
     setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
 
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(createUser(data) as any);
+    dispatch(updateFormUser("empty"));
   }
 
   return (
@@ -100,7 +91,6 @@ export default function NewAccount(): JSX.Element {
               value={data.name}
               onChange={changeHandler}
             ></input>
-
             <span className="err">{error.name}</span>
           </div>
 
@@ -223,6 +213,11 @@ export default function NewAccount(): JSX.Element {
           </button>
         </div>
       </form>
+      <AssignJobs
+        name={data.name}
+        cuil={data.cuil}
+        removableJobs={true}
+      ></AssignJobs>
     </div>
   );
 }
