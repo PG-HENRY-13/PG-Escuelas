@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
 import "../../styles/UserList.css";
-import { fetchUsers, loadUser } from "../../redux/actions";
+import { fetchUsers, loadUser, loadUserSalary } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Filters from "../Filters";
-
 
 export default function UserList(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,11 +16,16 @@ export default function UserList(): JSX.Element {
     return state.usersState.users;
   });
 
-
   function putUserinState(cuil: number) {
     dispatch(loadUser(cuil) as any);
     navigate("/admin/userlist/" + cuil);
   }
+
+  function putUserinStateSalary(cuil: number) {
+    dispatch(loadUserSalary(cuil) as any);
+    navigate("/admin/salary/" + cuil);
+  }
+
   useEffect(() => {
     dispatch(fetchUsers() as any);
   }, []);
@@ -53,7 +57,10 @@ export default function UserList(): JSX.Element {
               cuil <span className="resize-handle"></span>
             </th>
             <th data-type="any">
-              boton <span className="resize-handle"></span>
+              Detalles <span className="resize-handle"></span>
+            </th>
+            <th data-type="any">
+              Salario <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
               Nombre <span className="resize-handle"></span>
@@ -93,17 +100,26 @@ export default function UserList(): JSX.Element {
                 : false;
             })
             .map((e: any) => {
-              
               return (
                 <>
                   <tr>
                     <td>{e.cuil}</td>{" "}
-                    <button
-                      id="userlist-button"
-                      onClick={() => putUserinState(e.cuil)}
-                    >
-                      Detalles
-                    </button>
+                    <td>
+                      <button
+                        id="userlist-button"
+                        onClick={() => putUserinState(e.cuil)}
+                      >
+                        Detalles
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        id="userlist-button"
+                        onClick={() => putUserinStateSalary(e.cuil)}
+                      >
+                        Salario
+                      </button>
+                    </td>
                     <td>{e.name}</td>
                     <td>{e.lastName}</td>
                     <td>{e.phoneNumber}</td>

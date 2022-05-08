@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
 import "../../styles/UserDetails.css";
-
-
 export default function UserDetails(): JSX.Element {
   let { cuil } = useParams();
   const dispatch = useDispatch();
