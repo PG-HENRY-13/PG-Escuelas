@@ -2,7 +2,7 @@ import  jwt  from 'jsonwebtoken'
 interface User {
     cuil: string;
     name: string;
-    last_name: string;
+    lastName: string;
     role: string;
 }
 
@@ -11,7 +11,7 @@ export const genToken = (user: User) => {
     const token = jwt.sign({ 
         id:user.cuil,
         name:user.name, 
-        last_name:user.last_name,
+        last_name:user.lastName,
         role:user.role
     },secretKey as string);
 

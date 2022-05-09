@@ -44,6 +44,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       user.role = "empleado";
     }
     // user.password = await encryptPwd( req.body.password);
+    user.password = await encryptPwd( req.body.password);
     console.log("llegue al user");
     const [newUser, created] = await User.findOrCreate({
       where: {
