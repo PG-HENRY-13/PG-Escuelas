@@ -1,8 +1,9 @@
 import React from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { deleteUsers, fetchUser, userUpdate } from "../../redux/actions";
+import { loadUser, updateFormUser, userUpdate } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import AssignJobs from "../AssignJobs/AssignJobs";
 import validate from "../NewAccount/validate";
 import "../../styles/UpdateUser.css";
 
@@ -17,23 +18,11 @@ export default function UpdateUser(): JSX.Element {
     today.getDate().toString().padStart(2, "0");
 
   const dispatch = useDispatch();
-  const userToUpdate = useSelector((state: any) => {
-    return state.usersState.user;
-  });
 
   const [disabled, setDisabled] = useState(false);
-  const [data, setData] = useState({
-    cuil: "",
-    name: "",
-    lastName: "",
-    password: "",
-    password2: "",
-    address: "",
-    phoneNumber: "",
-    emailAddress: "",
-    gender: "otro",
-    role: "empleado",
-    seniorityDate: date,
+
+  const data = useSelector((state: any) => {
+    return state.usersState.userForm;
   });
 
   const [error, setError] = React.useState({
@@ -48,19 +37,6 @@ export default function UpdateUser(): JSX.Element {
   });
 
   useEffect(() => {
-    setData({
-      cuil: "",
-      name: "",
-      lastName: "",
-      password: "",
-      password2: "",
-      address: "",
-      phoneNumber: "",
-      emailAddress: "",
-      gender: "otro",
-      role: "empleado",
-      seniorityDate: date,
-    });
     setError({
       cuil: "",
       name: "",
@@ -72,7 +48,7 @@ export default function UpdateUser(): JSX.Element {
       emailAddress: "",
     });
     if (cuil) {
-      dispatch(fetchUser(cuil) as any);
+      dispatch(loadUser(Number(cuil)) as any);
       setDisabled(false);
     }
     return () => {};
@@ -80,7 +56,6 @@ export default function UpdateUser(): JSX.Element {
 
   useEffect(() => {
     if (
-      error.cuil ||
       error.name ||
       error.lastName ||
       error.password ||
@@ -93,31 +68,22 @@ export default function UpdateUser(): JSX.Element {
   }, [error]);
 
   useEffect(() => {
-    if (cuil) setData(userToUpdate);
-  }, [userToUpdate]);
+    setError(validate(data));
+  }, [data]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
     setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-    setError(validate({ ...data, [e.target.name]: e.target.value }));
+    dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
 
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(userUpdate(data) as any);
   }
-
-  const handlerClickSearch = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (cuil) {
-      dispatch(fetchUser(cuil) as any);
-      setDisabled(false);
-    }
-  };
 
   return (
     <div className="usersform-container">
@@ -126,21 +92,6 @@ export default function UpdateUser(): JSX.Element {
       </div>
       <form onSubmit={submit}>
         <div className="form-container">
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Cuil:</label>
-            <input
-              className="form-control"
-              name="cuil"
-              value={data.cuil}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.cuil}</span>
-
-            <button className="button-consult" onClick={handlerClickSearch}>
-              Consultar
-            </button>
-          </div>
-
           <div className="form-group">
             <label className="col-sm-2 control-label">Nombre:</label>
             <input
@@ -172,14 +123,12 @@ export default function UpdateUser(): JSX.Element {
             <span className="err">{error.password}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-6 control-label">
-              Escalafon:{data.seniorityDate.split("T")[0]}
-            </label>
+            <label className="col-sm-6 control-label">Escalafon:</label>
             <input
               className="form-control"
               type="date"
               name="seniorityDate"
-              value={data.seniorityDate}
+              value={data.seniorityDate.split("T")[0]}
               onChange={changeHandler}
             ></input>
           </div>
@@ -246,6 +195,11 @@ export default function UpdateUser(): JSX.Element {
           </button>
         </div>
       </form>
+      <AssignJobs
+        name={data.name}
+        cuil={cuil ? cuil : data.cuil}
+        removableJobs={false}
+      ></AssignJobs>
     </div>
   );
 }

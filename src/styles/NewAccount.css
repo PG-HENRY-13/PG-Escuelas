@@ -50,3 +50,13 @@
 .form-select {
   width: 200px;
 }
+
+.minibtn {
+  padding: 0.5rem;
+  right: 0;
+}
+
+.mini-button-container {
+  display: flex;
+  justify-content: flex-end;
+}

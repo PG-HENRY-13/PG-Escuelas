@@ -15,6 +15,21 @@ const initialState: StoreState = {
     gender: "",
     role: "",
   },
+  userForm: {
+    cuil: "",
+    name: "",
+    lastName: "",
+    password: "",
+    password2: "",
+    address: "",
+    phoneNumber: "",
+    emailAddress: "",
+    seniorityDate: "",
+    gender: "",
+    role: "",
+    jobs: [],
+  },
+  contingencies: [],
 };
 
 export const usersReducer = (
@@ -34,7 +49,7 @@ export const usersReducer = (
       };
 
     case ActionTypes.loadUser:
-      return { ...state, user: action.payload };
+      return { ...state, userForm: action.payload };
     case ActionTypes.createUser:
       return {
         ...state,
@@ -55,10 +70,27 @@ export const usersReducer = (
         ...state,
         users: action.payload,
       };
+    case ActionTypes.updateFormUser:
+      return {
+        ...state,
+        userForm: action.payload,
+      };
     case ActionTypes.filterJobs:
       return {
         ...state,
         users: action.payload,
+      };
+    case ActionTypes.fetchContingencies:
+      return {
+        ...state,
+        contingencies: action.payload,
+      };
+    case ActionTypes.deleteContingency:
+      return {
+        ...state,
+        contingencies: state.contingencies.filter(
+          (el) => el.id !== action.payload
+        ),
       };
 
     default:

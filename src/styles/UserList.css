@@ -10,16 +10,22 @@
 .userlist-search-container input {
   width: 25%;
 }
+td {
+  justify-content: center;
+  align-items: center;
+}
 
 #userlist-button {
   background-color: var(--main-nav-color);
   color: white;
   border: 0;
   border-radius: 2px;
+  width: 80px;
+  height: 30px;
 }
 
 #userlist-button:hover {
-  background-color: #161616;
+  background-color: #0f0f0f;
   color: white;
   border: 0;
   border-radius: 2px;

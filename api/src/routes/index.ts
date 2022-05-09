@@ -5,6 +5,12 @@ import authentifyRoutes from "./authentify";
 import employeesRoutes from "./employees";
 import roleRoutes from "./role";
 import filterJobsRoutes from "./filterjobs";
+import excelRoutes from "./excel";
+import testRoutes from "./test";
+
+import contingenciesRoutes from "./contingencies";
+
+import WageConcepts from "./WageConcepts";
 const router = Router();
 
 router.use("/user", userRoutes);
@@ -13,7 +19,10 @@ router.use("/job", jobRoutes);
 router.use("/authentify", authentifyRoutes);
 router.use("/role", roleRoutes);
 router.use("/employees", employeesRoutes);
-router.use("/job", jobRoutes);
+router.use("/excel", excelRoutes);
 router.use("/filterjobs", filterJobsRoutes);
+router.use("/test", testRoutes);
 
+router.use("/contingencies", contingenciesRoutes);
+router.use("/salary", WageConcepts);
 export default router;

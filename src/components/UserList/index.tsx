@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
 import "../../styles/UserList.css";
-import { fetchUsers, loadUser } from "../../redux/actions";
+import { fetchUsers, loadUser, loadUserSalary } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Filters from "../Filters";
@@ -11,6 +11,7 @@ export default function UserList(): JSX.Element {
   const filter = searchParams.get("filter") ?? "";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const loadedUsers = useSelector((state: any) => {
     return state.usersState.users;
   });
@@ -19,6 +20,12 @@ export default function UserList(): JSX.Element {
     dispatch(loadUser(cuil) as any);
     navigate("/admin/userlist/" + cuil);
   }
+
+  function putUserinStateSalary(cuil: number) {
+    dispatch(loadUserSalary(cuil) as any);
+    navigate("/admin/salary/" + cuil);
+  }
+
   useEffect(() => {
     dispatch(fetchUsers() as any);
   }, []);
@@ -50,7 +57,10 @@ export default function UserList(): JSX.Element {
               cuil <span className="resize-handle"></span>
             </th>
             <th data-type="any">
-              boton <span className="resize-handle"></span>
+              Detalles <span className="resize-handle"></span>
+            </th>
+            <th data-type="any">
+              Salario <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
               Nombre <span className="resize-handle"></span>
@@ -62,7 +72,7 @@ export default function UserList(): JSX.Element {
               Teléfono <span className="resize-handle"></span>
             </th>
             <th data-type="text-long">
-              Cargo <span className="resize-handle"></span>
+              Rol <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
               Dirección <span className="resize-handle"></span>
@@ -79,20 +89,37 @@ export default function UserList(): JSX.Element {
           {loadedUsers
             .filter((user: User) => {
               if (!filter) return true;
-              const name = user.name.toLowerCase();
-              return name.includes(filter.toLocaleLowerCase());
+              const Fullname =
+                user.name.toLowerCase() + " " + user.lastName.toLowerCase();
+              const ReverseFullname =
+                user.lastName.toLowerCase() + " " + user.name.toLowerCase();
+              return Fullname.includes(filter.toLocaleLowerCase())
+                ? user
+                : ReverseFullname.includes(filter.toLocaleLowerCase())
+                ? user
+                : false;
             })
             .map((e: any) => {
               return (
                 <>
                   <tr>
                     <td>{e.cuil}</td>{" "}
-                    <button
-                      id="userlist-button"
-                      onClick={() => putUserinState(e.cuil)}
-                    >
-                      Detalles
-                    </button>
+                    <td>
+                      <button
+                        id="userlist-button"
+                        onClick={() => putUserinState(e.cuil)}
+                      >
+                        Detalles
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        id="userlist-button"
+                        onClick={() => putUserinStateSalary(e.cuil)}
+                      >
+                        Salario
+                      </button>
+                    </td>
                     <td>{e.name}</td>
                     <td>{e.lastName}</td>
                     <td>{e.phoneNumber}</td>

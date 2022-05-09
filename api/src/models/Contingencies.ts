@@ -21,19 +21,28 @@ export class Contingencies extends Model<Contingencies> {
   date!: Date;
 
   @Column
+  endDate?: Date;
+
+  @Column
   cuil!: string;
 
   @Column
-  jobId!: string;
+  fullName!: string;
+
+  @Column
+  jobId?: string;
 
   @Column
   contingencyType!: ContingencyType;
 
   @Column
-  hoursNumber!: number;
+  hoursNumber?: number;
 
   @Column
   hasNotice!: boolean;
+
+  @Column
+  reason!: string;
 
   @CreatedAt
   @Column
