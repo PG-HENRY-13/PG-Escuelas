@@ -16,17 +16,19 @@ import {
   UserForm,
   UpdateFormUserAction,
   FilterJobsAction,
+  SaveUsersFromExcelFileAction,
   Contingency,
   FetchContingenciesAction,
   DeleteContingencyAction,
   LoadUserSalaryAction,
 } from "../interfaces";
 
-const url = "http://localhost:3001/api/";
-const userUrl = url + "user";
+export const url = "http://localhost:3001/api/";
+export const userUrl = url + "user";
 const jobUrl = url + "job";
 const filterJobsUrl = url + "filterjobs?JobId=";
 const filterRolesUrl = url + "role?role=";
+const excelUrl = url + "excel";
 const employeesUrl = url + "employees";
 const contingenciesUrl = url + "contingencies";
 const wageUrl = url + "salary";
@@ -219,6 +221,26 @@ export const filterJobs = (JobId: string) => {
     });
   };
 };
+
+///// EXCEL ACTIONS
+
+export const saveUsersFromExcelFile = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await axios.post<any>(excelUrl + "/users");
+      response.data.map(async (user: User) => await axios.post(userUrl, user));
+      dispatch<SaveUsersFromExcelFileAction>({
+        type: ActionTypes.saveUsersFromExcelFile,
+        payload: response.data,
+      });
+      alert("Usuarios cargados");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+/// CONTINGENCIES ACTIONS
 
 export const sendContingency = (data: Contingency) => {
   axios

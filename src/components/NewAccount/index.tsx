@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import validate from "./validate";
 import AssignJobs from "../AssignJobs/AssignJobs";
 import "../../styles/NewAccount.css";
+import { Link } from "react-router-dom";
 
 export default function NewAccount(): JSX.Element {
   let today = new Date();
@@ -218,6 +219,14 @@ export default function NewAccount(): JSX.Element {
         cuil={data.cuil}
         removableJobs={true}
       ></AssignJobs>
+      <Link
+        to="/admin/excel/upload"
+        className="form-button-container mini-button-container"
+      >
+        <button className="button minibtn" type="submit">
+          Crear Multiples usuarios con Excel
+        </button>
+      </Link>
     </div>
   );
 }

@@ -110,6 +110,10 @@ export interface LoadUserAction {
   payload: UserForm;
 }
 
+export interface SaveUsersFromExcelFileAction {
+  type: ActionTypes.saveUsersFromExcelFile;
+  payload: UserForm;
+}
 // employee interfaces
 
 export interface Contingency {

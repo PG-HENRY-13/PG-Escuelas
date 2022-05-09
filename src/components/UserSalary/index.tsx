@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
 import "../../styles/UserDetails.css";
+import Back_Logo from "../../styles/img/Back_Logo.png"
 
 export default function UserDetails(): JSX.Element {
   let { cuil } = useParams();
@@ -31,7 +32,7 @@ export default function UserDetails(): JSX.Element {
         <Link to="/admin/userlist">
           <img
             className="back-img"
-            src="http://cdn.onlinewebfonts.com/svg/img_490217.png"
+            src={Back_Logo}
           ></img>
         </Link>
       </div>

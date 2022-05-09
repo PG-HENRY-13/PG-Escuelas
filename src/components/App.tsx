@@ -2,17 +2,20 @@ import React from "react";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
+import LoadUsersWithExcel from "./LoadUsersWithExcel";
 import LayoutEmployee from "./LayoutEmployee";
 import Login from "./Login";
 import NewAccount from "./NewAccount";
 import News from "./News";
 import UpdateUser from "./UpdateUser";
+import UploadExcelFile from "./UploadExcelFile";
 import UserDetails from "./UserDetails";
 import UserList from "./UserList";
 import AbsenceForm from "./ContingencyForms/AbsenceForm";
 import ScheduleForm from "./ContingencyForms/ScheduleForm";
 import ContingencyList from "./ContingencyList";
 import UserSalary from "./UserSalary";
+import Paycheck from "./Paycheck";
 
 export default function App(): JSX.Element {
   return (
@@ -30,6 +33,14 @@ export default function App(): JSX.Element {
         />
         <Route path="reschedule" element={<ScheduleForm />} />
         <Route path="news" element={<News />} />
+        <Route
+          path="paycheck"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
       </Route>
       <Route path="/admin" element={<LayoutAdmin />}>
         <Route index element={<News />} />
@@ -54,6 +65,15 @@ export default function App(): JSX.Element {
           element={
             <div className="container">
               <UserDetails />
+            </div>
+          }
+        />
+        <Route
+          path="excel/upload"
+          element={
+            <div className="container login-container login-container-900">
+              <UploadExcelFile />
+              <LoadUsersWithExcel />
             </div>
           }
         />
