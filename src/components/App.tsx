@@ -33,6 +33,14 @@ export default function App(): JSX.Element {
         />
         <Route path="reschedule" element={<ScheduleForm />} />
         <Route path="news" element={<News />} />
+        <Route
+          path="paycheck"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
       </Route>
       <Route path="/admin" element={<LayoutAdmin />}>
         <Route index element={<News />} />
@@ -94,14 +102,6 @@ export default function App(): JSX.Element {
           }
         />
       </Route>
-      <Route
-        path="paycheck"
-        element={
-          <div className="container">
-            <Paycheck />
-          </div>
-        }
-      />
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );
