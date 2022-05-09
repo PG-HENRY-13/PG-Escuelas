@@ -7,7 +7,28 @@ import { User } from "../models/User";
 // const upload = multer({ dest: "/resources/uploads/" });
 const router = Router();
 
-export var json = {};
+export var wagingJson = [
+  {
+    CGO: "000000", // Cargo
+    DENOMINACION: "CARGO INEXISTENTE", //nombre del cargo
+    P001: 0, // codigo del basico
+    C100003: 0, // MONTO DEL BASICO
+    P1723: 0, // codigo del Ded. Funcional
+    C117230: 0, // MONTO DEL Ded. Funcional
+    P1763: 0, // codigo del Ded. Excl (dias no laborados)
+    C117630: 0, //MONTO DEL Ded. Excl (dias no laborados)
+    P1821: 0, // codigo del Compl. Esp.
+    C118210: 0, // MONTO del Compl. Esp.
+    C118360: 0, // MONTO Antigüedad (por cada año)
+    C110230: 0, // MONTO Ad. Rem
+    C117730: 0, // MONTO Est. Doc (ni idea)
+    C117430: 0, // MONTO Supl. Cap (ni idea)
+    C112620: 0, // MONTO Gtos. Inh. Lab. Doc. (ni idea)
+    C118420: 0, // MONTO P. Cal Ed
+    C117930: 0, // MONTO Func. Jer
+    G112335: 0, // MONTO Gremio (%)
+  },
+];
 
 router.get("/gob", async (req: Request, res: Response, next: NextFunction) => {
   const jsonFromExcel = excelToJson({
@@ -21,9 +42,9 @@ router.get("/gob", async (req: Request, res: Response, next: NextFunction) => {
       "*": "{{columnHeader}}",
     },
   });
-  json = jsonFromExcel.salarios;
+  wagingJson = jsonFromExcel.salarios;
   console.log(jsonFromExcel.salarios);
-  return res.status(200).json(json);
+  return res.status(200).json(wagingJson);
 });
 
 router.post(
