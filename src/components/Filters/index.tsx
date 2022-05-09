@@ -28,14 +28,14 @@ export default function FilterUser(): JSX.Element {
   });
 
   return (
-    <div>
-      <select onChange={(e) => handleFilter(e.target.value)}>
+    <div className="form-container-select">
+      <select className="form-select" onChange={(e) => handleFilter(e.target.value)}>
         <option value="">Todos</option>
         <option value="admin">Admin</option>
         <option value="empleado">Empleado</option>
         <option value="gerente">Gerente</option>
       </select>
-      <select onChange={(e) => handleFilterJobs(e.target.value)}>
+      <select className="form-select" onChange={(e) => handleFilterJobs(e.target.value)}>
         <option value="">Todos</option>
         {jobs.map((jobs: any) => {
           return <option value={jobs.id}>{jobs.name}</option>;

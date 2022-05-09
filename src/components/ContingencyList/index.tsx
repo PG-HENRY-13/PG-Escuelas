@@ -20,7 +20,7 @@ export default function ContingencyList(): JSX.Element {
 
   return (
     <div className="userlist-filter-container">
-      <div>
+      <div className="na-title">
         <h1>Listado de contingencias</h1>
         {loadedContingencies.length ? (
           <div>
@@ -37,7 +37,9 @@ export default function ContingencyList(): JSX.Element {
             })}
           </div>
         ) : (
+          <div className="na-title">
           <h3>Sin contingencias que atender</h3>
+          </div>
         )}
       </div>
     </div>
