@@ -76,6 +76,7 @@ export default function AbsenceForm(): JSX.Element {
               onChange={changeHandler1}
               rows={4}
               cols={60}
+              value={data.reason}
               name="reason"
             ></textarea>
           </div>
@@ -87,6 +88,7 @@ export default function AbsenceForm(): JSX.Element {
               className="form-control"
               type="date"
               name="date"
+              value={data.date}
               onChange={changeHandler1}
             ></input>
           </div>
@@ -97,6 +99,7 @@ export default function AbsenceForm(): JSX.Element {
             <input
               className="form-control"
               type="date"
+              value={data.endDate}
               name="endDate"
               onChange={changeHandler1}
             ></input>

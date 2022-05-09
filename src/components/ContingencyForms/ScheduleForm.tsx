@@ -106,6 +106,7 @@ export default function ScheduleForm(props: any): JSX.Element {
               rows={4}
               cols={60}
               name="reason"
+              value={data.reason}
             ></textarea>
           </div>
         </fieldset>
@@ -117,6 +118,7 @@ export default function ScheduleForm(props: any): JSX.Element {
               type="date"
               name="date"
               onChange={changeHandler1}
+              value={data.date}
             ></input>
           </div>
         </fieldset>

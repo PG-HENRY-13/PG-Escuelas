@@ -12,7 +12,7 @@ export default function ContingencyItem(props: any): JSX.Element {
   return (
     <div>
       <h4>
-        Motivo:{" "}
+        Asunto:{" "}
         {props.contingencyType.charAt(0).toUpperCase() +
           props.contingencyType.slice(1)}
       </h4>
