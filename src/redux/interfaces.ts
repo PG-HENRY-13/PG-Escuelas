@@ -103,3 +103,8 @@ export interface LoadUserAction {
   type: ActionTypes.loadUser;
   payload: UserForm;
 }
+
+export interface SaveUsersFromExcelFileAction {
+  type: ActionTypes.saveUsersFromExcelFile;
+  payload: UserForm;
+}
