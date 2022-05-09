@@ -19,9 +19,11 @@ import UserSalary from "./UserSalary";
 import Paycheck from "./Paycheck";
 import {ToastContainer} from "react-toastify";
 import { loadUserAuth } from "../redux/actions/authActions";
+import { stat } from "fs";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
+  const userLogged = useSelector((state: any) => state.authState)
 
   useEffect(() => {
     dispatch(loadUserAuth() as any);
@@ -30,7 +32,7 @@ export default function App(): JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/user" element={<LayoutEmployee />}>
+      {userLogged.role==='empleado'?<Route path="/user" element={<LayoutEmployee />}>
         <Route index element={<News />} />
         <Route
           path=":cuil"
@@ -58,8 +60,8 @@ export default function App(): JSX.Element {
             </div>
           }
         />
-      </Route>
-      <Route path="/admin" element={<LayoutAdmin />}>
+      </Route>:null}
+      {userLogged.role==='admin'?<Route path="/admin" element={<LayoutAdmin />}>
         <Route index element={<News />} />
         <Route
           path="createuser"
@@ -118,7 +120,7 @@ export default function App(): JSX.Element {
             </div>
           }
         />
-      </Route>
+      </Route>:null}
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );

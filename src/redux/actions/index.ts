@@ -246,9 +246,6 @@ export const sendContingency = (data: Contingency) => {
   axios
     .post(contingenciesUrl, {
       ...data,
-      cuil: "200422352811",
-      jobId: "1010",
-      fullName: "Armando EsteBanquito",
     })
     .then(() => alert("Enviado"));
 };
