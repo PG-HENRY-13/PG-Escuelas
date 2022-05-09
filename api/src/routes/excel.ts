@@ -41,8 +41,12 @@ router.post(
       },
     });
     // console.log(jsonFromExcel.Users);
-    await User.bulkCreate(jsonFromExcel.Users);
-    return res.status(200).json(jsonFromExcel);
+    try {
+      // await User.bulkCreate(jsonFromExcel.Users);
+      return res.status(200).json(jsonFromExcel.Users);
+    } catch (error) {
+      return res.status(400).json("Uno o más usuarios enviados ya existen");
+    }
   }
 );
 
