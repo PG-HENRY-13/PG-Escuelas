@@ -2,10 +2,12 @@ import React from "react";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
+import LoadUsersWithExcel from "./LoadUsersWithExcel";
 import Login from "./Login";
 import NewAccount from "./NewAccount";
 import News from "./News";
 import UpdateUser from "./UpdateUser";
+import UploadExcelFile from "./UploadExcelFile";
 import UserDetails from "./UserDetails";
 import UserList from "./UserList";
 
@@ -36,6 +38,15 @@ export default function App(): JSX.Element {
           element={
             <div className="container">
               <UserDetails />
+            </div>
+          }
+        />
+        <Route
+          path="waging/upload"
+          element={
+            <div className="container">
+              <UploadExcelFile />
+              <LoadUsersWithExcel />
             </div>
           }
         />
