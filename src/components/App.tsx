@@ -15,6 +15,7 @@ import AbsenceForm from "./ContingencyForms/AbsenceForm";
 import ScheduleForm from "./ContingencyForms/ScheduleForm";
 import ContingencyList from "./ContingencyList";
 import UserSalary from "./UserSalary";
+import Paycheck from "./Paycheck";
 
 export default function App(): JSX.Element {
   return (
@@ -32,6 +33,14 @@ export default function App(): JSX.Element {
         />
         <Route path="reschedule" element={<ScheduleForm />} />
         <Route path="news" element={<News />} />
+        <Route
+          path="paycheck"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
       </Route>
       <Route path="/admin" element={<LayoutAdmin />}>
         <Route index element={<News />} />

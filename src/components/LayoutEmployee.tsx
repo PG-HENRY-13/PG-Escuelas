@@ -31,6 +31,11 @@ export default function LayoutEmployee(): JSX.Element {
               </li>
             </ul>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/user/paycheck">
+              Recibo de sueldo
+            </NavLink>
+          </li>
         </ul>
       </nav>
       <section>
