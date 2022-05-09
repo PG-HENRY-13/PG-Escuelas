@@ -2,6 +2,7 @@ import { Response, Request, Router, NextFunction } from "express";
 import { json } from "stream/consumers";
 import { User } from "../models/User";
 import { Job } from "../models/Job";
+import {encryptPwd} from '../utils/encryptPwd'
 const router = Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
@@ -42,12 +43,15 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     if (!user.role) {
       user.role = "empleado";
     }
+    // user.password = await encryptPwd( req.body.password);
+    user.password = await encryptPwd( req.body.password);
+    console.log("llegue al user");
     const [newUser, created] = await User.findOrCreate({
       where: {
         cuil: req.body.cuil,
       },
       defaults: {
-        ...user,
+        ...user
       },
     });
     if (jobs.length && created) {
@@ -91,8 +95,9 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
     //ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
 
     const existingUser = await User.findByPk(userUpdate.cuil);
-
+  
     if (existingUser) {
+      userUpdate.password = await encryptPwd(userUpdate.password);
       await User.update(
         {
           name: userUpdate.name,
@@ -103,6 +108,7 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
           seniorityDate: userUpdate.seniorityDate,
           gender: userUpdate.gender,
           role: userUpdate.role,
+          password:userUpdate.password,
           //AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
         },
         {

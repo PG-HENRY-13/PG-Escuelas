@@ -1,13 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import "../styles/Layouts.css";
 export default function LayoutEmployee(): JSX.Element {
+  const cuil=useSelector((state:any) => state.authState.id)
   return (
     <main>
       <nav className="navbar navbar-expand-lg">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/createuser">
+            <NavLink className="nav-link" to={"/user/"+cuil}>
               Mi perfil
             </NavLink>
           </li>

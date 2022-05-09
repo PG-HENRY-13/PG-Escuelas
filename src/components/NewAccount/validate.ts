@@ -1,12 +1,12 @@
 import { User, UserForm } from "../../redux/interfaces";
 
-export default function validate(input: UserForm) {
+export default function validate(input: any) {
   let error: any = {};
   if (input.hasOwnProperty("cuil")) {
     if (
       !/^\d+$/.test(input.cuil) ||
       input.cuil.length > 11 ||
-      input.cuil.length < 10
+      input.cuil.length < 11
     )
       error.cuil = "Ingrese un Cuil valido";
   }
