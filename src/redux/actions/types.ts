@@ -10,6 +10,7 @@ import {
   UpdateFormUserAction,
   FilterRolesAction,
   FilterJobsAction,
+  SaveUsersFromExcelFileAction,
   FetchContingenciesAction,
   DeleteContingencyAction,
   LoadUserSalaryAction,
@@ -29,6 +30,7 @@ export enum ActionTypes {
   updateFormUser,
   fetchUserJobs,
   filterJobs,
+  saveUsersFromExcelFile,
   fetchContingencies,
   deleteContingency,
   loadUserSalary,
@@ -47,6 +49,7 @@ export type Action =
   | UpdateFormUserAction
   | FilterRolesAction
   | FilterJobsAction
+  | SaveUsersFromExcelFileAction
   | FetchContingenciesAction
   | DeleteContingencyAction
   | LoadUserSalaryAction;
