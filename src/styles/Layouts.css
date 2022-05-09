@@ -50,3 +50,7 @@
 .dropdown-item {
   color: white;
 }
+.close-session {
+  position:absolute;
+  right:10px
+}

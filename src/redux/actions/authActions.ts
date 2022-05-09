@@ -4,7 +4,7 @@ import { ActionTypes } from "./types";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { url } from "./index";
-import { SignInAction } from "../interfaces";
+import { SignInAction, SignOutAction } from "../interfaces";
 
 export const signIn = (data: any) => {
   return async (dispatch: Dispatch) => {
@@ -34,5 +34,14 @@ export const loadUserAuth = () => {
         payload: token,
       });
     } else return null;
+  };
+};
+
+export const signOut = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionTypes.signOut,
+      
+    })
   };
 };

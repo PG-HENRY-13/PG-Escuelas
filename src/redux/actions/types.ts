@@ -15,7 +15,8 @@ import {
   DeleteContingencyAction,
   LoadUserSalaryAction,
   SignInAction,
-  LoadUserAuthAction
+  LoadUserAuthAction,
+  SignOutAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -37,7 +38,8 @@ export enum ActionTypes {
   deleteContingency,
   loadUserSalary,
   signIn,
-  loadUserAuth
+  loadUserAuth,
+  signOut
 }
 
 export type Action =
@@ -58,4 +60,5 @@ export type Action =
   | DeleteContingencyAction
   | LoadUserSalaryAction
   | SignInAction
-  | LoadUserAuthAction;
+  | LoadUserAuthAction
+  | SignOutAction;
