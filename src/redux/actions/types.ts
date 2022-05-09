@@ -12,6 +12,7 @@ import {
   FilterJobsAction,
   FetchContingenciesAction,
   DeleteContingencyAction,
+  LoadUserSalaryAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -30,6 +31,7 @@ export enum ActionTypes {
   filterJobs,
   fetchContingencies,
   deleteContingency,
+  loadUserSalary,
 }
 
 export type Action =
@@ -46,4 +48,5 @@ export type Action =
   | FilterRolesAction
   | FilterJobsAction
   | FetchContingenciesAction
-  | DeleteContingencyAction;
+  | DeleteContingencyAction
+  | LoadUserSalaryAction;

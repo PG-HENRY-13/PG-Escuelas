@@ -12,6 +12,7 @@ import UserList from "./UserList";
 import AbsenceForm from "./ContingencyForms/AbsenceForm";
 import ScheduleForm from "./ContingencyForms/ScheduleForm";
 import ContingencyList from "./ContingencyList";
+import UserSalary from "./UserSalary";
 
 export default function App(): JSX.Element {
   return (
@@ -69,6 +70,14 @@ export default function App(): JSX.Element {
           element={
             <div className="container">
               <ContingencyList />
+            </div>
+          }
+        />
+        <Route
+          path="salary/:cuil"
+          element={
+            <div>
+              <UserSalary />
             </div>
           }
         />

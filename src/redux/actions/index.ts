@@ -19,6 +19,7 @@ import {
   Contingency,
   FetchContingenciesAction,
   DeleteContingencyAction,
+  LoadUserSalaryAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -28,6 +29,7 @@ const filterJobsUrl = url + "filterjobs?JobId=";
 const filterRolesUrl = url + "role?role=";
 const employeesUrl = url + "employees";
 const contingenciesUrl = url + "contingencies";
+const wageUrl = url + "salary";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
@@ -155,6 +157,20 @@ export const loadUser = (userCuil: number) => {
     }); ///CAMBIAR EL ANY
     dispatch<LoadUserAction>({
       type: ActionTypes.loadUser,
+      payload: response.data,
+    });
+  };
+};
+
+export const loadUserSalary = (userCuil: number) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any>(wageUrl + "/" + userCuil, {
+      data: {
+        userCuil: userCuil,
+      },
+    }); ///CAMBIAR EL ANY
+    dispatch<LoadUserSalaryAction>({
+      type: ActionTypes.loadUserSalary,
       payload: response.data,
     });
   };
