@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { assignJobToUser, updateFormUser } from "../../redux/actions";
 import { Job, StoreState, User } from "../../redux/interfaces";
 import { JobAssing } from "../../redux/interfaces";
-
+import "../../styles/AssignJobs.css"
 export default function AssignJobs(props: JobAssing): JSX.Element {
   const dispatch = useDispatch();
 
@@ -33,19 +33,19 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
 
   return (
     <div>
-      <div className="form-group">
+      <div className="form-container-jobs">
         <br />
-        <label className="col-sm-2 control-label">
+        <label className="na-title">
           Asignando cargos a {props.name}
         </label>
-        <select onChange={changeHandler} name="jobId" id="job">
+        <select className="form-select" onChange={changeHandler} name="jobId" id="job">
           {jobs.map((job: Job) => {
             return <option value={[job.name, job.id]}>{job.name}</option>;
           })}
         </select>
       </div>
       <br />
-      <button
+      <button className="button"
         onClick={(e) => {
           let tempJobs = [...loadedUser.jobs];
           return tempJobs.filter((j) => j.id === input.id).length > 0
@@ -64,8 +64,8 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
         {loadedUser.jobs?.map((job: Job) => {
           return (
             <div>
-              <span>{job.name}</span>
-              <button
+              <span >{job.name}</span>
+              <button className="button"
                 name={job.name}
                 value={job.id}
                 hidden={!props.removableJobs}

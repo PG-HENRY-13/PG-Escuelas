@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Job } from "../../redux/interfaces";
 import "../../styles/UserDetails.css";
+import Back_Logo from "../../styles/img/Back_Logo.png"
+
 export default function UserDetails(): JSX.Element {
   let { cuil } = useParams();
   const dispatch = useDispatch();
@@ -22,7 +24,7 @@ export default function UserDetails(): JSX.Element {
         <Link to="/admin/userlist">
           <img
             className="back-img"
-            src="http://cdn.onlinewebfonts.com/svg/img_490217.png"
+            src={Back_Logo}
           ></img>
         </Link>
       </div>
@@ -77,18 +79,20 @@ export default function UserDetails(): JSX.Element {
               : "Gerente"}
           </label>
           <br></br>
-          <h5>Trabajos:</h5>
+          <div className="jobs-container">
+          <label className="detail-label">Trabajos:</label>
           {userToUpdate.jobs.length ? (
             userToUpdate.jobs.map((job: Job) => {
               return <h6>- {job.name}</h6>;
             })
           ) : (
-            <span>Sin trabajos asignados</span>
+            <label className="detail-label">Sin trabajos asignados</label>
           )}
           <br></br>
-          <Link to={"/admin/updateuser/" + cuil} className="barBtn">
-            Editar Usuario
+          <Link to={"/admin/updateuser/" + cuil} >
+            <button className="button">Editar Usuario</button>
           </Link>
+          </div>
         </div>
       </div>
     </div>
