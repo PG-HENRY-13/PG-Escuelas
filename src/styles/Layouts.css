@@ -23,20 +23,18 @@
 .nav-logo-center {
   position: absolute;
   left: 50%;
-  
+
   top: -15px;
   margin-left: -50px !important; /* 50% of your logo width */
   display: block;
 }
-
-
 
 .nav-logo {
   width: 90px;
   height: 90px;
 }
 
-.nav-logo:hover{
+.nav-logo:hover {
   transform: scale(1.1);
 }
 
