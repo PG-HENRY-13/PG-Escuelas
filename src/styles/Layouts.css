@@ -41,3 +41,12 @@
 :root {
   --main-nav-color: #212121;
 }
+
+.dropdown-menu {
+  background-color: #212121;
+  color: white;
+}
+
+.dropdown-item {
+  color: white;
+}

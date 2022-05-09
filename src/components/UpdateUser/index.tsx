@@ -113,14 +113,20 @@ export default function UpdateUser(): JSX.Element {
             <span className="err">{error.lastName}</span>
           </div>
           <div className="form-group">
-            <label className="col-sm-2 control-label">Contraseña:</label>
+            <label className="col-sm-2 control-label">Restear contraseña:</label>
+            <br />
             <input
-              className="form-control"
+            type="checkbox"
+              // className="form-control"
               name="password"
-              value={data.password}
-              onChange={changeHandler}
+              // value={data.password}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  dispatch(updateFormUser({ ...data, password: '123456' }));
+                }
+              }}
             ></input>
-            <span className="err">{error.password}</span>
+            {/* <span className="err">{error.password}</span> */}
           </div>
           <div className="form-group">
             <label className="col-sm-6 control-label">Escalafon:</label>

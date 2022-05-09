@@ -109,8 +109,8 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
       });
     })
     .catch((err: any) => {
-      alert("Eror, el usuario ya existe en la db");
-      console.log("error: ", err);
+      alert("Error, el usuario ya existe en la db");
+      console.log("error: ", err.message);
     });
 };
 
