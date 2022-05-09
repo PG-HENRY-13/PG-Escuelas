@@ -16,13 +16,15 @@ import {
   UserForm,
   UpdateFormUserAction,
   FilterJobsAction,
+  SaveUsersFromExcelFileAction,
 } from "../interfaces";
 
-const url = "http://localhost:3001/api/";
+export const url = "http://localhost:3001/api/";
 const userUrl = url + "user";
 const jobUrl = url + "job";
 const filterJobsUrl = url + "filterjobs?JobId=";
 const filterRolesUrl = url + "role?role=";
+const excelUrl = url + "excel";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
@@ -194,6 +196,19 @@ export const filterJobs = (JobId: string) => {
     });
     dispatch<FilterJobsAction>({
       type: ActionTypes.filterJobs,
+      payload: response.data,
+    });
+  };
+};
+
+///// EXCEL ACTIONS
+
+export const saveUsersFromExcelFile = () => {
+  return async (dispatch: Dispatch) => {
+    console.log();
+    const response = await axios.post<any>(excelUrl + "/users");
+    dispatch<SaveUsersFromExcelFileAction>({
+      type: ActionTypes.saveUsersFromExcelFile,
       payload: response.data,
     });
   };

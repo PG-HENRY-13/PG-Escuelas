@@ -10,6 +10,7 @@ import {
   UpdateFormUserAction,
   FilterRolesAction,
   FilterJobsAction,
+  SaveUsersFromExcelFileAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -26,6 +27,7 @@ export enum ActionTypes {
   updateFormUser,
   fetchUserJobs,
   filterJobs,
+  saveUsersFromExcelFile,
 }
 
 export type Action =
@@ -40,4 +42,5 @@ export type Action =
   | FilterRolesAction
   | UpdateFormUserAction
   | FilterRolesAction
-  | FilterJobsAction;
+  | FilterJobsAction
+  | SaveUsersFromExcelFileAction;
