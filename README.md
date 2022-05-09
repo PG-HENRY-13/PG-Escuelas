@@ -40,6 +40,7 @@ NODE_ENV="development"
 API_PORT="3001"
 API_HOST="localhost"
 CORS="http://localhost:3000"
+JWT_SECRET_KEY="clavesecreta"
 
 ```
 ___________
