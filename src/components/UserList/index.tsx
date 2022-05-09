@@ -72,7 +72,7 @@ export default function UserList(): JSX.Element {
               Teléfono <span className="resize-handle"></span>
             </th>
             <th data-type="text-long">
-              Cargo <span className="resize-handle"></span>
+              Rol <span className="resize-handle"></span>
             </th>
             <th data-type="text-short">
               Dirección <span className="resize-handle"></span>

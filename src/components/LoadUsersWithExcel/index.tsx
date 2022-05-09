@@ -11,7 +11,7 @@ export default function LoadUsersWithExcel(): JSX.Element {
   }
 
   return (
-    <div className="login-container">
+    <div>
       <div className="form-button-container">
         <form onSubmit={loadData}>
           <button className="button" type="submit">

@@ -60,9 +60,9 @@ export default function App(): JSX.Element {
           }
         />
         <Route
-          path="waging/upload"
+          path="excel/upload"
           element={
-            <div className="container">
+            <div className="container login-container login-container-900">
               <UploadExcelFile />
               <LoadUsersWithExcel />
             </div>

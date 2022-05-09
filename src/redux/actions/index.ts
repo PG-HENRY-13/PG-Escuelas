@@ -24,7 +24,7 @@ import {
 } from "../interfaces";
 
 export const url = "http://localhost:3001/api/";
-const userUrl = url + "user";
+export const userUrl = url + "user";
 const jobUrl = url + "job";
 const filterJobsUrl = url + "filterjobs?JobId=";
 const filterRolesUrl = url + "role?role=";
@@ -226,14 +226,22 @@ export const filterJobs = (JobId: string) => {
 
 export const saveUsersFromExcelFile = () => {
   return async (dispatch: Dispatch) => {
-    console.log();
-    const response = await axios.post<any>(excelUrl + "/users");
-    dispatch<SaveUsersFromExcelFileAction>({
-      type: ActionTypes.saveUsersFromExcelFile,
-      payload: response.data,
-    });
+    try {
+      const response = await axios.post<any>(excelUrl + "/users");
+      response.data.map(async (user: User) => await axios.post(userUrl, user));
+      dispatch<SaveUsersFromExcelFileAction>({
+        type: ActionTypes.saveUsersFromExcelFile,
+        payload: response.data,
+      });
+      alert("Usuarios cargados");
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
+
+/// CONTINGENCIES ACTIONS
+
 export const sendContingency = (data: Contingency) => {
   axios
     .post(contingenciesUrl, {

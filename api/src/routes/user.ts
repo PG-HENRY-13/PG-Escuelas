@@ -38,10 +38,13 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { jobs } = req.body;
     const user = req.body;
-    console.log("llegue al user");
+    console.log("llegue al user con ", user);
+    if (!user.role) {
+      user.role = "empleado";
+    }
     const [newUser, created] = await User.findOrCreate({
       where: {
-        name: req.body.name,
+        cuil: req.body.cuil,
       },
       defaults: {
         ...user,

@@ -17,14 +17,14 @@ export default function UploadExcelFile(): JSX.Element {
   // }
 
   return (
-    <div className="usersform-container">
-      <div className="na-title">
+    <div className="container">
+      <div>
         <h1>Cargar archivo de Excel</h1>
       </div>
       <form
       // onSubmit={submit}
       >
-        <div className="form-container">
+        <div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Subir Archivo:</label>
             <input
