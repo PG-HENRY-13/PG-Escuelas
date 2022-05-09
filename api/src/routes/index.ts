@@ -24,10 +24,7 @@ router.use("/excel", excelRoutes);
 router.use("/filterjobs", filterJobsRoutes);
 router.use("/test", testRoutes);
 
-<<<<<<< HEAD
 router.use("/contingencies", contingenciesRoutes);
 router.use("/salary", WageConcepts);
-=======
 
->>>>>>> [CREATE] Route login
 export default router;

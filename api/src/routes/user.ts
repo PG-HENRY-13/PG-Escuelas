@@ -95,8 +95,9 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
     //ES NECESARIO RECIBIR LOS DATOS DESDE EL BODY
 
     const existingUser = await User.findByPk(userUpdate.cuil);
-
+  
     if (existingUser) {
+      userUpdate.password = await encryptPwd(userUpdate.password);
       await User.update(
         {
           name: userUpdate.name,
@@ -107,6 +108,7 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
           seniorityDate: userUpdate.seniorityDate,
           gender: userUpdate.gender,
           role: userUpdate.role,
+          password:userUpdate.password,
           //AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
         },
         {

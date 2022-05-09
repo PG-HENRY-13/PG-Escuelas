@@ -6,7 +6,7 @@ export default function validate(input: any) {
     if (
       !/^\d+$/.test(input.cuil) ||
       input.cuil.length > 11 ||
-      input.cuil.length < 10
+      input.cuil.length < 11
     )
       error.cuil = "Ingrese un Cuil valido";
   }
