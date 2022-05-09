@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { sendContingency } from "../../redux/actions";
 import { ContingencyType } from "../../redux/interfaces";
 export default function ScheduleForm(props: any): JSX.Element {
@@ -24,6 +25,9 @@ export default function ScheduleForm(props: any): JSX.Element {
       ...data,
       contingencyType: type,
       hasNotice: data.hasNotice === "true" ? true : false,
+      fullName: loggedUser.name + " " + loggedUser.lastName,
+      jobId: "1010",
+      cuil: loggedUser.id,
     });
 
     setData({
@@ -35,6 +39,9 @@ export default function ScheduleForm(props: any): JSX.Element {
     });
   }
 
+  const loggedUser = useSelector((state: any) => {
+    return state.authState;
+  });
   // const [data, setData] = useState({
   //   hasNotice: "true",
   //   type: "ola",

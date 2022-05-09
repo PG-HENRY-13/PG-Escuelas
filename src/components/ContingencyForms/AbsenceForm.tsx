@@ -12,6 +12,9 @@ export default function AbsenceForm(): JSX.Element {
       //el dato se substitute no se manda actualmente
       ...data,
       hasNotice: data.hasNotice === "true" ? true : false,
+      fullName: loggedUser.name + " " + loggedUser.lastName,
+      jobId: "1010",
+      cuil: loggedUser.id,
     };
     if (!data.endDate) delete toSend.endDate;
     sendContingency(toSend);
@@ -25,6 +28,10 @@ export default function AbsenceForm(): JSX.Element {
     });
   }
 
+  const loggedUser = useSelector((state: any) => {
+    return state.authState;
+  });
+
   const [data, setData] = useState({
     hasNotice: "true",
     contingencyType: ContingencyType.Absence,
@@ -32,10 +39,6 @@ export default function AbsenceForm(): JSX.Element {
     date: "",
     endDate: "",
     substitute: "",
-  });
-
-  const loggedUser = useSelector((state: any) => {
-    return state.usersState.userForm;
   });
 
   function changeHandler1(e: any) {

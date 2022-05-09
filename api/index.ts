@@ -40,7 +40,8 @@ sequelize
         cuil: "23042275281",
         name: "Carlos Salvador",
         lastName: "Bilardo",
-        password: "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6",
+        password:
+          "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6",
         address: "Kiricocho 13",
         phoneNumber: "01113131313",
         emailAddress: "elDoctor@gmail.com",
@@ -52,7 +53,8 @@ sequelize
         cuil: "20042235281",
         name: "Horacio",
         lastName: "Salazar",
-        password: "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6",
+        password:
+          "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6",
         address: "sí tiene 8",
         phoneNumber: "01113131313",
         emailAddress: "elDoctor@gmail.com",
