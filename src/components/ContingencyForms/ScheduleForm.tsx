@@ -25,7 +25,7 @@ export default function ScheduleForm(props: any): JSX.Element {
       ...data,
       contingencyType: type,
       hasNotice: data.hasNotice === "true" ? true : false,
-      fullName: loggedUser.name + loggedUser.lastName,
+      fullName: loggedUser.name + " " + loggedUser.lastName,
       jobId: "1010",
       cuil: loggedUser.id,
     });
