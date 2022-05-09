@@ -7,7 +7,6 @@ import {
   Default,
   PrimaryKey,
   DataType,
-  HasOne,
   ForeignKey,
   BelongsTo,
 } from "sequelize-typescript";

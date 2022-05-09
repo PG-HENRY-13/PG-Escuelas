@@ -29,6 +29,7 @@ const initialState: StoreState = {
     role: "",
     jobs: [],
   },
+  contingencies: [],
 };
 
 export const usersReducer = (
@@ -78,6 +79,18 @@ export const usersReducer = (
       return {
         ...state,
         users: action.payload,
+      };
+    case ActionTypes.fetchContingencies:
+      return {
+        ...state,
+        contingencies: action.payload,
+      };
+    case ActionTypes.deleteContingency:
+      return {
+        ...state,
+        contingencies: state.contingencies.filter(
+          (el) => el.id !== action.payload
+        ),
       };
 
     default:

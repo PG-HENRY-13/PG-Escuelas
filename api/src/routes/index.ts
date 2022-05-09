@@ -8,6 +8,9 @@ import filterJobsRoutes from "./filterjobs";
 import excelRoutes from "./excel";
 import testRoutes from "./test";
 
+import contingenciesRoutes from "./contingencies";
+
+import WageConcepts from "./WageConcepts";
 const router = Router();
 
 router.use("/user", userRoutes);
@@ -20,4 +23,6 @@ router.use("/excel", excelRoutes);
 router.use("/filterjobs", filterJobsRoutes);
 router.use("/test", testRoutes);
 
+router.use("/contingencies", contingenciesRoutes);
+router.use("/salary", WageConcepts);
 export default router;
