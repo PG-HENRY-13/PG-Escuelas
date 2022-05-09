@@ -1,0 +1,36 @@
+.paycheck-container {
+  margin: 30px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fafafa;
+  width: 90%;
+}
+.empDetail {
+  border: 2px solid black;
+  font-size: 11px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.empDetail th {
+  padding: 4px;
+  font-size: 12px;
+}
+.myBackground {
+  text-align: center;
+  border: 1px solid black;
+  height: 50px;
+}
+.myAlign {
+  border: 1px solid black;
+}
+.table-border {
+  border: 1px solid black;
+  background-color: #e2e2e2;
+}
+.footer {
+  border-right: 1px solid black;
+}
+.footer-center {
+  text-align: center;
+}

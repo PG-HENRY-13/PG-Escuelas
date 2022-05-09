@@ -8,6 +8,7 @@ import News from "./News";
 import UpdateUser from "./UpdateUser";
 import UserDetails from "./UserDetails";
 import UserList from "./UserList";
+import Paycheck from "./Paycheck";
 
 export default function App(): JSX.Element {
   return (
@@ -59,6 +60,14 @@ export default function App(): JSX.Element {
           }
         />
       </Route>
+      <Route
+        path="paycheck"
+        element={
+          <div className="container">
+            <Paycheck />
+          </div>
+        }
+      />
       <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );
