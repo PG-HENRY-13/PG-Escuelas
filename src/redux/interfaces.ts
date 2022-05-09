@@ -182,3 +182,26 @@ export interface LoadUserSalaryAction {
   type: ActionTypes.loadUserSalary;
   payload: UserFormSalary;
 }
+
+// Auth interfaces
+
+export interface AuthStateInterface {
+  token: any;
+  name:string;
+  lastName:string;
+  id:string;
+  role:string;
+  loginStatus:string;
+  loginError:string;
+  userLoded:boolean;
+}
+
+export interface SignInAction {
+  type:ActionTypes.signIn;
+  payload: any;
+}
+
+export interface LoadUserAuthAction {
+  type:ActionTypes.loadUserAuth;
+  payload: any;
+}

@@ -1,6 +1,6 @@
 import { User, UserForm } from "../../redux/interfaces";
 
-export default function validate(input: UserForm) {
+export default function validate(input: any) {
   let error: any = {};
   if (input.hasOwnProperty("cuil")) {
     if (

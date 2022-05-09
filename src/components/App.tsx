@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Navigate, useParams } from "react-router-dom";
 import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
@@ -16,8 +17,16 @@ import ScheduleForm from "./ContingencyForms/ScheduleForm";
 import ContingencyList from "./ContingencyList";
 import UserSalary from "./UserSalary";
 import Paycheck from "./Paycheck";
+import {ToastContainer} from "react-toastify";
+import { loadUserAuth } from "../redux/actions/authActions";
 
 export default function App(): JSX.Element {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUserAuth() as any);
+  },[dispatch])
+  
   return (
     <Routes>
       <Route path="/" element={<Login />} />

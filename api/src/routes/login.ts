@@ -14,12 +14,12 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   });
   const { error } = schema.validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
+  
   let user = await User.findByPk(cuil);
   if (!user) return res.status(400).send("Usuario incorrecto");
 
   const isValid = await bcrypt.compare(password, user.password);
-  if (!isValid) return res.status(400).send("Contraseña incorrecta");
+  if (!isValid) return res.status(400).send({msg:'Contraseña incorrecta'});
 
   const token = genToken(user);
   res.send(token);

@@ -14,6 +14,8 @@ import {
   FetchContingenciesAction,
   DeleteContingencyAction,
   LoadUserSalaryAction,
+  SignInAction,
+  LoadUserAuthAction
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -34,6 +36,8 @@ export enum ActionTypes {
   fetchContingencies,
   deleteContingency,
   loadUserSalary,
+  signIn,
+  loadUserAuth
 }
 
 export type Action =
@@ -52,4 +56,6 @@ export type Action =
   | SaveUsersFromExcelFileAction
   | FetchContingenciesAction
   | DeleteContingencyAction
-  | LoadUserSalaryAction;
+  | LoadUserSalaryAction
+  | SignInAction
+  | LoadUserAuthAction;
