@@ -11,7 +11,7 @@ export const genToken = (user: User) => {
     const token = jwt.sign({ 
         id:user.cuil,
         name:user.name, 
-        last_name:user.lastName,
+        lastName:user.lastName,
         role:user.role
     },secretKey as string);
 
