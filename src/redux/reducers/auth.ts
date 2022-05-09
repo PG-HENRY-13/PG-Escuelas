@@ -27,7 +27,7 @@ export const authReducer = (
         token: action.payload,
         name: user.name,
         lastName: user.lastName,
-        id: user.cuil,
+        id: user.id,
         role: user.role,
         loginStatus: "logged",
         loginError: "",

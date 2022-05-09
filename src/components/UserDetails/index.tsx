@@ -21,12 +21,12 @@ export default function UserDetails(): JSX.Element {
   return (
     <div className="user-detail-container">
       <div className="back-img-container">
-        <Link to="/admin/userlist">
+        <a href="javascript:history.back()" >
           <img
             className="back-img"
             src={Back_Logo}
           ></img>
-        </Link>
+        </a>
       </div>
       <div className="na-title">
         <h1>Datos de {userToUpdate.name}</h1>
@@ -41,9 +41,7 @@ export default function UserDetails(): JSX.Element {
             Apellido: {userToUpdate.lastName}
           </label>
           <br></br>
-          <label className="detail-label">
-            Contraseña: {userToUpdate.password}
-          </label>
+          
           <br></br>
           <label className="detail-label">
             Escalafon:{userToUpdate.seniorityDate.split("T")[0]}

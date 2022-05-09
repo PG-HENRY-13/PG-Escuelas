@@ -33,6 +33,14 @@ export default function App(): JSX.Element {
       <Route path="/user" element={<LayoutEmployee />}>
         <Route index element={<News />} />
         <Route
+          path=":cuil"
+          element={
+            <div className="container">
+              <UserDetails />
+            </div>
+          }
+        /> 
+        <Route
           path="absenceReport"
           element={
             <div className="container">
