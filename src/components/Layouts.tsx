@@ -1,9 +1,20 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "../styles/Layouts.css";
 import Logo from "../styles/img/Logo.png";
+import { useDispatch } from "react-redux";
+import { signOut } from "../redux/actions/authActions";
 
 export default function LayoutAdmin(): JSX.Element {
+  const dispatch =useDispatch();
+  const navigate =  useNavigate();
+
+  const handleLogOut = (e: any) => {
+    e.preventDefault();
+    dispatch(signOut() as any)
+    navigate('/')
+  }
+
   return (
     <main>
       <nav className="navbar navbar-expand-lg">
@@ -29,11 +40,15 @@ export default function LayoutAdmin(): JSX.Element {
             </NavLink>
           </li>
 
+          <li className="nav-item close-session">
+            <button onClick={handleLogOut}>Cerrar Sesión</button>
+          </li>
           <li className="nav-logo-center">
             <NavLink className="nav-logo-link" to="/admin/">
               <img className="nav-logo" src={Logo} alt="logo"></img>
             </NavLink>
           </li>
+          
         </ul>
       </nav>
       <section>

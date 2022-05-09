@@ -34,7 +34,18 @@ export const authReducer = (
         userLoded: true,
       };
 
-      
+    case ActionTypes.signOut:
+      localStorage.removeItem("token");
+      return {
+        token: null,
+        name: "",
+        lastName: "",
+        id: "",
+        role: "",
+        loginStatus: "",
+        loginError: "",
+        userLoded: false,
+      };
 
     default:
       return state;

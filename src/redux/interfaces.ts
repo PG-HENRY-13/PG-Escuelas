@@ -208,3 +208,7 @@ export interface LoadUserAuthAction {
   type: ActionTypes.loadUserAuth;
   payload: any;
 }
+export interface SignOutAction {
+  type:ActionTypes.signOut;
+  payload: any;
+}
