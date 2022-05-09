@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { saveUsersFromExcelFile } from "../../redux/actions";
+// import { saveUsersFromExcelFile } from "../../redux/actions";
 import { useState, useEffect } from "react";
 
 export default function UploadExcelFile(): JSX.Element {
