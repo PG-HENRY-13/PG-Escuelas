@@ -4,6 +4,7 @@ export interface StoreState {
   users: User[];
   user: User;
   userForm: UserForm;
+  contingencies: Contingency[] | [];
 }
 
 export interface User {
@@ -17,6 +18,10 @@ export interface User {
   seniorityDate: string;
   gender: string;
   role: string;
+}
+
+export interface EmployeeState {
+  loggedUser: UserForm;
 }
 
 export interface UserForm {
@@ -33,6 +38,7 @@ export interface UserForm {
   role: string;
   jobs: Job[];
 }
+
 export interface JobAssing {
   cuil: string;
   name: string;
@@ -104,6 +110,46 @@ export interface LoadUserAction {
   payload: UserForm;
 }
 
+// employee interfaces
+
+export interface Contingency {
+  id?: number;
+  hasNotice: boolean;
+  contingencyType: ContingencyType;
+  reason?: string;
+  date: string;
+  endDate?: string;
+  hoursNumber?: number;
+}
+
+export interface AbsenceContingency extends Contingency {
+  substitute?: string;
+}
+
+export interface ScheduleContingency extends Contingency {
+  startingHour: string;
+  endingHour: string;
+  implies: string;
+  askedBy: string;
+  days?: string;
+}
+
+export enum ContingencyType {
+  Absence = "ausencia",
+  overtime = "horas extras",
+  lateArrival = "llegada tarde",
+  earlyWithdrawal = "retiro temprano",
+}
+
+export interface FetchContingenciesAction {
+  type: ActionTypes.fetchContingencies;
+  payload: Contingency[];
+}
+
+export interface DeleteContingencyAction {
+  type: ActionTypes.deleteContingency;
+  payload: number;
+}
 export interface Salary {
   basic_salary: number;
   remunerative: number;
