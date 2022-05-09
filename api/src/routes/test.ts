@@ -3,8 +3,8 @@ import excelToJson from "convert-excel-to-json";
 const path = require("path");
 import fs from "fs";
 import { User } from "../models/User";
-const multer = require("multer");
-const upload = multer({ dest: "/resources/uploads/" });
+// const multer = require("multer");
+// const upload = multer({ dest: "/resources/uploads/" });
 const router = Router();
 import { json } from "./excel";
 
