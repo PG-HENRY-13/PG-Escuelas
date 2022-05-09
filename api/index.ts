@@ -50,15 +50,15 @@ sequelize
       },
       {
         cuil: "20042235281",
-        name: "Pruebita",
-        lastName: "Pruebon",
+        name: "Horacio",
+        lastName: "Salazar",
         password: "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6",
         address: "sí tiene 8",
         phoneNumber: "01113131313",
         emailAddress: "elDoctor@gmail.com",
         seniorityDate: "2022-04-29 04:50:12.390 +00:00",
         gender: GenderType.Male,
-        role: RoleType.Admin,
+        role: RoleType.Employee,
       },
     ]);
   })
