@@ -62,4 +62,4 @@ sequelize
       },
     ]);
   })
-  .catch((err) => console.error(err));
+  .catch((err) => console.error(err.message));

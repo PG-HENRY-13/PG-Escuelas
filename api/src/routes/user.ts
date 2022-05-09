@@ -2,6 +2,7 @@ import { Response, Request, Router, NextFunction } from "express";
 import { json } from "stream/consumers";
 import { User } from "../models/User";
 import { Job } from "../models/Job";
+import {encryptPwd} from '../utils/encryptPwd'
 const router = Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
@@ -42,12 +43,14 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     if (!user.role) {
       user.role = "empleado";
     }
+    // user.password = await encryptPwd( req.body.password);
+    console.log("llegue al user");
     const [newUser, created] = await User.findOrCreate({
       where: {
         cuil: req.body.cuil,
       },
       defaults: {
-        ...user,
+        ...user
       },
     });
     if (jobs.length && created) {
