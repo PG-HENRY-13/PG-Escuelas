@@ -16,6 +16,9 @@ import {
   UserForm,
   UpdateFormUserAction,
   FilterJobsAction,
+  Contingency,
+  FetchContingenciesAction,
+  DeleteContingencyAction,
 } from "../interfaces";
 
 const url = "http://localhost:3001/api/";
@@ -23,6 +26,8 @@ const userUrl = url + "user";
 const jobUrl = url + "job";
 const filterJobsUrl = url + "filterjobs?JobId=";
 const filterRolesUrl = url + "role?role=";
+const employeesUrl = url + "employees";
+const contingenciesUrl = url + "contingencies";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
@@ -195,6 +200,43 @@ export const filterJobs = (JobId: string) => {
     dispatch<FilterJobsAction>({
       type: ActionTypes.filterJobs,
       payload: response.data,
+    });
+  };
+};
+
+export const sendContingency = (data: Contingency) => {
+  axios
+    .post(contingenciesUrl, {
+      ...data,
+      cuil: "200422352811",
+      jobId: "1010",
+      fullName: "Armando EsteBanquito",
+    })
+    .then(() => alert("Enviado"));
+};
+
+// export const FetchContingencies = (data: Contingency) => {
+//   axios
+//     .get(contingenciesUrl)
+//     .then((data) => alert("Enviado"));
+// };
+
+export const fetchContingencies = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<Contingency[]>(contingenciesUrl);
+    dispatch<FetchContingenciesAction>({
+      type: ActionTypes.fetchContingencies,
+      payload: response.data,
+    });
+  };
+};
+
+export const deleteContingency = (id: number) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.delete(contingenciesUrl, { data: { id } });
+    dispatch<DeleteContingencyAction>({
+      type: ActionTypes.deleteContingency,
+      payload: id,
     });
   };
 };

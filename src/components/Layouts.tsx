@@ -21,6 +21,11 @@ export default function LayoutAdmin(): JSX.Element {
               Ver lista de usuarios
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/admin/contingencies">
+              Contingencias
+            </NavLink>
+          </li>
         </ul>
       </nav>
       <section>
