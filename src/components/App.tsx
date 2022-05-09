@@ -8,6 +8,7 @@ import News from "./News";
 import UpdateUser from "./UpdateUser";
 import UserDetails from "./UserDetails";
 import UserList from "./UserList";
+import UserSalary from "./UserSalary";
 
 export default function App(): JSX.Element {
   return (
@@ -46,6 +47,15 @@ export default function App(): JSX.Element {
               <UserList />
             </div>
           }
+        />
+        
+      <Route
+        path="salary/:cuil"
+        element={
+          <div>
+            <UserSalary/>
+          </div>
+        }
         />
       </Route>
       <Route path="*" element={<h1>404</h1>} />

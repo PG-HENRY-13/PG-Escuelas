@@ -103,3 +103,32 @@ export interface LoadUserAction {
   type: ActionTypes.loadUser;
   payload: UserForm;
 }
+
+export interface Salary {
+  basic_salary: number;
+  remunerative: number;
+  no_remunerative: number;
+  deductions: number;
+  antiquity: number;
+  totalSalary: number;
+}
+
+export interface SalaryStoreState {
+  salary: Salary;
+  userFormSalary: UserFormSalary;
+}
+
+export interface UserFormSalary {
+  basic_salary: number;
+  remunerative: number;
+  no_remunerative: number;
+  deductions: number;
+  antiquity: number;
+  totalSalary: number;
+  jobs: Job[];
+}
+
+export interface LoadUserSalaryAction {
+  type: ActionTypes.loadUserSalary;
+  payload: UserFormSalary;
+}

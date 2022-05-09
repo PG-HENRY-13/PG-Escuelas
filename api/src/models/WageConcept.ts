@@ -1,29 +1,40 @@
 import {
-    Model,
-    Column,
-    Table,
-    CreatedAt,
-    UpdatedAt,
-    PrimaryKey,
-    DataType,
+  Model,
+  Column,
+  Table,
+  CreatedAt,
+  UpdatedAt,
+  PrimaryKey,
+  DataType,
 } from "sequelize-typescript";
+import { col } from "sequelize/types";
 
 @Table
-export class WageConcept
- extends Model<WageConcept
-> {
-    @PrimaryKey
-    @Column
-    id!: number;
+export class WageConcept extends Model<WageConcept> {
+  @PrimaryKey
+  @Column
+  id!: number;
 
-    @Column
-    name!: string;
+  @Column
+  basic_salary!: number;
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @Column
+  remunerative!: number;
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
+  @Column
+  no_remunerative!: number;
+
+  @Column
+  deductions!: number;
+
+  @Column
+  antiquity!:number;
+
+  @CreatedAt
+  @Column
+  createdAt!: Date;
+
+  @UpdatedAt
+  @Column
+  updatedAt!: Date;
 }
