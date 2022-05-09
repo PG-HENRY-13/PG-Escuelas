@@ -50,3 +50,8 @@ body {
 :root {
   --main-button-color: #1c658c;
 }
+
+.login-container-900 {
+
+  width: 900px;
+}

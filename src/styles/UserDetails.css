@@ -59,5 +59,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 80px;
+}
+
+
+.salary-btn-container{
+  width: 500px;
+  margin-bottom: 120px;
 }
