@@ -2,10 +2,11 @@ import React from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "../styles/Layouts.css";
 import Logo from "../styles/img/Logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../redux/actions/authActions";
 
 export default function LayoutAdmin(): JSX.Element {
+  const userLogged = useSelector((state: any) => state.authState)
   const dispatch =useDispatch();
   const navigate =  useNavigate();
 
@@ -21,7 +22,7 @@ export default function LayoutAdmin(): JSX.Element {
         <ul className="navbar-nav">
           <li className="nav-item">
             <NavLink className="nav-link" to="/">
-              Inicio
+            Inicio - <span >{userLogged.name + ' ' + userLogged.lastName}</span>
             </NavLink>
           </li>
           <li className="nav-item">
@@ -41,13 +42,13 @@ export default function LayoutAdmin(): JSX.Element {
           </li>
 
           <li className="nav-item close-session">
-            <button onClick={handleLogOut}>Cerrar Sesión</button>
+            <button className="btn btn-light" onClick={handleLogOut}>Cerrar Sesión</button>
           </li>
-          <li className="nav-logo-center">
+          {/* <li className="nav-logo-center">
             <NavLink className="nav-logo-link" to="/admin/">
               <img className="nav-logo" src={Logo} alt="logo"></img>
             </NavLink>
-          </li>
+          </li> */}
           
         </ul>
       </nav>

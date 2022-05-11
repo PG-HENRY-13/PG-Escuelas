@@ -4,24 +4,24 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { signOut } from "../redux/actions/authActions";
 import "../styles/Layouts.css";
 export default function LayoutEmployee(): JSX.Element {
-  const dispatch =useDispatch();
-  const navigate =  useNavigate();
+  const userLogged = useSelector((state: any) => state.authState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogOut = (e: any) => {
     e.preventDefault();
-    dispatch(signOut() as any)
-    navigate('/')
-  }
+    dispatch(signOut() as any);
+    navigate("/");
+  };
 
-
-  const cuil=useSelector((state:any) => state.authState.id)
+  const cuil = useSelector((state: any) => state.authState.id);
   return (
     <main>
-      <nav className="navbar navbar-expand-lg">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <ul className="navbar-nav">
           <li className="nav-item">
             <NavLink className="nav-link" to={"/user/" + cuil}>
-              Mi perfil
+              Mi perfil - <span >{userLogged.name + ' ' + userLogged.lastName}</span>
             </NavLink>
           </li>
           <li className="nav-item">
@@ -59,7 +59,9 @@ export default function LayoutEmployee(): JSX.Element {
             </NavLink>
           </li>
           <li className="nav-item close-session">
-            <button onClick={handleLogOut}>Cerrar Sesión</button>
+            <button className="btn btn-light" onClick={handleLogOut}>
+              Cerrar Sesión
+            </button>
           </li>
         </ul>
       </nav>
