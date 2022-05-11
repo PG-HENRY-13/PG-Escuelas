@@ -8,6 +8,7 @@ import "../../styles/UserDetails.css";
 import Back_Logo from "../../styles/img/Back_Logo.png"
 
 export default function UserDetails(): JSX.Element {
+  const role = useSelector((state:any )=> state.authState.role)
   let { cuil } = useParams();
   const dispatch = useDispatch();
   const userToUpdate = useSelector((state: any) => {
@@ -87,9 +88,14 @@ export default function UserDetails(): JSX.Element {
             <label className="detail-label">Sin trabajos asignados</label>
           )}
           <br></br>
-          <Link to={"/admin/updateuser/" + cuil} >
+          {role === 'admin'?<Link to={"/admin/updateuser/" + cuil} >
             <button className="button">Editar Usuario</button>
-          </Link>
+          </Link>:
+          <Link to={"/user/updateuser/" + cuil} >
+          <button className="button">Editar Usuario</button>
+        </Link>
+          }
+
           </div>
         </div>
       </div>

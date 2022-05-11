@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, useParams, useNavigate, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useParams,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
 import LoadUsersWithExcel from "./LoadUsersWithExcel";
@@ -20,6 +26,7 @@ import Paycheck from "./Paycheck";
 import { ToastContainer } from "react-toastify";
 import { loadUserAuth } from "../redux/actions/authActions";
 import { stat } from "fs";
+import UpdateMyInfo from "./UpdateMyInfo";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -41,6 +48,14 @@ export default function App(): JSX.Element {
             element={
               <div className="container">
                 <UserDetails />
+              </div>
+            }
+          />
+          <Route
+            path={"updateuser/" + userLogged.id}
+            element={
+              <div className="container">
+                <UpdateMyInfo />
               </div>
             }
           />
@@ -126,8 +141,7 @@ export default function App(): JSX.Element {
           />
         </Route>
       ) : null}
-      <Route path="*" element={<Navigate to='/'/>} />
-     
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
