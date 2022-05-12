@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, useParams, useNavigate, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useParams,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import AssignJobs from "./AssignJobs/AssignJobs";
 import LayoutAdmin from "./Layouts";
 import LoadUsersWithExcel from "./LoadUsersWithExcel";
@@ -126,8 +132,7 @@ export default function App(): JSX.Element {
           />
         </Route>
       ) : null}
-      <Route path="*" element={<Navigate to='/'/>} />
-     
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
