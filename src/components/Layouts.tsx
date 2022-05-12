@@ -2,12 +2,18 @@ import React from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "../styles/Layouts.css";
 import Logo from "../styles/img/Logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../redux/actions/authActions";
 
 export default function LayoutAdmin(): JSX.Element {
+<<<<<<< HEAD
   const dispatch = useDispatch();
   const navigate = useNavigate();
+=======
+  const userLogged = useSelector((state: any) => state.authState)
+  const dispatch =useDispatch();
+  const navigate =  useNavigate();
+>>>>>>> 57967ea436671e5d6f1e1c89ac6f4e2b40647df8
 
   const handleLogOut = (e: any) => {
     e.preventDefault();
@@ -17,11 +23,19 @@ export default function LayoutAdmin(): JSX.Element {
 
   return (
     <main>
+<<<<<<< HEAD
       {/* <nav classNameName="navbar navbar-expand-lg">
         <ul classNameName="navbar-nav">
           <li classNameName="nav-item">
             <NavLink classNameName="nav-link" to="/admin/">
               <img classNameName="nav-logo" src={Logo} alt="logo"></img>
+=======
+      <nav className="navbar navbar-expand-lg">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/">
+            Inicio - <span >{userLogged.name + ' ' + userLogged.lastName}</span>
+>>>>>>> 57967ea436671e5d6f1e1c89ac6f4e2b40647df8
             </NavLink>
           </li>
           <li classNameName="nav-item">
@@ -40,6 +54,7 @@ export default function LayoutAdmin(): JSX.Element {
             </NavLink>
           </li>
 
+<<<<<<< HEAD
           <li classNameName="nav-item">
             <NavLink classNameName="nav-link" to="/admin/salary">
               Salario
@@ -47,6 +62,16 @@ export default function LayoutAdmin(): JSX.Element {
           </li>
           </ul>
         
+=======
+          <li className="nav-item close-session">
+            <button className="btn btn-light" onClick={handleLogOut}>Cerrar Sesión</button>
+          </li>
+          {/* <li className="nav-logo-center">
+            <NavLink className="nav-logo-link" to="/admin/">
+              <img className="nav-logo" src={Logo} alt="logo"></img>
+            </NavLink>
+          </li> */}
+>>>>>>> 57967ea436671e5d6f1e1c89ac6f4e2b40647df8
           
           <nav classNameName="dflex">
             <li classNameName="nav-item">

@@ -26,7 +26,11 @@ import Paycheck from "./Paycheck";
 import { ToastContainer } from "react-toastify";
 import { loadUserAuth } from "../redux/actions/authActions";
 import { stat } from "fs";
+<<<<<<< HEAD
 import SalaryList from "./SalaryList"
+=======
+import UpdateMyInfo from "./UpdateMyInfo";
+>>>>>>> 57967ea436671e5d6f1e1c89ac6f4e2b40647df8
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -48,6 +52,14 @@ export default function App(): JSX.Element {
             element={
               <div className="container">
                 <UserDetails />
+              </div>
+            }
+          />
+          <Route
+            path={"updateuser/" + userLogged.id}
+            element={
+              <div className="container">
+                <UpdateMyInfo />
               </div>
             }
           />

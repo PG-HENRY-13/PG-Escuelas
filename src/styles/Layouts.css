@@ -43,6 +43,8 @@
   color: white;
 }
 .close-session {
+  display: flex;
+  color: white;
   position: absolute;
   right: 10px;
 }
@@ -63,5 +65,3 @@
 .nav-item {
   padding: 5px;
 }
-
-
