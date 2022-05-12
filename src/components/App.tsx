@@ -60,14 +60,6 @@ export default function App(): JSX.Element {
           />
           <Route path="reschedule" element={<ScheduleForm />} />
           <Route path="news" element={<News />} />
-          <Route
-            path="paycheck"
-            element={
-              <div className="container">
-                <Paycheck />
-              </div>
-            }
-          />
         </Route>
       ) : null}
       {userLogged.role === "admin" ? (
@@ -133,6 +125,14 @@ export default function App(): JSX.Element {
         </Route>
       ) : null}
       <Route path="*" element={<Navigate to="/" />} />
+      <Route
+        path="/user/paycheck"
+        element={
+          <div className="container">
+            <Paycheck />
+          </div>
+        }
+      />
     </Routes>
   );
 }

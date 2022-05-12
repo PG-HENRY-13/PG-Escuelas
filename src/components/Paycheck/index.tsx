@@ -3,7 +3,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { loadUser, updateFormUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Html from "react-pdf-html";
+import { jsPDF } from "jspdf";
 
 export default function Paycheck(): JSX.Element {
   let { cuil } = useParams();
@@ -15,6 +15,50 @@ export default function Paycheck(): JSX.Element {
   useEffect(() => {
     if (cuil) dispatch(loadUser(Number(cuil)) as any);
   }, []);
+
+  /*  var generateData = function (amount: any) {
+    var result = [];
+    var data: any = {
+      coin: "100",
+      game_group: "GameGroup",
+      game_name: "XPTO2",
+      game_version: "25",
+      machine: "20485861",
+      vlt: "0",
+      name: "Juan",
+    };
+    for (var i = 0; i < amount; i += 1) {
+      data.id = (i + 1).toString();
+      result.push(Object.assign({}, data));
+    }
+    return result;
+  };
+
+  interface headers {
+    id: number;
+    coin: string;
+    game_group: string;
+    game_name: string;
+    game_version: string;
+    machine: string;
+    vlt: string;
+    name: string;
+  }
+
+  var headers = [
+    "id",
+    "coin",
+    "game_group",
+    "game_name",
+    "game_version",
+    "machine",
+    "vlt",
+    "name",
+  ];
+
+  var doc = new jsPDF();
+  doc.text("Paycheck", 95, 20);
+  doc.table(50, 30, generateData(5), headers, { fontSize: 10 }); */
 
   return (
     <div id="paycheckPdf">
@@ -224,8 +268,12 @@ export default function Paycheck(): JSX.Element {
           </tr>
         </table>
       </div>
-      <button className="button-download" onClick={() => window.print()}>
-        {console.log(window)} Descargar
+      <button
+        className="button-download"
+        onClick={() => window.print()}
+        /* onClick={() => doc.save("pdfFFFFFFFF")} */
+      >
+        Descargar
       </button>
     </div>
   );

@@ -1,15 +1,14 @@
 .paycheck-container {
-  margin: 30px;
-  padding: 30px;
+  margin: 20px;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fafafa;
   width: 90%;
 }
 .empDetail {
-  border: 3px solid black;
-  font-size: 11px;
-  margin-bottom: 10px;
+  border: 2px solid black;
+  font-size: 10px;
   width: 100%;
 }
 .empDetail th {
@@ -36,4 +35,6 @@
 }
 .button-download {
   margin-left: 80%;
+  border: 1px solid rgba(0, 0, 0, 0.644);
+  font-size: 12px;
 }
