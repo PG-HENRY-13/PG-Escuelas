@@ -1,0 +1,31 @@
+.subList {
+  background-color: var(--main-bg-color);
+  border-radius: 20px;
+  padding: 1px 40px 50px 40px;
+  margin-bottom: 5px;
+  box-shadow: 10px 10px 20px #4d4d4d, -15px -15px 30px #e0e0e0;
+  
+}
+
+
+
+
+.salary-button{
+  border: 0;
+  background-color: var(--main-nav-color);
+  color: white;
+  padding: 8px;
+  margin-left: 5%;
+}
+
+.salary-button:hover{
+  background-color: #0f0f0f;
+  
+}
+
+.userlist-search-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.search-h4{width: 100%;}
