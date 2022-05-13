@@ -247,3 +247,32 @@ export interface SignOutAction {
   type: ActionTypes.signOut;
   payload: any;
 }
+
+// Paycheck Interface
+
+export interface Paycheck {
+  jobId: string;
+  userCuil: string;
+  period: string;
+  jobName: string;
+  baseWage$: number;
+  additionals$: number;
+  seniority$: number;
+  overTimeAdditionals$: number;
+  absencesDeductions$: number;
+  underTimeDeductions$: number;
+  unionDeductions$: number;
+  baseWageCode: number;
+  underTimeDeductionsCode: number;
+  absencesDeductionsCode: number;
+}
+
+export interface ExportGobExcelToCalculatorAction {
+  type: ActionTypes.exportGobExcelToCalculator;
+  payload: UserForm;
+}
+
+export interface CalculateAllWagesAction {
+  type: ActionTypes.calculateAllWages;
+  payload: UserForm;
+}

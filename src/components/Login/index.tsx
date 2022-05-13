@@ -24,7 +24,7 @@ export default function Login(): JSX.Element {
       if (auth.role === "admin") navigate("/admin");
       else navigate("/user");
     }
-  })
+  });
   const handleChange = (e: any) => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
@@ -35,8 +35,7 @@ export default function Login(): JSX.Element {
     e.preventDefault();
     dispatch(signIn(data) as any);
     dispatch(loadUserAuth() as any);
-    console.log (auth)
-   
+    console.log(auth);
   };
 
   return (

@@ -18,6 +18,9 @@ import { Contingencies } from "./Contingencies";
 
 @Table
 export class UsersJobs extends Model<UsersJobs> {
+  @HasMany(() => Paycheck)
+  paychecks!: Paycheck[];
+
   @PrimaryKey
   @ForeignKey(() => User)
   @Column

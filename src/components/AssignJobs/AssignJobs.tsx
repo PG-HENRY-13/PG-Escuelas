@@ -19,10 +19,12 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
     id: jobs[0].id,
   });
 
-  useEffect(() => {}, [input]);
+  useEffect(() => {
+    // console.log(input);
+  }, [input]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setInput({
       name: e.target.value.split(",")[0],
       id: e.target.value.split(",")[1],
@@ -59,8 +61,7 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
                 jobs: [...loadedUser.jobs, input],
               })
             );
-            props.setDisabled();
-
+            // props.setDisabled();
           }
         }}
       >
