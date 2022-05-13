@@ -1,12 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { sendContingency } from "../../redux/actions";
-import { ContingencyType } from "../../redux/interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser, sendContingency } from "../../redux/actions";
+import { ContingencyType, Job } from "../../redux/interfaces";
 export default function ScheduleForm(props: any): JSX.Element {
+  const dispatch = useDispatch();
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
-    let type: ContingencyType;
+    let type: any;
     switch (data.implies) {
       case "Horas extra":
         type = ContingencyType.overtime;
@@ -21,16 +22,17 @@ export default function ScheduleForm(props: any): JSX.Element {
         type = ContingencyType.lateArrival;
         break;
     }
-    sendContingency({
+    const toSend = {
       ...data,
       contingencyType: type,
       hasNotice: data.hasNotice === "true" ? true : false,
-      fullName: loggedUser.name + " " + loggedUser.lastName,
-      jobId: "1010",
       cuil: loggedUser.id,
-    });
-
+    };
+    console.log("ESTO ES TO SEND: ---------", toSend);
+    if (toSend.cuil) sendContingency(toSend);
+    else alert("Problema con el cuil");
     setData({
+      ...data,
       hasNotice: "true",
       reason: "",
       date: "",
@@ -41,6 +43,10 @@ export default function ScheduleForm(props: any): JSX.Element {
 
   const loggedUser = useSelector((state: any) => {
     return state.authState;
+  });
+
+  const loadedUser = useSelector((state: any) => {
+    return state.usersState.userForm;
   });
   // const [data, setData] = useState({
   //   hasNotice: "true",
@@ -59,7 +65,17 @@ export default function ScheduleForm(props: any): JSX.Element {
     date: "",
     hoursNumber: 0,
     implies: "",
+    jobId: "",
   });
+
+  useEffect(() => {
+    if (loggedUser.id) dispatch(loadUser(Number(loggedUser.id)) as any);
+  }, []);
+
+  useEffect(() => {
+    if (loadedUser.jobs[0]?.id)
+      setData({ ...data, jobId: loadedUser.jobs[0].id });
+  }, [loadedUser]);
 
   //const days: string[] = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
   //Para el lunes 9 no se usa
@@ -81,7 +97,7 @@ export default function ScheduleForm(props: any): JSX.Element {
 
   return (
     <div className="usersform-container">
-      <form onSubmit={submit}>
+      <form id="miForm" onSubmit={submit}>
         <fieldset>
           <legend>Nivel de previsión de la novedad:*</legend>
           <div>
@@ -104,6 +120,19 @@ export default function ScheduleForm(props: any): JSX.Element {
             ></input>
             <label>Notificar</label>
           </div>
+        </fieldset>
+        <fieldset>
+          <legend>Cargo:*</legend>
+          <select
+            className="form-select"
+            onChange={changeHandler1}
+            name="jobId"
+            id="job"
+          >
+            {loadedUser.jobs?.map((job: Job) => {
+              return <option value={job.id}>{job.name}</option>;
+            })}
+          </select>
         </fieldset>
         <fieldset>
           <div>
