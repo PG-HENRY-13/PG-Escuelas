@@ -4,6 +4,7 @@ import { fetchContingencies } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import ContingencyItem from "./contingencyItem";
+import { Contingency } from "../../redux/interfaces";
 
 export default function ContingencyList(): JSX.Element {
   const dispatch = useDispatch();
@@ -25,13 +26,24 @@ export default function ContingencyList(): JSX.Element {
         {loadedContingencies.length ? (
           <div>
             {loadedContingencies?.map((e: any) => {
+              console.log(e);
               return (
                 <ContingencyItem
-                  fullName={e.fullName}
+                  fullName={
+                    e.userJob?.userData.name +
+                    " " +
+                    e.userJob?.userData.lastName
+                  }
                   reason={e.reason}
                   contingencyType={e.contingencyType}
                   date={e.date}
                   CID={e.id}
+                  state={e.state}
+                  hasNotice={e.hasNotice}
+                  job={e.userJob?.jobData.name}
+                  substitute={e.substitute}
+                  endDate={e.endDate}
+                  hours={e.hoursNumber}
                 ></ContingencyItem>
               );
             })}

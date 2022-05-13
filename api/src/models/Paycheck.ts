@@ -16,7 +16,7 @@ import { User } from "./User";
 @Table
 export class Paycheck extends Model<Paycheck> {
   @BelongsTo(() => User)
-  user!: User[];
+  user!: User;
 
   @ForeignKey(() => User)
   @Column
@@ -24,6 +24,15 @@ export class Paycheck extends Model<Paycheck> {
 
   @Column
   date!: Date;
+
+  @Column
+  absences?: number;
+
+  @Column
+  excusedAbsences?: number;
+
+  @Column
+  extraHours?: number;
 
   @Column
   totalValue!: number;

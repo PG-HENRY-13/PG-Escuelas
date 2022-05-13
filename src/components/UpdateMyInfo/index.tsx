@@ -12,7 +12,8 @@ export default function UpdateMyInfo(): JSX.Element {
 
   const dispatch = useDispatch();
 
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [changed, setChanged] = useState(false);
 
   const data = useSelector((state: any) => {
     return state.usersState.userForm;
@@ -22,8 +23,6 @@ export default function UpdateMyInfo(): JSX.Element {
     cuil: "Ingrese un Cuil valido",
     name: "Ingrese un nombre",
     lastName: "Ingrese un apellido",
-    password: "Al menos 8 caracteres",
-    password2: "Al menos 8 caracteres",
     address: "Ingrese una direccion",
     phoneNumber: "Ingrese un número valido",
     emailAddress: "Ingrese una direccion de correo valida",
@@ -34,8 +33,6 @@ export default function UpdateMyInfo(): JSX.Element {
       cuil: "",
       name: "",
       lastName: "",
-      password: "",
-      password2: "",
       address: "",
       phoneNumber: "",
       emailAddress: "",
@@ -51,25 +48,27 @@ export default function UpdateMyInfo(): JSX.Element {
     if (
       error.name ||
       error.lastName ||
-      error.password ||
       error.address ||
       error.phoneNumber ||
-      error.emailAddress
+      error.emailAddress ||
+      !changed
     )
       setDisabled(true);
-    else setDisabled(false);
-  }, [error]);
+    else  setDisabled(false);
+  }, [error,changed]);
 
   useEffect(() => {
     setError(validate(data));
   }, [data]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChanged(true);
     dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
     setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setChanged(true);
     dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
 
@@ -108,6 +107,7 @@ export default function UpdateMyInfo(): JSX.Element {
               onChange={(e) => {
                 if (e.target.checked) {
                   dispatch(updateFormUser({ ...data, password: "123456" }));
+                  //send email
                 }
               }}
             ></input>
