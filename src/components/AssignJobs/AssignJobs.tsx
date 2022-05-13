@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { assignJobToUser, updateFormUser } from "../../redux/actions";
 import { Job, StoreState, User } from "../../redux/interfaces";
 import { JobAssing } from "../../redux/interfaces";
-import "../../styles/AssignJobs.css"
+import "../../styles/AssignJobs.css";
 export default function AssignJobs(props: JobAssing): JSX.Element {
   const dispatch = useDispatch();
 
@@ -19,9 +19,7 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
     id: jobs[0].id,
   });
 
-  useEffect(() => {
-    console.log(input);
-  }, [input]);
+  useEffect(() => {}, [input]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value);
@@ -35,27 +33,35 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
     <div>
       <div className="form-container-jobs">
         <br />
-        <label className="na-title">
-          Asignando cargos a {props.name}
-        </label>
-        <select className="form-select" onChange={changeHandler} name="jobId" id="job">
+        <label className="na-title">Asignando cargos a {props.name}</label>
+        <select
+          className="form-select"
+          onChange={changeHandler}
+          name="jobId"
+          id="job"
+        >
           {jobs.map((job: Job) => {
             return <option value={[job.name, job.id]}>{job.name}</option>;
           })}
         </select>
       </div>
       <br />
-      <button className="button"
+      <button
+        className="button"
         onClick={(e) => {
           let tempJobs = [...loadedUser.jobs];
-          return tempJobs.filter((j) => j.id === input.id).length > 0
-            ? alert("El usuario ya posee este trabajo")
-            : dispatch(
-                updateFormUser({
-                  ...loadedUser,
-                  jobs: [...loadedUser.jobs, input],
-                })
-              );
+          if (tempJobs.filter((j) => j.id === input.id).length > 0)
+            alert("El usuario ya posee este trabajo");
+          else {
+            dispatch(
+              updateFormUser({
+                ...loadedUser,
+                jobs: [...loadedUser.jobs, input],
+              })
+            );
+            props.setDisabled();
+
+          }
         }}
       >
         Asignar Cargo
@@ -64,8 +70,9 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
         {loadedUser.jobs?.map((job: Job) => {
           return (
             <div>
-              <span >{job.name}</span>
-              <button className="button"
+              <span>{job.name}</span>
+              <button
+                className="button"
                 name={job.name}
                 value={job.id}
                 hidden={!props.removableJobs}

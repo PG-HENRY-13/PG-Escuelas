@@ -25,7 +25,11 @@ import {
   HandleContingencyAction,
 } from "../interfaces";
 
-export const url = "http://localhost:3001/api/";
+import {URL_API} from "../../env.js"
+
+export const url = URL_API;
+// export const url = "http://localhost:3001/api/";
+
 export const userUrl = url + "user";
 const jobUrl = url + "job";
 const filterJobsUrl = url + "filterjobs?JobId=";
