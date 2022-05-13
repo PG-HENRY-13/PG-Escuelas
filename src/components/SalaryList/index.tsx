@@ -83,11 +83,6 @@ export default function SalaryList(): JSX.Element {
   ]
 
 
-  const fakejobs= [{
-    id:1012,
-  },
-  {id:1014}
-]
 
   return (
     <div className="userlist-filter-container">
@@ -172,7 +167,7 @@ export default function SalaryList(): JSX.Element {
                     <td>
                       {e.name} {e.lastName}
                     </td>
-                   
+                    {console.log(e.jobs)}
                     
                     <td>20202</td>
                     <td>10202</td>
