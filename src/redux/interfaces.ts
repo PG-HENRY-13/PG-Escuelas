@@ -43,6 +43,7 @@ export interface JobAssing {
   cuil: string;
   name: string;
   removableJobs: boolean;
+  setDisabled: any;
 }
 
 export interface FetchUsersAction {
