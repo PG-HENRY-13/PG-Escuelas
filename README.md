@@ -20,6 +20,8 @@ const config = {
 	port: process.env.API_PORT || '3001',
 	host: process.env.API_host || 'localhost',
 	cors: process.env.CORS || 'localhost:3000',
+	http: process.env.HTTP || 'http://',
+	frontPort: process.env.FRONT_PORT || '3000'
 };
 
 export default config;
@@ -41,7 +43,8 @@ API_PORT="3001"
 API_HOST="localhost"
 CORS="http://localhost:3000"
 JWT_SECRET_KEY="clavesecreta"
-
+HTTP='http://'
+FRONT_PORT="3000"
 ```
 ___________
 

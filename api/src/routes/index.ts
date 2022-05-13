@@ -7,6 +7,7 @@ import roleRoutes from "./role";
 import filterJobsRoutes from "./filterjobs";
 import excelRoutes from "./excel";
 import testRoutes from "./test";
+import mail from "./mail";
 
 import contingenciesRoutes from "./contingencies";
 
@@ -23,6 +24,7 @@ router.use("/employees", employeesRoutes);
 router.use("/excel", excelRoutes);
 router.use("/filterjobs", filterJobsRoutes);
 router.use("/test", testRoutes);
+router.use("/mail", mail);
 
 router.use("/contingencies", contingenciesRoutes);
 router.use("/salary", salaryRoute);

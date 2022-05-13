@@ -54,7 +54,7 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
         ...user,
       },
     });
-    if (jobs.length && created) {
+    if (jobs?.length && created) {
       await Promise.all(
         jobs.map(async (job: any) => {
           let jobToAdd = await Job.findByPk(job.id);

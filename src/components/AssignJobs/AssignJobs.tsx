@@ -52,14 +52,17 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
         className="button"
         onClick={(e) => {
           let tempJobs = [...loadedUser.jobs];
-          return tempJobs.filter((j) => j.id === input.id).length > 0
-            ? alert("El usuario ya posee este trabajo")
-            : dispatch(
-                updateFormUser({
-                  ...loadedUser,
-                  jobs: [...loadedUser.jobs, input],
-                })
-              );
+          if (tempJobs.filter((j) => j.id === input.id).length > 0)
+            alert("El usuario ya posee este trabajo");
+          else {
+            dispatch(
+              updateFormUser({
+                ...loadedUser,
+                jobs: [...loadedUser.jobs, input],
+              })
+            );
+            // props.setDisabled();
+          }
         }}
       >
         Asignar Cargo

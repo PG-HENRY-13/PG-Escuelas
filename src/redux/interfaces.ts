@@ -43,6 +43,7 @@ export interface JobAssing {
   cuil: string;
   name: string;
   removableJobs: boolean;
+  setDisabled: any;
 }
 
 export interface FetchUsersAction {
@@ -127,10 +128,29 @@ export interface Contingency {
   cuil?: string;
   jobId?: string;
   fullName?: string;
+  userJob?: {
+    UserCuil: string;
+    JobId: string;
+    userData: {
+      name: string;
+      lastName: string;
+    };
+    jobData: {
+      name: string;
+    };
+  };
 }
 
-export interface AbsenceContingency extends Contingency {
-  substitute?: string;
+export interface UserJobCont {
+  UserCuil: string;
+  JobId: string;
+  userData: {
+    name: string;
+    lastName: string;
+  };
+  jobData: {
+    name: string;
+  };
 }
 
 export interface ScheduleContingency extends Contingency {
@@ -148,6 +168,13 @@ export enum ContingencyType {
   earlyWithdrawal = "retiro temprano",
 }
 
+export enum ContingencyState {
+  pending = "Pendiente",
+  accepted = "Atendida",
+  rejected = "Rechazada",
+  discarded = "Descartada",
+}
+
 export interface FetchContingenciesAction {
   type: ActionTypes.fetchContingencies;
   payload: Contingency[];
@@ -156,6 +183,14 @@ export interface FetchContingenciesAction {
 export interface DeleteContingencyAction {
   type: ActionTypes.deleteContingency;
   payload: number;
+}
+
+export interface HandleContingencyAction {
+  type: ActionTypes.handleContingency;
+  payload: {
+    id: number;
+    resolve: ContingencyState;
+  };
 }
 export interface Salary {
   basic_salary: number;
