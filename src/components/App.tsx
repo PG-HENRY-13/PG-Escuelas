@@ -133,6 +133,14 @@ export default function App(): JSX.Element {
           </div>
         }
       />
+      <Route
+        path="/admin/paycheck"
+        element={
+          <div className="container">
+            <Paycheck />
+          </div>
+        }
+      />
     </Routes>
   );
 }
