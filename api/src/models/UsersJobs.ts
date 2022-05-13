@@ -8,16 +8,23 @@ import {
   BelongsToMany,
   ForeignKey,
   Default,
+  HasMany,
 } from "sequelize-typescript";
 import { User } from "./User";
 import { Job } from "./Job";
+import { Paycheck } from "./Paycheck";
 
 @Table
 export class UsersJobs extends Model<UsersJobs> {
+  @HasMany(() => Paycheck)
+  paychecks!: Paycheck[];
+
+  @PrimaryKey
   @ForeignKey(() => User)
   @Column
   UserCuil!: string;
 
+  @PrimaryKey
   @ForeignKey(() => Job)
   @Column
   JobId!: string;
