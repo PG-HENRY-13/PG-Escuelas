@@ -21,6 +21,8 @@ import {
   FetchContingenciesAction,
   DeleteContingencyAction,
   LoadUserSalaryAction,
+  ContingencyState,
+  HandleContingencyAction,
 } from "../interfaces";
 
 export const url = "http://localhost:3001/api/";
@@ -272,6 +274,19 @@ export const deleteContingency = (id: number) => {
     dispatch<DeleteContingencyAction>({
       type: ActionTypes.deleteContingency,
       payload: id,
+    });
+  };
+};
+
+export const handleContingency = (id: number, resolve: ContingencyState) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.put(contingenciesUrl, {
+      id,
+      resolve,
+    });
+    dispatch<HandleContingencyAction>({
+      type: ActionTypes.handleContingency,
+      payload: { id, resolve },
     });
   };
 };
