@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 import config from "../lib/config";
 import { encryptPwd } from "../utils/encryptPwd";
 import jwtDecode from "jwt-decode";
+import { sendMail } from "../utils/mails";
 
 const url =
   config.http + config.host + (config.frontPort ? ":" + config.frontPort : "");
@@ -51,9 +52,14 @@ router.post("/forgotpwd", async (req, res) => {
 
       // TODO: Send email containing link to reset password.
       // In our case, will just return a link to click.
-      res.send(
-        `<a href="${url}/resetpassword/${payload.id}/${token}">Reset password</a>`
+      let resp = sendMail(
+        user.emailAddress,
+        "resetpassword",
+       `Siga el siguiente link para recuperar su clave
+        ${url}/resetpassword/${payload.id}/${token}`
       );
+
+      res.send(resp);
     } else {
       res.status(404).send("El cuil no existe");
     }
@@ -93,12 +99,10 @@ router.get("/resetpassword/:id/:token", async (req, res) => {
     const user = await User.findByPk(id);
 
     if (user) {
-      
-      const payload:any =  jwtDecode(token);
-     if(user.cuil === payload.id) {
-       return res.status(200).send('Token correcto');
-     }
-     else res.status(400).send('Error');
+      const payload: any = jwtDecode(token);
+      if (user.cuil === payload.id) {
+        return res.status(200).send("Token correcto");
+      } else res.status(400).send("Error");
     }
   }
 });

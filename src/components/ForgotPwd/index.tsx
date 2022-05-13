@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { loadUserAuth, signIn } from "../../redux/actions/authActions";
 import "../../styles/Login.css";
 import validate from "../NewAccount/validate";
+import { toast } from "react-toastify";
 
 export default function ForgotPwd(): JSX.Element {
   const navigate = useNavigate();
@@ -30,8 +31,8 @@ export default function ForgotPwd(): JSX.Element {
     axios
       .post(`${URL_API}login/forgotpwd`, { cuil: data.cuil })
       .then((response) => {
-        var sp = document.getElementById("otro");
-        if (sp) sp.innerHTML = response.data;
+        toast.success('Correo enviado, revise su casilla');
+        navigate('/')
       })
       .catch((error) => {
         var sp = document.getElementById("otro");

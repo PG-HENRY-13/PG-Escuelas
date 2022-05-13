@@ -8,8 +8,9 @@ import { loadUserAuth, signIn } from "../../redux/actions/authActions";
 import "../../styles/Login.css";
 import validate from "../NewAccount/validate";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-toastify";
 
-export default function Login(): JSX.Element {
+export default function ResetPwd(): JSX.Element {
   const navigate = useNavigate();
   const { id, token } = useParams();
   const dispatch = useDispatch();
@@ -39,16 +40,16 @@ export default function Login(): JSX.Element {
     axios
       .get(`${URL_API}login/resetpassword/${id}/${token}`)
       .then((response) => {
-         axios
+        axios
           .put(`${URL_API}login/changepwd`, {
             cuil: user.cuil,
             password: data.password,
           })
           .then((response) => {
-            console.log(response);
+            toast.success('Contraseña cambiada correctamente')
           })
           .catch((error) => {
-            console.log(error);
+            toast.error('Ocurrió un error al cambiar contraseña')
           });
         navigate("/");
       })

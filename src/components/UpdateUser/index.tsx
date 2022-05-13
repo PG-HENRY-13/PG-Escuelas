@@ -6,6 +6,9 @@ import { useParams } from "react-router-dom";
 import AssignJobs from "../AssignJobs/AssignJobs";
 import validate from "../NewAccount/validate";
 import "../../styles/UpdateUser.css";
+import axios from "axios";
+import { URL_API } from "../../env";
+import { toast } from "react-toastify";
 
 export default function UpdateUser(): JSX.Element {
   let { cuil } = useParams();
@@ -74,6 +77,20 @@ export default function UpdateUser(): JSX.Element {
     dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
 
+  const handlerOnClickPwd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    axios
+    .post(`${URL_API}login/forgotpwd`, { cuil: data.cuil })
+    .then((response) => {
+      toast.success('Correo enviado, revise su casilla');
+   
+    })
+    .catch((error) => {
+      var sp = document.getElementById("otro");
+      if (sp) sp.innerHTML = 'Ingrese el CUIL correcto';
+    });
+  }
+
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(userUpdate(data) as any);
@@ -111,17 +128,14 @@ export default function UpdateUser(): JSX.Element {
               Restear contraseña:
             </label>
             <br />
-            <input
-              type="checkbox"
+            <button className="btn btn-primary"
               // className="form-control"
               name="password"
               // value={data.password}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  dispatch(updateFormUser({ ...data, password: "123456" }));
-                }
-              }}
-            ></input>
+              onClick={
+                handlerOnClickPwd
+              }
+            >Resetear contraseña</button>
             {/* <span className="err">{error.password}</span> */}
           </div>
           <div className="form-group">
