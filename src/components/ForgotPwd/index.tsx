@@ -1,30 +1,25 @@
+import axios from "axios";
+import { URL_API } from "../../env";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { loadUserAuth, signIn } from "../../redux/actions/authActions";
 import "../../styles/Login.css";
 import validate from "../NewAccount/validate";
+import { toast } from "react-toastify";
 
-export default function Login(): JSX.Element {
+export default function ForgotPwd(): JSX.Element {
   const navigate = useNavigate();
   const auth = useSelector((state: any) => state.authState);
   const dispatch = useDispatch();
   const [data, setData] = useState({
     cuil: "",
-    password: "",
   });
 
   const [error, setError] = useState({
     cuil: "Ingrese un Cuil valido",
-    password: "Al menos 8 caracteres",
   });
 
-  useEffect(() => {
-    if (auth.userLoded) {
-      if (auth.role === "admin") navigate("/admin");
-      else navigate("/user");
-    }
-  });
   const handleChange = (e: any) => {
     e.preventDefault();
     setData({ ...data, [e.target.name]: e.target.value });
@@ -33,9 +28,16 @@ export default function Login(): JSX.Element {
 
   const submitHandler = (e: any) => {
     e.preventDefault();
-    dispatch(signIn(data) as any);
-    dispatch(loadUserAuth() as any);
-    console.log(auth);
+    axios
+      .post(`${URL_API}login/forgotpwd`, { cuil: data.cuil })
+      .then((response) => {
+        toast.success('Correo enviado, revise su casilla');
+        navigate('/')
+      })
+      .catch((error) => {
+        var sp = document.getElementById("otro");
+        if (sp) sp.innerHTML = 'Ingrese el CUIL correcto';
+      });
   };
 
   return (
@@ -56,25 +58,11 @@ export default function Login(): JSX.Element {
               onChange={handleChange}
             />
             <span className="err">{error.cuil}</span>
+            <span id="otro"></span>
           </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              onChange={handleChange}
-            />
-            <span className="err">{error.password}</span>
-          </div>
-
           <button type="submit" className="button">
-            Ingresar
+            Enviar
           </button>
-          <Link to="/forgotpassword"> Olvidé mi contraseña</Link>
         </form>
       </div>
     </div>
