@@ -10,7 +10,7 @@ import testRoutes from "./test";
 
 import contingenciesRoutes from "./contingencies";
 
-import WageConcepts from "./WageConcepts";
+import Salary from "./Salary";
 import loginRoute from './login'
 const router = Router();
 
@@ -25,6 +25,6 @@ router.use("/filterjobs", filterJobsRoutes);
 router.use("/test", testRoutes);
 
 router.use("/contingencies", contingenciesRoutes);
-router.use("/salary", WageConcepts);
+router.use("/salary", Salary);
 
 export default router;

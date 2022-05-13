@@ -22,6 +22,7 @@ export default function SalaryList(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchUsers() as any);
+    
   }, []);
 
   const handleFilter = (e: string) => {
@@ -36,6 +37,8 @@ export default function SalaryList(): JSX.Element {
     }
   };
 
+  const month = new Date().getMonth()
+  console.log(month)
 
   var array =[
     {
@@ -99,7 +102,7 @@ export default function SalaryList(): JSX.Element {
           placeholder="Buscar"
           onChange={(e) => handleFilter(e.target.value)}
         />
-        <button className="salary-button">Salario total</button>
+        <button className="salary-button">CALCULAR SALARIO BULK</button>
         </div>
         
      
@@ -167,7 +170,7 @@ export default function SalaryList(): JSX.Element {
                     <td>
                       {e.name} {e.lastName}
                     </td>
-                    {console.log(e.jobs)}
+                    
                     
                     <td>20202</td>
                     <td>10202</td>
@@ -179,7 +182,7 @@ export default function SalaryList(): JSX.Element {
                   <td colSpan={8}>
             
                     <div className="subList">
-                      {userCuil === e.cuil ? <SalaryListEach /> : null}
+                      {userCuil === e.cuil ? <SalaryListEach array={array} /> : null}
                     </div>
                     
                   </td>

@@ -1,51 +1,22 @@
 import React, { useEffect } from "react";
 import "../../../styles/SalaryList.css";
 
-var array =[
-  {
-      jobId: 1012,
-      jobName: "profe",
-      baseWage$: 50070,
-      additionals$: 14881.98,
-      seniority$: 0,
-      overTimeAdditionals$: 0,
-      absencesDeductions$: 0,
-      underTimeDeductions$: 0,
-      unionDeductions$: 1001.4,
-      baseWageCode: 100,
-      underTimeDeductionsCode: 3779,
-      absencesDeductionsCode: 1226
-  },
-  {
-      jobId: 1013,
-      jobName: "profe inicial",
-      baseWage$: 53574.89444444444,
-      additionals$: 14881.985555555,
-      seniority$: 0,
-      overTimeAdditionals$: 0,
-      absencesDeductions$: 0,
-      underTimeDeductions$: 0,
-      unionDeductions$: 1071.49,
-      baseWageCode: 107,
-      underTimeDeductionsCode: 3779,
-      absencesDeductionsCode: 219
-  },
-  {
-      jobId: 1014,
-      jobName: "profe primario",
-      baseWage$: 53574.89,
-      additionals$: 15287.5955555555,
-      seniority$: 0,
-      overTimeAdditionals$: 0,
-      absencesDeductions$: 0,
-      underTimeDeductions$: 0,
-      unionDeductions$: 1071.49,
-      baseWageCode: 107,
-      underTimeDeductionsCode: 3779,
-      absencesDeductionsCode: 219
-  }
-]
-export default function SalaryList(): JSX.Element {
+interface Props {
+  array: Array<{jobId: number,
+  jobName: string,
+  baseWage$: number,
+  additionals$: number,
+  seniority$: number,
+  overTimeAdditionals$: number,
+  absencesDeductions$: number,
+  underTimeDeductions$: number,
+  unionDeductions$: number,
+  baseWageCode: number,
+  underTimeDeductionsCode: number,
+  absencesDeductionsCode: number}>;
+}
+
+export default function SalaryList({ array }:Props): JSX.Element {
   return (
     <div className="subList">
       <div className="userlist-filter-container">

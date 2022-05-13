@@ -28,6 +28,9 @@ export class Paycheck extends Model<Paycheck> {
   @Column
   totalValue!: number;
 
+  @Column
+  period!: string;
+
   @Default(false)
   @Column
   hasSigned!: boolean;
