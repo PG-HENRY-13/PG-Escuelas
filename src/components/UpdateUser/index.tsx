@@ -123,6 +123,8 @@ export default function UpdateUser(): JSX.Element {
               onChange={(e) => {
                 if (e.target.checked) {
                   dispatch(updateFormUser({ ...data, password: '123456' }));
+                  //send email
+                  
                 }
               }}
             ></input>
