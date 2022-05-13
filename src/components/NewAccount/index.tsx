@@ -29,7 +29,8 @@ export default function NewAccount(): JSX.Element {
     password2: "Las contraseñas deben coincidir",
     address: "Ingrese una direccion",
     phoneNumber: "Ingrese un número valido",
-    emailAddress: "Ingrese una direccion de correo valida",
+    emailAddress: "Ingrese una direccion de correo válida",
+    seniorityDate: 'Ingrese fecha de escalafón'
   });
 
   useEffect(() => {
@@ -41,23 +42,15 @@ export default function NewAccount(): JSX.Element {
       error.password2 ||
       error.address ||
       error.phoneNumber ||
-      error.emailAddress
+      error.emailAddress ||
+      error.seniorityDate
     )
       setDisabled(true);
     else setDisabled(false);
   }, [error]);
 
   useEffect(() => {
-    setError({
-      cuil: "",
-      name: "",
-      lastName: "",
-      password: "",
-      password2: "",
-      address: "",
-      phoneNumber: "",
-      emailAddress: "",
-    });
+   
     dispatch(updateFormUser("empty"));
     return () => {};
   }, []);
@@ -150,6 +143,7 @@ export default function NewAccount(): JSX.Element {
               value={data.seniorityDate}
               onChange={changeHandler}
             ></input>
+              <span className="err">{error.seniorityDate}</span>
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Direccion:</label>
@@ -218,6 +212,7 @@ export default function NewAccount(): JSX.Element {
         name={data.name}
         cuil={data.cuil}
         removableJobs={true}
+        setDisabled={setDisabled}
       ></AssignJobs>
       <Link
         to="/admin/excel/upload"

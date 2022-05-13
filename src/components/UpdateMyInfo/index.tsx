@@ -7,15 +7,8 @@ import AssignJobs from "../AssignJobs/AssignJobs";
 import validate from "../NewAccount/validate";
 import "../../styles/UpdateUser.css";
 
-export default function UpdateUser(): JSX.Element {
+export default function UpdateMyInfo(): JSX.Element {
   let { cuil } = useParams();
-  let today = new Date();
-  let date =
-    today.getFullYear().toString().padStart(4, "0") +
-    "-" +
-    (today.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    today.getDate().toString().padStart(2, "0");
 
   const dispatch = useDispatch();
 
@@ -27,50 +20,55 @@ export default function UpdateUser(): JSX.Element {
   });
 
   const [error, setError] = React.useState({
-    cuil: "",
-    name: "",
-    lastName: "",
-    address: "",
-    phoneNumber: "",
-    emailAddress: "",
+    cuil: "Ingrese un Cuil valido",
+    name: "Ingrese un nombre",
+    lastName: "Ingrese un apellido",
+    address: "Ingrese una direccion",
+    phoneNumber: "Ingrese un número valido",
+    emailAddress: "Ingrese una direccion de correo valida",
   });
 
   useEffect(() => {
+    setError({
+      cuil: "",
+      name: "",
+      lastName: "",
+      address: "",
+      phoneNumber: "",
+      emailAddress: "",
+    });
     if (cuil) {
       dispatch(loadUser(Number(cuil)) as any);
+      setDisabled(false);
     }
     return () => {};
   }, []);
 
   useEffect(() => {
-    console.log(error);
     if (
       error.name ||
       error.lastName ||
       error.address ||
       error.phoneNumber ||
-      error.emailAddress
+      error.emailAddress ||
+      !changed
     )
       setDisabled(true);
-    else if (changed) setDisabled(false);
-  }, [error, changed]);
+    else  setDisabled(false);
+  }, [error,changed]);
 
-  // useEffect(() => {
-  //   setError(validate(data));
-  // }, [data]);
-
-  //  useEffect(() => {
-  //   setDisabled(false);
-  // }, [data]);
+  useEffect(() => {
+    setError(validate(data));
+  }, [data]);
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChanged(true);
     dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
-    !changed && setChanged(true);
     setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
   const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    !changed && setChanged(true);
+    setChanged(true);
     dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
 
@@ -88,22 +86,12 @@ export default function UpdateUser(): JSX.Element {
         <div className="form-container">
           <div className="form-group">
             <label className="col-sm-2 control-label">Nombre:</label>
-            <input
-              className="form-control"
-              name="name"
-              value={data.name}
-              onChange={changeHandler}
-            ></input>
+            <h3>{data.name}</h3>
             <span className="err">{error.name}</span>
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Apellido:</label>
-            <input
-              className="form-control"
-              name="lastName"
-              value={data.lastName}
-              onChange={changeHandler}
-            ></input>
+            <h3>{data.lastName}</h3>
             <span className="err">{error.lastName}</span>
           </div>
           <div className="form-group">
@@ -119,20 +107,11 @@ export default function UpdateUser(): JSX.Element {
               onChange={(e) => {
                 if (e.target.checked) {
                   dispatch(updateFormUser({ ...data, password: "123456" }));
+                  //send email
                 }
               }}
             ></input>
             {/* <span className="err">{error.password}</span> */}
-          </div>
-          <div className="form-group">
-            <label className="col-sm-6 control-label">Escalafon:</label>
-            <input
-              className="form-control"
-              type="date"
-              name="seniorityDate"
-              value={data.seniorityDate.split("T")[0]}
-              onChange={changeHandler}
-            ></input>
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">Direccion:</label>
@@ -177,19 +156,7 @@ export default function UpdateUser(): JSX.Element {
               <option value="masc">Masculino</option>
             </select>
           </div>
-          <div className="form-group">
-            <label className="col-sm-3 control-label">Rol:</label>
-            <select
-              className="form-select"
-              name="role"
-              onChange={selectHandler}
-              defaultValue={data.role}
-            >
-              <option value="empleado">Empleado</option>
-              <option value="admin">Admin</option>
-              <option value="gerente">Gerente</option>
-            </select>
-          </div>
+          
         </div>
         <div className="form-button-container">
           <button disabled={disabled} className="button" type="submit">
@@ -197,14 +164,6 @@ export default function UpdateUser(): JSX.Element {
           </button>
         </div>
       </form>
-      <AssignJobs
-        name={data.name}
-        cuil={cuil ? cuil : data.cuil}
-        removableJobs={false}
-        setDisabled={() => {
-          setChanged(true);
-        }}
-      ></AssignJobs>
     </div>
   );
 }
