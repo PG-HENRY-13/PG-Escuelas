@@ -40,54 +40,10 @@ export default function SalaryList(): JSX.Element {
   };
 
   const month = new Date().getMonth()
-  console.log(month)
 
-  var array =[
-    {
-        jobId: 1012,
-        jobName: "profe",
-        baseWage$: 50070,
-        additionals$: 14881.98,
-        seniority$: 0,
-        overTimeAdditionals$: 0,
-        absencesDeductions$: 0,
-        underTimeDeductions$: 0,
-        unionDeductions$: 1001.4,
-        baseWageCode: 100,
-        underTimeDeductionsCode: 3779,
-        absencesDeductionsCode: 1226
-    },
-    {
-        jobId: 1013,
-        jobName: "profe inicial",
-        baseWage$: 53574.89444444444,
-        additionals$: 14881.985555555,
-        seniority$: 0,
-        overTimeAdditionals$: 0,
-        absencesDeductions$: 0,
-        underTimeDeductions$: 0,
-        unionDeductions$: 1071.49,
-        baseWageCode: 107,
-        underTimeDeductionsCode: 3779,
-        absencesDeductionsCode: 219
-    },
-    {
-        jobId: 1014,
-        jobName: "profe primario",
-        baseWage$: 53574.89,
-        additionals$: 15287.5955555555,
-        seniority$: 0,
-        overTimeAdditionals$: 0,
-        absencesDeductions$: 0,
-        underTimeDeductions$: 0,
-        unionDeductions$: 1071.49,
-        baseWageCode: 107,
-        underTimeDeductionsCode: 3779,
-        absencesDeductionsCode: 219
-    }
-  ]
+  let salaryArray: any[];
 
-
+  
 
   return (
     <div className="userlist-filter-container">
@@ -155,7 +111,8 @@ export default function SalaryList(): JSX.Element {
             .map((e: any) => {
               return (
                 <>
-                  {axios.get(URL_API + "salary/"+e.cuil+"/"+"202205")}
+                  {axios.get(URL_API + "salary/"+e.cuil+"/"+"202205")
+                  .then(res=>{salaryArray.push(res)})}
                   <tr>
                     <td>{e.cuil}</td>{" "}
                     <td>
@@ -173,18 +130,16 @@ export default function SalaryList(): JSX.Element {
                       {e.name} {e.lastName}
                     </td>
                     
+                    {salaryArray?.map(s=>{
+                      <td></td>
+                    })}
                     
-                    <td>20202</td>
-                    <td>10202</td>
-                    <td>816</td>
-                    <td>14162</td>
-                    <td>84626</td>
                   </tr>
 
                   <td colSpan={8}>
             
                     <div className="subList">
-                      {userCuil === e.cuil ? <SalaryListEach array={array} /> : null}
+                      {userCuil === e.cuil ? <SalaryListEach /> : null}
                     </div>
                     
                   </td>
