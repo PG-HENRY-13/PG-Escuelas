@@ -7,6 +7,8 @@ import Filters from "../Filters";
 import SalaryListEach from "./SalaryListEach";
 import "../../styles/SalaryList.css"
 import { mapFinderOptions } from "sequelize/types/utils";
+import axios from "axios";
+import {URL_API} from "../../env"
 
 export default function SalaryList(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -153,7 +155,7 @@ export default function SalaryList(): JSX.Element {
             .map((e: any) => {
               return (
                 <>
-                
+                  {axios.get(URL_API + "salary/"+e.cuil+"/"+"202205")}
                   <tr>
                     <td>{e.cuil}</td>{" "}
                     <td>

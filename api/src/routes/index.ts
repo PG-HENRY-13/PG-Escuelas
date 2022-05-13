@@ -10,8 +10,8 @@ import testRoutes from "./test";
 import mail from "./mail";
 
 import contingenciesRoutes from "./contingencies";
+import salary from "./salary"
 
-import Salary from "./Salary";
 import loginRoute from './login'
 const router = Router();
 
@@ -27,6 +27,6 @@ router.use("/test", testRoutes);
 router.use("/mail", mail);
 
 router.use("/contingencies", contingenciesRoutes);
-router.use("/salary", Salary);
+router.use("/salary", salary);
 
 export default router;

@@ -1,6 +1,5 @@
 import { Response, Request, Router, NextFunction } from "express";
 
-
 import { User } from "../models/User";
 import { Job } from "../models/Job";
 import { userInfo } from "os";
@@ -8,27 +7,15 @@ import { Paycheck } from "../models/Paycheck";
 
 const router = Router();
 
-router.get("/:cuil/:month"),
-  async (req: Request, res: Response, next: NextFunction) => {
-    const month = req.params.month;
-    const cuil = req.params.cuil;
 
-    let selected_user = await User.findByPk(cuil);
 
-    if (selected_user) {
-      //Una vez encontrado el usuario, analizamos su cargo
-      // selected_user.jobs?.map((job) => {
-      //   let charge_db = Paycheck.findByPk(job.id);
-      // //esto
-      //   const year = selected_user.seniorityDate.getFullYear();
-      //   var final_year = actualYear - year;
-      //   if (!final_year) {
-      //     final_year = 1;
-      //   }
-      // });
-      // res.json(paycheck);
-    }
-  };
+router.get("/:cuil/:period", async (req: Request, res: Response, next: NextFunction) => {
+  const cuil = req.params.cuil;
+  const period = req.params.period;
+
+  return res.send({ jobName: "Profe de ingles" });
+  }
+);
 
 
 
@@ -51,9 +38,16 @@ router.get("/:month"),
     //   let paychecks = Paycheck.findAll({where:{period: month,userCuil:u.cuil}})
     // })
 
-    
-    return{cuil: 2043078093,name: "Santiago", lastName: "Montion" , remunerative: 20456, NoRemunerative: 5464,assignments:4000,deductions: 5433, totalSalary: 104665}
-
+    return {
+      cuil: 2043078093,
+      name: "Santiago",
+      lastName: "Montion",
+      remunerative: 20456,
+      NoRemunerative: 5464,
+      assignments: 4000,
+      deductions: 5433,
+      totalSalary: 104665,
+    };
   };
 
 export default router;
