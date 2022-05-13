@@ -35,7 +35,7 @@ export default function ForgotPwd(): JSX.Element {
       })
       .catch((error) => {
         var sp = document.getElementById("otro");
-        if (sp) sp.innerHTML = error;
+        if (sp) sp.innerHTML = 'Ingrese el CUIL correcto';
       });
   };
 
