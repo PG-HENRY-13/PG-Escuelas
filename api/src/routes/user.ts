@@ -39,13 +39,13 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { jobs } = req.body;
     const user = req.body;
-    console.log("llegue al user con ", user);
+    // console.log("llegue al user con ", user);
     if (!user.role) {
       user.role = "empleado";
     }
     // user.password = await encryptPwd( req.body.password);
     user.password = await encryptPwd(req.body.password);
-    console.log("llegue al user");
+    // console.log("llegue al user");
     const [newUser, created] = await User.findOrCreate({
       where: {
         cuil: req.body.cuil,

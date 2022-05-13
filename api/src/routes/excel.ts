@@ -22,7 +22,7 @@ export var wagingJson = [
     C118360: 0, // MONTO Antigüedad (por cada año)
     C110230: 0, // MONTO Ad. Rem
     C117730: 0, // MONTO Est. Doc (ni idea)
-    C117430: 0, // MONTO Supl. Cap (ni idea)
+    C117430: 0, // MONTO Supl. Cap (lo uso para horas extra)
     C112620: 0, // MONTO Gtos. Inh. Lab. Doc. (ni idea)
     C118420: 0, // MONTO P. Cal Ed
     C117930: 0, // MONTO Func. Jer
@@ -30,9 +30,13 @@ export var wagingJson = [
   },
 ];
 
-router.get("/gob", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/gob", async (req: Request, res: Response, next: NextFunction) => {
+  var period = req.body.period;
+  if (!period) {
+    period = "05-2022";
+  }
   const jsonFromExcel = excelToJson({
-    source: fs.readFileSync(__dirname + "/../resources/mayo22.xlsx"),
+    source: fs.readFileSync(__dirname + `/../resources/${period}.xlsx`),
     // source: fs.readFileSync(upload),
     header: {
       // Is the number of rows that will be skipped and will not be present at our result object. Counting from top to bottom
@@ -43,14 +47,14 @@ router.get("/gob", async (req: Request, res: Response, next: NextFunction) => {
     },
   });
   wagingJson = jsonFromExcel.salarios;
-  console.log(jsonFromExcel.salarios);
+  // console.log(jsonFromExcel.salarios);
   return res.status(200).json(wagingJson);
 });
 
 router.post(
   "/users",
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log("HACIENDO POST A /API/EXCEL/USERS");
+    // console.log("HACIENDO POST A /API/EXCEL/USERS");
     const jsonFromExcel = excelToJson({
       source: fs.readFileSync(__dirname + "/../resources/users.xlsx"),
       header: {

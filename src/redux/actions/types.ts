@@ -17,6 +17,8 @@ import {
   SignInAction,
   LoadUserAuthAction,
   SignOutAction,
+  ExportGobExcelToCalculatorAction,
+  CalculateAllWagesAction,
   HandleContingencyAction,
 } from "../interfaces";
 
@@ -41,6 +43,8 @@ export enum ActionTypes {
   signIn,
   loadUserAuth,
   signOut,
+  exportGobExcelToCalculator,
+  calculateAllWages,
   handleContingency,
 }
 
@@ -64,4 +68,6 @@ export type Action =
   | SignInAction
   | LoadUserAuthAction
   | SignOutAction
+  | ExportGobExcelToCalculatorAction
+  | CalculateAllWagesAction
   | HandleContingencyAction;

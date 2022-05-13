@@ -21,11 +21,13 @@ import {
   FetchContingenciesAction,
   DeleteContingencyAction,
   LoadUserSalaryAction,
+  ExportGobExcelToCalculatorAction,
+  CalculateAllWagesAction,
   ContingencyState,
   HandleContingencyAction,
 } from "../interfaces";
 
-import {URL_API} from "../../env.js"
+import { URL_API } from "../../env.js";
 
 export const url = URL_API;
 // export const url = "http://localhost:3001/api/";
@@ -37,7 +39,7 @@ const filterRolesUrl = url + "role?role=";
 const excelUrl = url + "excel";
 const employeesUrl = url + "employees";
 const contingenciesUrl = url + "contingencies";
-const wageUrl = url + "salary";
+const wageUrl = url + "salary/";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
@@ -170,20 +172,6 @@ export const loadUser = (userCuil: number) => {
   };
 };
 
-export const loadUserSalary = (userCuil: number) => {
-  return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(wageUrl + "/" + userCuil, {
-      data: {
-        userCuil: userCuil,
-      },
-    }); ///CAMBIAR EL ANY
-    dispatch<LoadUserSalaryAction>({
-      type: ActionTypes.loadUserSalary,
-      payload: response.data,
-    });
-  };
-};
-
 export const userUpdate = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .put(userUrl, newUser)
@@ -243,6 +231,50 @@ export const saveUsersFromExcelFile = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+};
+
+export const exportGobExcelToCalculator = (period: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await axios.post<any>(excelUrl + "/gob", {
+        period: period,
+      });
+      dispatch<ExportGobExcelToCalculatorAction>({
+        type: ActionTypes.exportGobExcelToCalculator,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const calculateAllWages = (cuils: any) => {
+  return async (dispatch: Dispatch) => {
+    var response;
+    try {
+      cuils.map(async (cuil: string) => {
+        response = await axios.post<any>(wageUrl + cuil);
+      });
+    } catch (err) {
+      console.log("error, ", err);
+    }
+    alert("Paychecks calculados");
+  };
+};
+
+export const loadUserSalary = (userCuil: number) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.post<any>(wageUrl + "/" + userCuil, {
+      data: {
+        userCuil: userCuil,
+      },
+    }); ///CAMBIAR EL ANY
+    dispatch<LoadUserSalaryAction>({
+      type: ActionTypes.loadUserSalary,
+      payload: response.data,
+    });
   };
 };
 

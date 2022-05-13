@@ -27,6 +27,7 @@ import { ToastContainer } from "react-toastify";
 import { loadUserAuth } from "../redux/actions/authActions";
 import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
+import Calculator from "./Calculator";
 import SalaryList from "./SalaryList";
 
 export default function App(): JSX.Element {
@@ -121,6 +122,7 @@ export default function App(): JSX.Element {
             element={
               <div className="container">
                 <UserList />
+                <Calculator />
               </div>
             }
           />

@@ -16,7 +16,7 @@ export default function ContingencyList(): JSX.Element {
     dispatch(fetchContingencies() as any);
   }, []);
   useEffect(() => {
-    console.log(loadedContingencies);
+    // console.log(loadedContingencies);
   }, [loadedContingencies]);
 
   return (
