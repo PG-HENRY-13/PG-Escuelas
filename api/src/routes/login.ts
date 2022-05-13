@@ -6,8 +6,11 @@ import Joi from "joi";
 import { genToken } from "../utils/authToken";
 import jwt from "jsonwebtoken";
 import config from "../lib/config";
+import { encryptPwd } from "../utils/encryptPwd";
+import jwtDecode from "jwt-decode";
 
-const url = config.http + config.host + (config.frontPort?":"+config.frontPort:'');
+const url =
+  config.http + config.host + (config.frontPort ? ":" + config.frontPort : "");
 
 const router = Router();
 
@@ -42,7 +45,7 @@ router.post("/forgotpwd", async (req, res) => {
         email: user.emailAddress,
       };
       // se crea un one time token con el pwd hasheado + la fecha creado
-      var secret = user?.password + "-" + user.createdAt.getTime;
+      var secret = user.password + "-" + user.createdAt.getTime;
 
       var token = jwt.sign(payload, secret);
 
@@ -59,8 +62,45 @@ router.post("/forgotpwd", async (req, res) => {
   }
 });
 
+router.put("/changepwd", async (req, res) => {
+  const { cuil, password } = req.body;
+  if (cuil && password) {
+    User.update(
+      {
+        password: await encryptPwd(password),
+      },
+      {
+        where: {
+          cuil: cuil,
+        },
+      }
+    )
+      .then((response) => {
+        // alert(response);
+        return res.status(202).send("La contraseña ha sido actualizada");
+      })
+      .catch((error) => {
+        // alert(error.message);
+        return res.status(500).send("Ha ocurrido un error ");
+      });
+  }
+});
 
+router.get("/resetpassword/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
 
+  if (id && token) {
+    const user = await User.findByPk(id);
+
+    if (user) {
+      
+      const payload:any =  jwtDecode(token);
+     if(user.cuil === payload.id) {
+       return res.status(200).send('Token correcto');
+     }
+     else res.status(400).send('Error');
+    }
+  }
+});
 
 export default router;
-

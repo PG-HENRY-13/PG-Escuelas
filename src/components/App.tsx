@@ -29,6 +29,9 @@ import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
 
+import ForgotPwd from "./ForgotPwd";
+import ResetPwd from "./ResetPwd";
+
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
   const userLogged = useSelector((state: any) => state.authState);
@@ -41,6 +44,8 @@ export default function App(): JSX.Element {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/forgotpassword" element={<ForgotPwd/>}/>
+      <Route path="/resetpassword/:id/:token" element={<ResetPwd />}/>
       {userLogged.role === "empleado" ? (
         <Route path="/user" element={<LayoutEmployee />}>
           <Route index element={<News />} />
