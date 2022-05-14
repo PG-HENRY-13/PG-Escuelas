@@ -62,7 +62,7 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
                 jobs: [...loadedUser.jobs, input],
               })
             );
-            // props.setDisabled();
+            props.setDisabled();
           }
         }}
       >
