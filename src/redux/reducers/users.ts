@@ -93,6 +93,17 @@ export const usersReducer = (
         ),
       };
 
+    case ActionTypes.handleContingency:
+      return {
+        ...state,
+        contingencies: state.contingencies.map((el) => {
+          if (el.id === action.payload.id) {
+            return { ...el, state: action.payload.resolve };
+          }
+          return el;
+        }),
+      };
+
     default:
       return state;
   }

@@ -21,9 +21,14 @@ import {
   FetchContingenciesAction,
   DeleteContingencyAction,
   LoadUserSalaryAction,
+  ExportGobExcelToCalculatorAction,
+  CalculateAllWagesAction,
+  ContingencyState,
+  HandleContingencyAction,
 } from "../interfaces";
 
-import {URL_API} from "../../env.js"
+import { URL_API } from "../../env.js";
+import { toast } from "react-toastify";
 
 export const url = URL_API;
 // export const url = "http://localhost:3001/api/";
@@ -35,7 +40,7 @@ const filterRolesUrl = url + "role?role=";
 const excelUrl = url + "excel";
 const employeesUrl = url + "employees";
 const contingenciesUrl = url + "contingencies";
-const wageUrl = url + "salary";
+const wageUrl = url + "salary/";
 
 export const fetchUsers = () => {
   return async (dispatch: Dispatch) => {
@@ -72,10 +77,18 @@ export const updateFormUser = (data: UserForm | string) => {
 
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<User>(userUrl + "/" + cuil);
-    dispatch<FetchUserAction>({
-      type: ActionTypes.fetchUser,
-      payload: response.data,
+    await axios.get<User>(userUrl + "/" + cuil).then((response) => {
+      dispatch<FetchUserAction>({
+        type: ActionTypes.fetchUser,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      toast.error('Error al intentar cargar los datos del usuario');
+      setTimeout(() => {
+        window.location.href ="/"; 
+      },3000)
+     
     });
   };
 };
@@ -97,7 +110,7 @@ export const deleteUsers = (userID: number) => {
     };
     // eslint-disable-next-line
   } catch (error: any) {
-    alert("Something went wrong. Try again");
+    toast.error("Something went wrong. Try again");
     return error;
   }
 };
@@ -106,14 +119,14 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {
-      alert("Usuario añadido correctamente");
+      toast.success("Usuario añadido correctamente");
       dispatch<CreateUserAction>({
         type: ActionTypes.createUser,
         payload: data.data,
       });
     })
     .catch((err: any) => {
-      alert("Error, el usuario ya existe en la db");
+      toast.error("Error, el usuario ya existe en la db");
       console.log("error: ", err.message);
     });
 };
@@ -133,10 +146,10 @@ export const assignJobToUser = (userCuil: string, jobID: string) => {
         type: ActionTypes.assignJobToUser,
         payload: response.data,
       });
-      alert("Trabajo asignado correctamente");
+      toast.success("Trabajo asignado correctamente");
     };
   } catch (err) {
-    alert("Todo lo que podía salir mal lo ha hecho");
+    toast.error("Todo lo que podía salir mal lo ha hecho");
   }
 };
 
@@ -168,32 +181,18 @@ export const loadUser = (userCuil: number) => {
   };
 };
 
-export const loadUserSalary = (userCuil: number) => {
-  return async (dispatch: Dispatch) => {
-    const response = await axios.get<any>(wageUrl + "/" + userCuil, {
-      data: {
-        userCuil: userCuil,
-      },
-    }); ///CAMBIAR EL ANY
-    dispatch<LoadUserSalaryAction>({
-      type: ActionTypes.loadUserSalary,
-      payload: response.data,
-    });
-  };
-};
-
 export const userUpdate = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .put(userUrl, newUser)
     .then((data) => {
-      alert("Usuario actualizado correctamente");
+      toast.success("Usuario actualizado correctamente");
       dispatch<UpdateUserAction>({
         type: ActionTypes.updateUser,
         payload: data.data,
       });
     })
     .catch((err: any) => {
-      alert("Error al actualizar usuario");
+      toast.error("Error al actualizar usuario");
       console.log("error: ", err);
     });
 };
@@ -237,10 +236,54 @@ export const saveUsersFromExcelFile = () => {
         type: ActionTypes.saveUsersFromExcelFile,
         payload: response.data,
       });
-      alert("Usuarios cargados");
+      toast.success("Usuarios cargados");
     } catch (err) {
       console.log(err);
     }
+  };
+};
+
+export const exportGobExcelToCalculator = (period: string) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await axios.post<any>(excelUrl + "/gob", {
+        period: period,
+      });
+      dispatch<ExportGobExcelToCalculatorAction>({
+        type: ActionTypes.exportGobExcelToCalculator,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const calculateAllWages = (cuils: any) => {
+  return async (dispatch: Dispatch) => {
+    var response;
+    try {
+      cuils.map(async (cuil: string) => {
+        response = await axios.post<any>(wageUrl + cuil);
+      });
+    } catch (err) {
+      console.log("error, ", err);
+    }
+    toast.success("Paychecks calculados");
+  };
+};
+
+export const loadUserSalary = (userCuil: number) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.post<any>(wageUrl + "/" + userCuil, {
+      data: {
+        userCuil: userCuil,
+      },
+    }); ///CAMBIAR EL ANY
+    dispatch<LoadUserSalaryAction>({
+      type: ActionTypes.loadUserSalary,
+      payload: response.data,
+    });
   };
 };
 
@@ -251,7 +294,7 @@ export const sendContingency = (data: Contingency) => {
     .post(contingenciesUrl, {
       ...data,
     })
-    .then(() => alert("Enviado"));
+    .then(() => toast.success("Enviado"));
 };
 
 // export const FetchContingencies = (data: Contingency) => {
@@ -276,6 +319,19 @@ export const deleteContingency = (id: number) => {
     dispatch<DeleteContingencyAction>({
       type: ActionTypes.deleteContingency,
       payload: id,
+    });
+  };
+};
+
+export const handleContingency = (id: number, resolve: ContingencyState) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.put(contingenciesUrl, {
+      id,
+      resolve,
+    });
+    dispatch<HandleContingencyAction>({
+      type: ActionTypes.handleContingency,
+      payload: { id, resolve },
     });
   };
 };

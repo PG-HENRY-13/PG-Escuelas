@@ -1,35 +1,51 @@
 import React from "react";
-import { sendContingency } from "../../redux/actions";
+import { loadUser, sendContingency } from "../../redux/actions";
 import { useState, useEffect } from "react";
-import { ContingencyType } from "../../redux/interfaces";
-import { useSelector } from "react-redux";
+import { ContingencyType, Job } from "../../redux/interfaces";
+import { useDispatch, useSelector } from "react-redux";
 import { Contingency } from "../../redux/interfaces";
+import { toast } from "react-toastify";
 
 export default function AbsenceForm(): JSX.Element {
+  const dispatch = useDispatch();
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
-    let toSend: Contingency = {
-      //el dato se substitute no se manda actualmente
+    let toSend: any = {
       ...data,
       hasNotice: data.hasNotice === "true" ? true : false,
-      fullName: loggedUser.name + " " + loggedUser.lastName,
-      jobId: "1010",
       cuil: loggedUser.id,
     };
-    if (!data.endDate) delete toSend.endDate;
-    sendContingency(toSend);
+    if (data.date && data.endDate) {
+      let day1 = new Date(data.date);
+      let day2 = new Date(data.endDate);
+      let difference = day2.getTime() - day1.getTime();
+      let days = difference / (1000 * 3600 * 24);
+      if (days > 0) toSend.absenceDays = days;
+    }
+    if (!data.endDate) {
+      delete toSend.endDate;
+      toSend.absenceDays = 1;
+    }
+    console.log(toSend);
+    if (toSend.cuil) sendContingency(toSend);
+    else toast.error("Problema con el cuil");
     setData({
+      ...data,
       hasNotice: "true",
       contingencyType: ContingencyType.Absence,
       reason: "",
       date: "",
       endDate: "",
       substitute: "",
+      jobId: "",
     });
   }
 
   const loggedUser = useSelector((state: any) => {
     return state.authState;
+  });
+  const loadedUser = useSelector((state: any) => {
+    return state.usersState.userForm;
   });
 
   const [data, setData] = useState({
@@ -39,7 +55,17 @@ export default function AbsenceForm(): JSX.Element {
     date: "",
     endDate: "",
     substitute: "",
+    jobId: "",
   });
+
+  useEffect(() => {
+    if (loggedUser.id) dispatch(loadUser(Number(loggedUser.id)) as any);
+  }, []);
+
+  useEffect(() => {
+    if (loadedUser.jobs[0]?.id)
+      setData({ ...data, jobId: loadedUser.jobs[0].id });
+  }, [loadedUser]);
 
   function changeHandler1(e: any) {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -71,6 +97,19 @@ export default function AbsenceForm(): JSX.Element {
             ></input>
             <label htmlFor="notify">Notificar</label>
           </div>
+        </fieldset>
+        <fieldset>
+          <legend>Cargo:*</legend>
+          <select
+            className="form-select"
+            onChange={changeHandler1}
+            name="jobId"
+            id="job"
+          >
+            {loadedUser.jobs?.map((job: Job) => {
+              return <option value={job.id}>{job.name}</option>;
+            })}
+          </select>
         </fieldset>
         <fieldset>
           <div>

@@ -11,28 +11,64 @@ import {
   BelongsTo,
 } from "sequelize-typescript";
 
+import { Job } from "./Job";
 import { User } from "./User";
+import { UsersJobs } from "./UsersJobs";
+import { Paycheck as PaycheckI } from "../../../src/redux/interfaces";
+import { DataTypes } from "sequelize/types";
 
 @Table
-export class Paycheck extends Model<Paycheck> {
-  @BelongsTo(() => User)
-  user!: User[];
+export class Paycheck extends Model<PaycheckI> {
+  @BelongsTo(() => UsersJobs)
+  userJobs!: UsersJobs;
 
-  @ForeignKey(() => User)
+  @PrimaryKey
+  @ForeignKey(() => UsersJobs)
   @Column
   userCuil!: string;
 
+  @PrimaryKey
+  @ForeignKey(() => UsersJobs)
   @Column
-  date!: Date;
-
-  @Column
-  totalValue!: number;
-
-  @Default(false)
-  @Column
-  hasSigned!: boolean;
+  jobId!: string;
 
   @PrimaryKey
+  @Column
+  period!: string; /// formato "202205"
+
+  @Column
+  jobName!: string;
+
+  @Column
+  baseWage$!: string;
+
+  @Column
+  additionals$!: string;
+
+  @Column
+  seniority$!: string;
+
+  @Column
+  overTimeAdditionals$!: string;
+
+  @Column
+  absencesDeductions$!: string;
+
+  @Column
+  underTimeDeductions$!: string;
+
+  @Column
+  unionDeductions$!: string;
+
+  @Column
+  baseWageCode!: string;
+
+  @Column
+  underTimeDeductionsCode!: string;
+
+  @Column
+  absencesDeductionsCode!: string;
+
   @CreatedAt
   @Column
   createdAt!: Date;

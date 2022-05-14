@@ -30,9 +30,6 @@ export class User extends Model<UserI> {
   @BelongsToMany(() => Job, () => UsersJobs)
   jobs!: Job[];
 
-  @HasMany(() => Paycheck)
-  paychecks!: Paycheck[];
-
   @PrimaryKey
   @Column
   cuil!: string;

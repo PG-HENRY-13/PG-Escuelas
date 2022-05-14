@@ -128,10 +128,29 @@ export interface Contingency {
   cuil?: string;
   jobId?: string;
   fullName?: string;
+  userJob?: {
+    UserCuil: string;
+    JobId: string;
+    userData: {
+      name: string;
+      lastName: string;
+    };
+    jobData: {
+      name: string;
+    };
+  };
 }
 
-export interface AbsenceContingency extends Contingency {
-  substitute?: string;
+export interface UserJobCont {
+  UserCuil: string;
+  JobId: string;
+  userData: {
+    name: string;
+    lastName: string;
+  };
+  jobData: {
+    name: string;
+  };
 }
 
 export interface ScheduleContingency extends Contingency {
@@ -149,6 +168,13 @@ export enum ContingencyType {
   earlyWithdrawal = "retiro temprano",
 }
 
+export enum ContingencyState {
+  pending = "Pendiente",
+  accepted = "Atendida",
+  rejected = "Rechazada",
+  discarded = "Descartada",
+}
+
 export interface FetchContingenciesAction {
   type: ActionTypes.fetchContingencies;
   payload: Contingency[];
@@ -157,6 +183,14 @@ export interface FetchContingenciesAction {
 export interface DeleteContingencyAction {
   type: ActionTypes.deleteContingency;
   payload: number;
+}
+
+export interface HandleContingencyAction {
+  type: ActionTypes.handleContingency;
+  payload: {
+    id: number;
+    resolve: ContingencyState;
+  };
 }
 export interface Salary {
   basic_salary: number;
@@ -210,6 +244,35 @@ export interface LoadUserAuthAction {
   payload: any;
 }
 export interface SignOutAction {
-  type:ActionTypes.signOut;
+  type: ActionTypes.signOut;
   payload: any;
+}
+
+// Paycheck Interface
+
+export interface Paycheck {
+  jobId: string;
+  userCuil: string;
+  period: string;
+  jobName: string;
+  baseWage$: number;
+  additionals$: number;
+  seniority$: number;
+  overTimeAdditionals$: number;
+  absencesDeductions$: number;
+  underTimeDeductions$: number;
+  unionDeductions$: number;
+  baseWageCode: number;
+  underTimeDeductionsCode: number;
+  absencesDeductionsCode: number;
+}
+
+export interface ExportGobExcelToCalculatorAction {
+  type: ActionTypes.exportGobExcelToCalculator;
+  payload: UserForm;
+}
+
+export interface CalculateAllWagesAction {
+  type: ActionTypes.calculateAllWages;
+  payload: UserForm;
 }

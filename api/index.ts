@@ -41,7 +41,7 @@ sequelize
         name: "Carlos Salvador",
         lastName: "Bilardo",
         password:
-          "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6",
+          "$2b$10$x0/2y8nbrC55hqKq3jxuBuMt0C1QBXwoUveetxb6U2kuGAxmdWbQ6", //12345
         address: "Kiricocho 13",
         phoneNumber: "01113131313",
         emailAddress: "elDoctor@gmail.com",
