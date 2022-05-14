@@ -1,5 +1,6 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { assignJobToUser, updateFormUser } from "../../redux/actions";
 import { Job, StoreState, User } from "../../redux/interfaces";
 import { JobAssing } from "../../redux/interfaces";
@@ -53,7 +54,7 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
         onClick={(e) => {
           let tempJobs = [...loadedUser.jobs];
           if (tempJobs.filter((j) => j.id === input.id).length > 0)
-            alert("El usuario ya posee este trabajo");
+            toast.error("El usuario ya posee este trabajo");
           else {
             dispatch(
               updateFormUser({
