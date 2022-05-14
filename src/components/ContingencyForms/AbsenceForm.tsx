@@ -8,36 +8,72 @@ import { Contingency } from "../../redux/interfaces";
 export default function AbsenceForm(): JSX.Element {
   const dispatch = useDispatch();
   function submit(e: React.SyntheticEvent) {
-    e.preventDefault();
-    let toSend: any = {
-      ...data,
-      hasNotice: data.hasNotice === "true" ? true : false,
-      cuil: loggedUser.id,
-    };
-    if (data.date && data.endDate) {
-      let day1 = new Date(data.date);
-      let day2 = new Date(data.endDate);
-      let difference = day2.getTime() - day1.getTime();
-      let days = difference / (1000 * 3600 * 24);
-      if (days > 0) toSend.absenceDays = days;
+    try {
+      e.preventDefault();
+      let toSend: any = {
+        ...data,
+        hasNotice: data.hasNotice === "true" ? true : false,
+        cuil: loggedUser.id,
+      };
+      if (data.date && data.endDate) {
+        let day1 = new Date(data.date);
+        let day2 = new Date(data.endDate);
+        day1.setDate(day1.getDate() + 1);
+        day2.setDate(day2.getDate() + 1);
+        if (day2.getTime() - day1.getTime() < 0) {
+          throw new Error("Combinacion de fechas invalida");
+        } else if (day1.getMonth() === day2.getMonth()) {
+          let difference = day2.getTime() - day1.getTime();
+          let days = difference / (1000 * 3600 * 24);
+          if (days > 0) toSend.absenceDays = days;
+        } else if (day1.getMonth() + 1 === day2.getMonth()) {
+          const toSend2: any = {
+            ...data,
+            hasNotice: data.hasNotice === "true" ? true : false,
+            cuil: loggedUser.id,
+          };
+          let day0string = [
+            day2.getFullYear(),
+            (day2.getMonth() + 1).toString().padStart(2, "0"),
+            "01",
+          ].join("-");
+          let day0 = new Date(day0string);
+          day0.setDate(day0.getDate() + 1);
+          let difference2 = day2.getTime() - day0.getTime();
+          let days2 = difference2 / (1000 * 3600 * 24);
+          toSend2.absenceDays = days2;
+          toSend2.date = day0string;
+          console.log(toSend2);
+          let difference1 = day0.getTime() - day1.getTime();
+          let days = difference1 / (1000 * 3600 * 24);
+          toSend.absenceDays = days;
+          if (toSend.cuil) sendContingency(toSend2);
+        } else {
+          throw new Error(
+            "No se puede solicitar faltas que difieran por mas de 1 mes"
+          );
+        }
+      }
+      if (!data.endDate) {
+        delete toSend.endDate;
+        toSend.absenceDays = 1;
+      }
+      console.log(toSend);
+      if (toSend.cuil) sendContingency(toSend);
+      else alert("Problema con el cuil");
+      setData({
+        ...data,
+        hasNotice: "true",
+        contingencyType: ContingencyType.Absence,
+        reason: "",
+        date: "",
+        endDate: "",
+        substitute: "",
+        jobId: "",
+      });
+    } catch (err) {
+      alert("Error: " + err);
     }
-    if (!data.endDate) {
-      delete toSend.endDate;
-      toSend.absenceDays = 1;
-    }
-    console.log(toSend);
-    if (toSend.cuil) sendContingency(toSend);
-    else alert("Problema con el cuil");
-    setData({
-      ...data,
-      hasNotice: "true",
-      contingencyType: ContingencyType.Absence,
-      reason: "",
-      date: "",
-      endDate: "",
-      substitute: "",
-      jobId: "",
-    });
   }
 
   const loggedUser = useSelector((state: any) => {
