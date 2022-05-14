@@ -28,6 +28,7 @@ import {
 } from "../interfaces";
 
 import { URL_API } from "../../env.js";
+import { toast } from "react-toastify";
 
 export const url = URL_API;
 // export const url = "http://localhost:3001/api/";
@@ -76,10 +77,18 @@ export const updateFormUser = (data: UserForm | string) => {
 
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<User>(userUrl + "/" + cuil);
-    dispatch<FetchUserAction>({
-      type: ActionTypes.fetchUser,
-      payload: response.data,
+    await axios.get<User>(userUrl + "/" + cuil).then((response) => {
+      dispatch<FetchUserAction>({
+        type: ActionTypes.fetchUser,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      toast.error('Error al intentar cargar los datos del usuario');
+      setTimeout(() => {
+        window.location.href ="/"; 
+      },3000)
+     
     });
   };
 };

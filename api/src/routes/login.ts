@@ -7,7 +7,7 @@ import { genToken } from "../utils/authToken";
 import jwt from "jsonwebtoken";
 import config from "../lib/config";
 import { encryptPwd } from "../utils/encryptPwd";
-import jwtDecode from "jwt-decode";
+
 import { sendMail } from "../utils/mails";
 
 const url =
@@ -48,14 +48,14 @@ router.post("/forgotpwd", async (req, res) => {
       // se crea un one time token con el pwd hasheado + la fecha creado
       var secret = user.password + "-" + user.createdAt.getTime;
 
-      var token = jwt.sign(payload, secret);
+      var token = jwt.sign(payload, secret, { expiresIn: 60 });
 
       // TODO: Send email containing link to reset password.
       // In our case, will just return a link to click.
       let resp = sendMail(
         user.emailAddress,
         "resetpassword",
-       `Siga el siguiente link para recuperar su clave
+        `Siga el siguiente link para recuperar su clave
         ${url}/resetpassword/${payload.id}/${token}`
       );
 
@@ -99,10 +99,18 @@ router.get("/resetpassword/:id/:token", async (req, res) => {
     const user = await User.findByPk(id);
 
     if (user) {
-      const payload: any = jwtDecode(token);
-      if (user.cuil === payload.id) {
-        return res.status(200).send("Token correcto");
-      } else res.status(400).send("Error");
+      var secret = user.password + "-" + user.createdAt.getTime;
+      jwt.verify(token, secret, (err: any, payload: any) => {
+        console.log(payload);
+
+        if (payload && user?.cuil === payload.id) {
+          console.log("paso por aca");
+          return res.status(200).send("Token correcto");
+        } else {
+          console.log("Paso por error");
+          return res.status(400).send(err);
+        }
+      });
     }
   }
 });
