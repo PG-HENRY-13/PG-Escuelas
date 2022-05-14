@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ContingencyType, Job } from "../../redux/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { Contingency } from "../../redux/interfaces";
+import { toast } from "react-toastify";
 
 export default function AbsenceForm(): JSX.Element {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function AbsenceForm(): JSX.Element {
     }
     console.log(toSend);
     if (toSend.cuil) sendContingency(toSend);
-    else alert("Problema con el cuil");
+    else toast.error("Problema con el cuil");
     setData({
       ...data,
       hasNotice: "true",
