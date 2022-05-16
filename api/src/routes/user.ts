@@ -108,7 +108,6 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
           seniorityDate: userUpdate.seniorityDate,
           gender: userUpdate.gender,
           role: userUpdate.role,
-          password: userUpdate.password,
           //AQUI AGREGAR LOS CAMPOS QUE SE QUIERAN MODIFICAR
         },
         {
