@@ -116,7 +116,7 @@ export default function Paychecks(): JSX.Element {
               if (!filter) return true;
               const jobName =
                 payc.jobName.toLowerCase() + " " + user.lastName.toLowerCase();
-          
+
               return jobName.includes(filter.toLocaleLowerCase())
                 ? payc
                 : false;
@@ -133,6 +133,9 @@ export default function Paychecks(): JSX.Element {
                     <td>{"$" + Number(e.absencesDeductions$).toFixed(2)}</td>
                     <td>{"$" + Number(e.underTimeDeductions$).toFixed(2)}</td>
                     <td>{"$" + Number(e.unionDeductions$).toFixed(2)}</td>
+                    <td>
+                      <button className="btn btn-dark"onClick={()=>navigate('../paycheck')}>Ver recibo</button>
+                    </td>
                   </tr>
                 </>
               );
