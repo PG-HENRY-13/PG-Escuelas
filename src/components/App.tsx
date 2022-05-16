@@ -33,6 +33,8 @@ import ResetPwd from "./ResetPwd";
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toast } from "react-toastify/dist/components";
+import Paychecks from "./PayChecks";
+
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -83,6 +85,14 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <Paycheck />
+                </div>
+              }
+            />
+            <Route
+              path="paychecks"
+              element={
+                <div className="container">
+                  <Paychecks />
                 </div>
               }
             />
@@ -151,9 +161,9 @@ export default function App(): JSX.Element {
             />
           </Route>
         ) : null}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
-      <ToastContainer position="bottom-center" theme="colored" />
+      <ToastContainer position="bottom-right" theme="colored" />
     </div>
   );
 }
