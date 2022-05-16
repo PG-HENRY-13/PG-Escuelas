@@ -11,6 +11,7 @@ import mail from "./mail";
 import paychecksRoute  from "./paycheck";
 
 import contingenciesRoutes from "./contingencies";
+import salary from "./salary"
 
 import salaryRoute from "./salary";
 import loginRoute from "./login";

@@ -27,6 +27,7 @@ import { loadUserAuth } from "../redux/actions/authActions";
 import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
+import SalaryList from "./SalaryList";
 
 import ForgotPwd from "./ForgotPwd";
 import ResetPwd from "./ResetPwd";
@@ -156,6 +157,14 @@ export default function App(): JSX.Element {
               element={
                 <div>
                   <UserSalary />
+                </div>
+              }
+            />
+            <Route
+              path="salary"
+              element={
+                <div className="container">
+                  <SalaryList />
                 </div>
               }
             />

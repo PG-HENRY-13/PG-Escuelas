@@ -50,7 +50,7 @@ export default function UserList(): JSX.Element {
           onChange={(e) => handleFilter(e.target.value)}
         />
       </div>
-      <table className="table">
+      <table className="table table-hover">
         <thead>
           <tr>
             <th data-type="numeric">

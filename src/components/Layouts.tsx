@@ -12,49 +12,58 @@ export default function LayoutAdmin(): JSX.Element {
 
   const handleLogOut = (e: any) => {
     e.preventDefault();
-    dispatch(signOut() as any)
-    navigate('/')
-  }
+    dispatch(signOut() as any);
+    navigate("/");
+  };
 
   return (
     <main>
-      <nav className="navbar navbar-expand-lg">
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/">
-            Inicio - <span >{userLogged.name + ' ' + userLogged.lastName}</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/createuser">
+      
+
+<nav className="navbar navbar-expand-lg">
+  <div className="container-fluid">
+  <NavLink className="nav-link" to="/admin/">
+              <img className="nav-logo" src={Logo} alt="logo"></img>
+    </NavLink>
+
+    <div className="collapse navbar-collapse" id="navbarScroll">
+      <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+        <li className="nav-item">
+        <NavLink className="nav-link" to="/admin/createuser">
               Crear Usuario Nuevo
             </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/userlist">
+        </li>
+        <li className="nav-item">
+        <NavLink className="nav-link" to="/admin/userlist">
               Ver lista de usuarios
             </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/contingencies">
+        </li>
+        <li className="nav-item">
+        <NavLink className="nav-link" to="/admin/contingencies">
               Contingencias
             </NavLink>
-          </li>
-
-          <li className="nav-item close-session">
-            <button className="btn btn-light" onClick={handleLogOut}>Cerrar Sesión</button>
-          </li>
-          {/* <li className="nav-logo-center">
-            <NavLink className="nav-logo-link" to="/admin/">
-              <img className="nav-logo" src={Logo} alt="logo"></img>
-            </NavLink>
-          </li> */}
           
-        </ul>
-      </nav>
+        </li>
+        <li className="nav-item">
+        <NavLink className="nav-link" to="/admin/salary">
+              Salario
+            </NavLink>
+        </li>
+      </ul>
+      <form className="d-flex">
+      <button className="button-close-session" onClick={handleLogOut}>
+              Cerrar Sesión
+            </button>
+        
+      </form>
+    </div>
+  </div>
+</nav>
+    
       <section>
         <Outlet />
       </section>
     </main>
   );
 }
+
