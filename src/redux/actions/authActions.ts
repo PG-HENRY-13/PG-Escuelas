@@ -19,7 +19,7 @@ export const signIn = (data: any) => {
       })
       .catch((error) => {
         // toast.error('error.response.data')
-        alert('Error de cuil o contraseña');
+        toast.error('Error de cuil o contraseña');
       });
   };
 };
