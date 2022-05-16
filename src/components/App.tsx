@@ -153,6 +153,14 @@ export default function App(): JSX.Element {
                 </div>
               }
             />
+            <Route
+              path="salary"
+              element={
+                <div className="container">
+                  <SalaryList />
+                </div>
+              }
+            />
           </Route>
         ) : null}
         <Route path="*" element={<Navigate to="/" />} />
