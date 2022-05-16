@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ContingencyType, Job } from "../../redux/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { Contingency } from "../../redux/interfaces";
+import { toast } from "react-toastify";
 
 export default function AbsenceForm(): JSX.Element {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export default function AbsenceForm(): JSX.Element {
         day1.setDate(day1.getDate() + 1);
         day2.setDate(day2.getDate() + 1);
         if (day2.getTime() - day1.getTime() < 0) {
+          toast.error("Combinacion de fechas invalida");
           throw new Error("Combinacion de fechas invalida");
         } else if (day1.getMonth() === day2.getMonth()) {
           let difference = day2.getTime() - day1.getTime();
@@ -49,8 +51,11 @@ export default function AbsenceForm(): JSX.Element {
           toSend.absenceDays = days;
           if (toSend.cuil) sendContingency(toSend2);
         } else {
-          throw new Error(
+          toast.error(
             "No se puede solicitar faltas que difieran por mas de 1 mes"
+          );
+          throw new Error(
+            "No se puede solicitar faltas que duren mas de 2 meses"
           );
         }
       }
@@ -72,10 +77,9 @@ export default function AbsenceForm(): JSX.Element {
         jobId: "",
       });
     } catch (err) {
-      alert("Error: " + err);
+      console.log(err);
     }
   }
-
   const loggedUser = useSelector((state: any) => {
     return state.authState;
   });

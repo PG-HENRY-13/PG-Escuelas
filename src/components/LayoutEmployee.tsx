@@ -21,7 +21,8 @@ export default function LayoutEmployee(): JSX.Element {
         <ul className="navbar-nav">
           <li className="nav-item">
             <NavLink className="nav-link" to={"/user/" + cuil}>
-              Mi perfil - <span >{userLogged.name + ' ' + userLogged.lastName}</span>
+              Mi perfil -{" "}
+              <span>{userLogged.name + " " + userLogged.lastName}</span>
             </NavLink>
           </li>
           <li className="nav-item">

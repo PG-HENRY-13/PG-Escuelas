@@ -27,6 +27,16 @@ export default function ResetPwd(): JSX.Element {
 
   useEffect(() => {
     id && dispatch(fetchUser(id) as any);
+
+    axios
+      .get(`${URL_API}login/resetpassword/${id}/${token}`)
+      .then((response) => {
+        toast.success("Su token es correcto");
+      })
+      .catch((error) => {
+        toast.error("Su token es erroneo");
+        navigate("/");
+      });
   }, []);
 
   const handleChange = (e: any) => {
@@ -37,25 +47,19 @@ export default function ResetPwd(): JSX.Element {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
+
     axios
-      .get(`${URL_API}login/resetpassword/${id}/${token}`)
+      .put(`${URL_API}login/changepwd`, {
+        cuil: user.cuil,
+        password: data.password,
+      })
       .then((response) => {
-        axios
-          .put(`${URL_API}login/changepwd`, {
-            cuil: user.cuil,
-            password: data.password,
-          })
-          .then((response) => {
-            toast.success('Contraseña cambiada correctamente')
-          })
-          .catch((error) => {
-            toast.error('Ocurrió un error al cambiar contraseña')
-          });
-        navigate("/");
+        toast.success("Contraseña cambiada correctamente");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Ocurrió un error al cambiar contraseña");
       });
+    navigate("/");
   };
 
   return (

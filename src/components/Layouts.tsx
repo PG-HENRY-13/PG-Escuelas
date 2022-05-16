@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../redux/actions/authActions";
 
 export default function LayoutAdmin(): JSX.Element {
-  const userLogged = useSelector((state: any) => state.authState)
-  const dispatch =useDispatch();
-  const navigate =  useNavigate();
+  const userLogged = useSelector((state: any) => state.authState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogOut = (e: any) => {
     e.preventDefault();
-    dispatch(signOut() as any)
-    navigate('/')
-  }
+    dispatch(signOut() as any);
+    navigate("/");
+  };
 
   return (
     <main>
@@ -22,7 +22,8 @@ export default function LayoutAdmin(): JSX.Element {
         <ul className="navbar-nav">
           <li className="nav-item">
             <NavLink className="nav-link" to="/">
-            Inicio - <span >{userLogged.name + ' ' + userLogged.lastName}</span>
+              Inicio -{" "}
+              <span>{userLogged.name + " " + userLogged.lastName}</span>
             </NavLink>
           </li>
           <li className="nav-item">
@@ -35,21 +36,55 @@ export default function LayoutAdmin(): JSX.Element {
               Ver lista de usuarios
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/admin/contingencies">
+          <li className="nav-item dropdown">
+            <a
+              href="#"
+              className="nav-link dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               Contingencias
-            </NavLink>
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <NavLink
+                  className="dropdown-item"
+                  to="/admin/contingencies/pending"
+                >
+                  Pendientes
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className="dropdown-item"
+                  to="/admin/contingencies/record"
+                >
+                  Historial
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className="dropdown-item"
+                  to="/admin/contingencies/create"
+                >
+                  Crear
+                </NavLink>
+              </li>
+            </ul>
           </li>
 
           <li className="nav-item close-session">
-            <button className="btn btn-light" onClick={handleLogOut}>Cerrar Sesión</button>
+            <button className="btn btn-light" onClick={handleLogOut}>
+              Cerrar Sesión
+            </button>
           </li>
           {/* <li className="nav-logo-center">
             <NavLink className="nav-logo-link" to="/admin/">
               <img className="nav-logo" src={Logo} alt="logo"></img>
             </NavLink>
           </li> */}
-          
         </ul>
       </nav>
       <section>

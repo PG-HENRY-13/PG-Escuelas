@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { loadUser, sendContingency } from "../../redux/actions";
 import { ContingencyType, Job } from "../../redux/interfaces";
 export default function ScheduleForm(props: any): JSX.Element {
@@ -30,7 +31,7 @@ export default function ScheduleForm(props: any): JSX.Element {
     };
     console.log("ESTO ES TO SEND: ---------", toSend);
     if (toSend.cuil) sendContingency(toSend);
-    else alert("Problema con el cuil");
+    else toast.error("Problema con el cuil");
     setData({
       ...data,
       hasNotice: "true",
@@ -83,7 +84,7 @@ export default function ScheduleForm(props: any): JSX.Element {
     if (e.target.name === "hoursNumber" && !isNaN(e.target.value))
       setData({ ...data, [e.target.name]: Number(e.target.value) });
     else if (e.target.name === "hoursNumber" && isNaN(e.target.value))
-      alert("Numeros solamente");
+      toast.error("Numeros solamente");
     else setData({ ...data, [e.target.name]: e.target.value });
   }
 

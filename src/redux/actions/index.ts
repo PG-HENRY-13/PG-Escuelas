@@ -28,6 +28,7 @@ import {
 } from "../interfaces";
 
 import { URL_API } from "../../env.js";
+import { toast } from "react-toastify";
 
 export const url = URL_API;
 // export const url = "http://localhost:3001/api/";
@@ -76,10 +77,18 @@ export const updateFormUser = (data: UserForm | string) => {
 
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<User>(userUrl + "/" + cuil);
-    dispatch<FetchUserAction>({
-      type: ActionTypes.fetchUser,
-      payload: response.data,
+    await axios.get<User>(userUrl + "/" + cuil).then((response) => {
+      dispatch<FetchUserAction>({
+        type: ActionTypes.fetchUser,
+        payload: response.data,
+      });
+    })
+    .catch((error) => {
+      toast.error('Error al intentar cargar los datos del usuario');
+      setTimeout(() => {
+        window.location.href ="/"; 
+      },3000)
+     
     });
   };
 };
@@ -101,7 +110,7 @@ export const deleteUsers = (userID: number) => {
     };
     // eslint-disable-next-line
   } catch (error: any) {
-    alert("Something went wrong. Try again");
+    toast.error("Something went wrong. Try again");
     return error;
   }
 };
@@ -110,14 +119,14 @@ export const createUser = (newUser: User) => (dispatch: Dispatch) => {
   axios
     .post(userUrl, newUser)
     .then((data) => {
-      alert("Usuario añadido correctamente");
+      toast.success("Usuario añadido correctamente");
       dispatch<CreateUserAction>({
         type: ActionTypes.createUser,
         payload: data.data,
       });
     })
     .catch((err: any) => {
-      alert("Error, el usuario ya existe en la db");
+      toast.error("Error, el usuario ya existe en la db");
       console.log("error: ", err.message);
     });
 };
@@ -137,10 +146,10 @@ export const assignJobToUser = (userCuil: string, jobID: string) => {
         type: ActionTypes.assignJobToUser,
         payload: response.data,
       });
-      alert("Trabajo asignado correctamente");
+      toast.success("Trabajo asignado correctamente");
     };
   } catch (err) {
-    alert("Todo lo que podía salir mal lo ha hecho");
+    toast.error("Todo lo que podía salir mal lo ha hecho");
   }
 };
 
@@ -176,14 +185,14 @@ export const userUpdate = (newUser: UserForm) => (dispatch: Dispatch) => {
   axios
     .put(userUrl, newUser)
     .then((data) => {
-      alert("Usuario actualizado correctamente");
+      toast.success("Usuario actualizado correctamente");
       dispatch<UpdateUserAction>({
         type: ActionTypes.updateUser,
         payload: data.data,
       });
     })
     .catch((err: any) => {
-      alert("Error al actualizar usuario");
+      toast.error("Error al actualizar usuario");
       console.log("error: ", err);
     });
 };
@@ -227,7 +236,7 @@ export const saveUsersFromExcelFile = () => {
         type: ActionTypes.saveUsersFromExcelFile,
         payload: response.data,
       });
-      alert("Usuarios cargados");
+      toast.success("Usuarios cargados");
     } catch (err) {
       console.log(err);
     }
@@ -260,7 +269,7 @@ export const calculateAllWages = (cuils: any) => {
     } catch (err) {
       console.log("error, ", err);
     }
-    alert("Paychecks calculados");
+    toast.success("Paychecks calculados");
   };
 };
 
@@ -285,7 +294,7 @@ export const sendContingency = (data: Contingency) => {
     .post(contingenciesUrl, {
       ...data,
     })
-    .then(() => alert("Enviado"));
+    .then(() => toast.success("Enviado"));
 };
 
 // export const FetchContingencies = (data: Contingency) => {

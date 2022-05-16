@@ -30,16 +30,15 @@ import Calculator from "./Calculator";
 
 import ForgotPwd from "./ForgotPwd";
 import ResetPwd from "./ResetPwd";
-import { ToastContainer,toast,Zoom,Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"
+import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Toast } from "react-toastify/dist/components";
-
+import ContingenciesRecord from "./ContingenciesRecord";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
   const userLogged = useSelector((state: any) => state.authState);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     dispatch(loadUserAuth() as any);
@@ -48,10 +47,9 @@ export default function App(): JSX.Element {
   return (
     <div>
       <Routes>
-      
         <Route path="/" element={<Login />} />
-        <Route path="/forgotpassword" element={<ForgotPwd/>}/>
-        <Route path="/resetpassword/:id/:token" element={<ResetPwd />}/>
+        <Route path="/forgotpassword" element={<ForgotPwd />} />
+        <Route path="/resetpassword/:id/:token" element={<ResetPwd />} />
         {userLogged.role === "empleado" ? (
           <Route path="/user" element={<LayoutEmployee />}>
             <Route index element={<News />} />
@@ -137,7 +135,23 @@ export default function App(): JSX.Element {
               }
             />
             <Route
-              path="contingencies"
+              path="contingencies/pending"
+              element={
+                <div className="container">
+                  <ContingencyList />
+                </div>
+              }
+            />
+            <Route
+              path="contingencies/record"
+              element={
+                <div className="container">
+                  <ContingenciesRecord />
+                </div>
+              }
+            />
+            <Route
+              path="contingencies/create"
               element={
                 <div className="container">
                   <ContingencyList />
@@ -156,9 +170,8 @@ export default function App(): JSX.Element {
         ) : null}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-       <ToastContainer />
+      <ToastContainer position="bottom-right" theme="colored" />
     </div>
-   
   );
 }
 

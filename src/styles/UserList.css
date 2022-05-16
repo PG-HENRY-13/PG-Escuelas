@@ -31,12 +31,11 @@ td {
   border-radius: 2px;
 }
 
-
-.form-container-select{
+.form-container-select {
   display: flex;
 }
 
-.form-select{
+.form-select {
   margin: 20px 0px 20px;
   margin-right: 10px;
 }
