@@ -135,7 +135,7 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get(
+router.post(
   "/values",
   async (req: Request, res: Response, next: NextFunction) => {
     const { cuil, jobId, date } = req.body;
