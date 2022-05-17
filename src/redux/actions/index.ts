@@ -30,7 +30,7 @@ import {
 import { URL_API } from "../../env.js";
 import { toast } from "react-toastify";
 
-export const url = URL_API;
+export const url: string = URL_API;
 // export const url = "http://localhost:3001/api/";
 
 export const userUrl = url + "user";
@@ -77,19 +77,20 @@ export const updateFormUser = (data: UserForm | string) => {
 
 export const fetchUser = (cuil: string) => {
   return async (dispatch: Dispatch) => {
-    await axios.get<User>(userUrl + "/" + cuil).then((response) => {
-      dispatch<FetchUserAction>({
-        type: ActionTypes.fetchUser,
-        payload: response.data,
+    await axios
+      .get<User>(userUrl + "/" + cuil)
+      .then((response) => {
+        dispatch<FetchUserAction>({
+          type: ActionTypes.fetchUser,
+          payload: response.data,
+        });
+      })
+      .catch((error) => {
+        toast.error("Error al intentar cargar los datos del usuario");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
       });
-    })
-    .catch((error) => {
-      toast.error('Error al intentar cargar los datos del usuario');
-      setTimeout(() => {
-        window.location.href ="/"; 
-      },3000)
-     
-    });
   };
 };
 
@@ -315,11 +316,19 @@ export const fetchContingencies = () => {
 
 export const deleteContingency = (id: number) => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.delete(contingenciesUrl, { data: { id } });
-    dispatch<DeleteContingencyAction>({
-      type: ActionTypes.deleteContingency,
-      payload: id,
-    });
+    await axios
+      .delete(contingenciesUrl, { data: { id } })
+      .then(() => {
+        toast.success("Contingencia eliminada corretamente");
+        dispatch<DeleteContingencyAction>({
+          type: ActionTypes.deleteContingency,
+          payload: id,
+        });
+      })
+      .catch((err) => {
+        console.log("entre");
+        toast.error("Error al eliminar la contingencia");
+      });
   };
 };
 

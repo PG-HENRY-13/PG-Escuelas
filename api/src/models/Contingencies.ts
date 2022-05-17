@@ -29,16 +29,20 @@ enum ContingencyState {
 
 @Table
 export class Contingencies extends Model<Contingencies> {
-  @BelongsTo(() => UsersJobs)
+  @BelongsTo(() => UsersJobs, "UserCuil")
   userJob!: UsersJobs;
 
   @ForeignKey(() => UsersJobs)
   @Column
   UserCuil!: string;
 
+  @ForeignKey(() => UsersJobs)
+  @Column
+  JobId!: string;
+
   // @ForeignKey(() => UsersJobs)
-  // @Column
-  // JobId!: string;
+  // @Column(DataType.JSONB)
+  // JobId!: object;
 
   @Column
   date!: Date;

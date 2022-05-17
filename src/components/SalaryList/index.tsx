@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Filters from "../Filters";
 import SalaryListEach from "./SalaryListEach";
 import "../../styles/SalaryList.css";
-import { mapFinderOptions } from "sequelize/types/utils";
+// import { mapFinderOptions } from "sequelize/types/utils";
 import axios from "axios";
 import { URL_API } from "../../env";
 import Calculator from "../Calculator";
@@ -20,9 +20,7 @@ export default function SalaryList(): JSX.Element {
   const [userCuil, setuserCuil] = React.useState("");
   const [closebutton, setclosebutton] = React.useState("Cerrar");
 
-  
-
-  const [cuils, setcuils] = React.useState<string[]>([])
+  const [cuils, setcuils] = React.useState<string[]>([]);
 
   interface Provider {
     cuil: string;
@@ -31,19 +29,48 @@ export default function SalaryList(): JSX.Element {
     a: number;
     de: number;
     s: number;
-    data: Array<{ jobId: number, jobName: number, 
-      baseWage$: number, additionals$: number, seniority$: number, overTimeAdditionals$:number, 
-      absencesDeductions$: number, underTimeDeductions$: number, unionDeductions$: number, baseWageCode:number, 
-      underTimeDeductionsCode: number, absencesDeductionsCode: number }>;
-      
+    data: Array<{
+      jobId: number;
+      jobName: number;
+      baseWage$: number;
+      additionals$: number;
+      seniority$: number;
+      overTimeAdditionals$: number;
+      absencesDeductions$: number;
+      underTimeDeductions$: number;
+      unionDeductions$: number;
+      baseWageCode: number;
+      underTimeDeductionsCode: number;
+      absencesDeductionsCode: number;
+    }>;
   }
 
-  const [concept, setconcept] = React.useState([{
-    cuil:'', r: 0, n:0, a:0, de:0, s:0, data: [{ jobId: 0, jobName: 0, 
-      baseWage$: 0, additionals$: 0, seniority$: 0, overTimeAdditionals$:0, 
-      absencesDeductions$: 0, underTimeDeductions$: 0, unionDeductions$: 0, baseWageCode:0, 
-      underTimeDeductionsCode: 0, absencesDeductionsCode: 0 }]
-  }]);
+  const [concept, setconcept] = React.useState([
+    {
+      cuil: "",
+      r: 0,
+      n: 0,
+      a: 0,
+      de: 0,
+      s: 0,
+      data: [
+        {
+          jobId: 0,
+          jobName: 0,
+          baseWage$: 0,
+          additionals$: 0,
+          seniority$: 0,
+          overTimeAdditionals$: 0,
+          absencesDeductions$: 0,
+          underTimeDeductions$: 0,
+          unionDeductions$: 0,
+          baseWageCode: 0,
+          underTimeDeductionsCode: 0,
+          absencesDeductionsCode: 0,
+        },
+      ],
+    },
+  ]);
 
   const loadedUsers = useSelector((state: any) => {
     return state.usersState.users;
@@ -64,9 +91,7 @@ export default function SalaryList(): JSX.Element {
       setuserCuil("");
     }
   };
- 
 
-  
   const calculateHandler = (
     cuil: string,
     data: Array<{
@@ -84,7 +109,6 @@ export default function SalaryList(): JSX.Element {
       absencesDeductionsCode: number;
     }>
   ) => {
-  
     if (!cuils.includes(cuil)) {
       let r = 0; //Remunerativos
       let n = 0; //No Remunerativos
@@ -107,61 +131,49 @@ export default function SalaryList(): JSX.Element {
   };
 
   const submitHandler = async (cuil: string) => {
-    
     if (!cuils.includes(cuil)) {
-      
-      const result = await axios.get(`${URL_API}salary/${cuil}/${selected_date}`);
+      const result = await axios.get(
+        `${URL_API}salary/${cuil}/${selected_date}`
+      );
 
       let data = result.data;
       if (data.length) {
-        
         calculateHandler(cuil, data);
         cuils.push(cuil);
+      } else {
+        concept.map((c, i) => {
+          if (c.cuil === cuil) {
+            concept.splice(i, 1);
+          }
+        });
       }
-      else{
-
-     
-      concept.map((c,i)=>{
-        if (c.cuil === cuil){
-          concept.splice(i,1)
-          
-        }
-        
-      })
-        
-      }
-      
     }
-    
-  
   };
 
-  const date = new Date()
-  var dd = String(date.getDate()).padStart(2, '0');
-  var mm = String(date.getMonth() + 1).padStart(2, '0'); 
+  const date = new Date();
+  var dd = String(date.getDate()).padStart(2, "0");
+  var mm = String(date.getMonth() + 1).padStart(2, "0");
   var yyyy = date.getFullYear();
-  var [today,settoday] = React.useState(yyyy + '-' + mm + '-' + dd) 
-  
+  var [today, settoday] = React.useState(yyyy + "-" + mm + "-" + dd);
+
   var month = ("0" + (date.getMonth() + 1)).slice(-2);
-  
-  var dateToSearch = date.getFullYear() + month
 
-  const [selected_date, setselected_date] = React.useState(dateToSearch)
+  var dateToSearch = date.getFullYear() + month;
 
-  function useForceUpdate(){
+  const [selected_date, setselected_date] = React.useState(dateToSearch);
+
+  function useForceUpdate() {
     const [value, setValue] = React.useState(0); // integer state
-    return () => setValue(value => value + 1); // update the state to force render
-    
-}
+    return () => setValue((value) => value + 1); // update the state to force render
+  }
   const forceUpdate = useForceUpdate();
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    var split = e.target.value.split('-')
-    
-    setselected_date(split[0] + split[1])
-    settoday(e.target.value)
-    cuils.splice(0,cuils.length)
-    
+    var split = e.target.value.split("-");
+
+    setselected_date(split[0] + split[1]);
+    settoday(e.target.value);
+    cuils.splice(0, cuils.length);
   };
 
   return (
@@ -170,11 +182,13 @@ export default function SalaryList(): JSX.Element {
         <h1>Salarios</h1>
       </div>
       <Filters />
-      <input type="date" id="datepicker"
+      <input
+        type="date"
+        id="datepicker"
         value={today}
-        onChange={ changeHandler }
-        ></input>
-      
+        onChange={changeHandler}
+      ></input>
+
       <div className="userlist-search-container">
         <h4 className="search-h4">Busqueda por nombre</h4>
         <input
@@ -184,8 +198,9 @@ export default function SalaryList(): JSX.Element {
           placeholder="Buscar"
           onChange={(e) => handleFilter(e.target.value)}
         />
-        <button className="salary-button" onClick={forceUpdate} ><Calculator></Calculator></button>
-        
+        <button className="salary-button" onClick={forceUpdate}>
+          <Calculator></Calculator>
+        </button>
       </div>
       <div className="table-container">
         <table className="table table-hover">
@@ -254,7 +269,6 @@ export default function SalaryList(): JSX.Element {
                       <td>
                         {e.name} {e.lastName}
                       </td>
-
                       {concept?.map((c) => {
                         return (
                           <>
@@ -267,8 +281,7 @@ export default function SalaryList(): JSX.Element {
                                 <td>{c.s.toFixed(2)}</td>
                               </>
                             ) : (
-                              <>
-                              </>
+                              <></>
                             )}
                           </>
                         );

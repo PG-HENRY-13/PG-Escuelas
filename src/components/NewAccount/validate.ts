@@ -40,7 +40,7 @@ export default function validate(input: any) {
       error.phoneNumber = "Ingrese un número valido";
   }
   if (input.hasOwnProperty("seniorityDate")) {
-    if (input.seniorityDate==='')
+    if (input.seniorityDate === "")
       error.seniorityDate = "Ingrese fecha de escalafón";
   }
   if (input.hasOwnProperty("emailAddress")) {
@@ -50,6 +50,10 @@ export default function validate(input: any) {
       )
     )
       error.emailAddress = "Ingrese una dirección de correo válida";
+  }
+  if (input.hasOwnProperty("message")) {
+    if (input.message.length < 1)
+      error.message = "Ingrese una dirección de correo válida";
   }
   return error;
 }

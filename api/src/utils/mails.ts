@@ -11,6 +11,8 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendMail = (mailTo: string, type: string, body?: string) => {
+
+
   if (type === "resetpassword") {
 
       const mail = {
@@ -31,7 +33,24 @@ export const sendMail = (mailTo: string, type: string, body?: string) => {
       );
 
   }
-
+  if(type === 'contact_from_user'){
+    const mail = {
+      from: gmail,
+      to: mailTo,
+      subject: "Contacto del usuario",
+      text: body
+    };
+    transporter.sendMail(
+      mail,
+      function (error: any, info: { response: string }) {
+        if (error) {
+          return error;
+        } else {
+          return "Email sent: " + info.response;
+        }
+      }
+    );
+  }
   if (type === "passwordUpdate") {
     const mail = {
       from: gmail,

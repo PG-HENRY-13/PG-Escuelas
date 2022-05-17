@@ -54,11 +54,13 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
       },
     });
     await UserJob?.$add("contingencies", newCont);
+    // await newCont?.$set("userJob", UserJob);
 
     const toSend = await Contingencies.findAll({
       include: [
         {
           model: UsersJobs,
+          as: "userJob",
           attributes: ["UserCuil", "JobId"],
           include: [
             {
@@ -71,6 +73,21 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
             },
           ],
         },
+        // {
+        //   model: UsersJobs,
+        //   as: "userjobs2",
+        //   attributes: ["UserCuil", "JobId"],
+        //   include: [
+        //     {
+        //       model: User,
+        //       attributes: ["name", "lastName"],
+        //     },
+        //     {
+        //       model: Job,
+        //       attributes: ["name"],
+        //     },
+        //   ],
+        // },
       ],
     });
     console.log("Exito");
@@ -118,14 +135,17 @@ router.put("/", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.get(
+router.post(
   "/values",
   async (req: Request, res: Response, next: NextFunction) => {
     const { cuil, jobId, date } = req.body;
     try {
       const extraHours = await getExtraHours(cuil, jobId, date);
+      console.log("Horas extra:" + extraHours);
       const missedHours = await getMissedHours(cuil, jobId, date);
+      console.log("Horas de menos:" + missedHours);
       const absences = await getAbsences(cuil, jobId, date);
+      console.log("Ausencias:" + absences);
       res.status(200).send({ ...absences, extraHours, missedHours });
     } catch (err) {
       console.log(err);
