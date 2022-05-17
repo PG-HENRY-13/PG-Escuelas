@@ -83,7 +83,7 @@ export async function getMissedHours(
         { contingencyType: "llegada tarde" },
         { contingencyType: "retiro temprano" },
       ],
-      state: "Atendida",
+      state: "Rechazada",
       [Op.and]: [
         sequelize.fn('EXTRACT(MONTH from "date") =', Number(month)),
         sequelize.fn('EXTRACT(YEAR from "date") =', Number(year)),
