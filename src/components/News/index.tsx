@@ -1,12 +1,13 @@
 import React from "react";
 import "../../styles/News.css"
+import New from "./New";
 
 export default function News() {
   return (
-    <div className="news-container">
+    <div className="news-container ">
       <div
         id="carouselExampleIndicators"
-        className="carousel slide"
+        className="carousel slide "
         data-bs-ride="carousel"
       >
         <div className="carousel-indicators">
@@ -32,15 +33,17 @@ export default function News() {
           ></button>
         </div>
         <div className="carousel-inner">
-          <div className="carousel-item active">
-            <h1 className='text-center'>Novedad 1</h1>{" "}
+          <div className="carousel-item active text-center">
+          <h1 className='text-center'>Ultimas Novedades</h1>
+            <New title='titulo' body='Este es el body'/>
           </div>
           <div className="carousel-item">
             <h1 className='text-center'>Novedad 2</h1>
-            
+            <New title='titulo' body='Este es el body'/>
           </div>
           <div className="carousel-item">
             <h1 className='text-center'>Novedad 3</h1>
+            <New title='titulo' body='Este es el body'/>
           </div>
         </div>
         <button
