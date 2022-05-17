@@ -27,7 +27,7 @@ import { loadUserAuth } from "../redux/actions/authActions";
 import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
-
+import FormContainer from "./ContingencyForms/FormContainer";
 import ForgotPwd from "./ForgotPwd";
 import ResetPwd from "./ResetPwd";
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
@@ -154,7 +154,7 @@ export default function App(): JSX.Element {
               path="contingencies/create"
               element={
                 <div className="container">
-                  <ContingencyList />
+                  <FormContainer />
                 </div>
               }
             />
