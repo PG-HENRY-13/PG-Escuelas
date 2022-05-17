@@ -52,7 +52,13 @@ export class Paycheck extends Model<PaycheckI> {
   overTimeAdditionals$!: string;
 
   @Column
-  absencesDeductions$!: string;
+  unexcusedAbsences!: string; // LA CANTIDAD DE FALTAS INJUSTIFICADAS
+
+  @Column
+  absencesDeductions$!: string; // EL MONTO DESCONTADO POR FALTAS INJUSTIFICADAS
+
+  @Column
+  excusedAbsences!: string; // LA CANTIDAD DE FALTAS JUSTIFICADAS, DESCUENTAN $0
 
   @Column
   underTimeDeductions$!: string;
@@ -68,6 +74,9 @@ export class Paycheck extends Model<PaycheckI> {
 
   @Column
   absencesDeductionsCode!: string;
+
+  @Column
+  isSigned!: boolean;
 
   @CreatedAt
   @Column
