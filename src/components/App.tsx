@@ -28,14 +28,12 @@ import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
 import SalaryList from "./SalaryList";
-
 import ForgotPwd from "./ForgotPwd";
 import ResetPwd from "./ResetPwd";
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toast } from "react-toastify/dist/components";
 import Paychecks from "./PayChecks";
-
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -52,6 +50,14 @@ export default function App(): JSX.Element {
         <Route path="/" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPwd />} />
         <Route path="/resetpassword/:id/:token" element={<ResetPwd />} />
+        <Route
+          path="/user/paycheck/:jobName"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
         {userLogged.role === "empleado" ? (
           <Route path="/user" element={<LayoutEmployee />}>
             <Route index element={<News />} />
@@ -81,14 +87,6 @@ export default function App(): JSX.Element {
             />
             <Route path="reschedule" element={<ScheduleForm />} />
             <Route path="news" element={<News />} />
-            <Route
-              path="paycheck"
-              element={
-                <div className="container">
-                  <Paycheck />
-                </div>
-              }
-            />
             <Route
               path="paychecks"
               element={

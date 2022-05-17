@@ -2,63 +2,58 @@ import "../../styles/Paycheck.css";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { loadUser, updateFormUser } from "../../redux/actions";
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { jsPDF } from "jspdf";
+import axios from "axios";
+import { URL_API } from "../../env";
+import { jobsReducer } from "../../redux/reducers/jobs";
 
 export default function Paycheck(): JSX.Element {
-  let { cuil } = useParams();
+  const role = useSelector((state: any) => state.authState.role);
+  let job = useParams();
+  console.log(job);
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => {
+  const userToUpdate = useSelector((state: any) => {
     return state.usersState.userForm;
   });
+  const user = useSelector((state: any) => state.authState);
 
   useEffect(() => {
-    if (cuil) dispatch(loadUser(Number(cuil)) as any);
+    if (job) dispatch(loadUser(user.id) as any);
   }, []);
 
-  var generateData = function (amount: any) {
-    var result = [];
-    var data: any = {
-      coin: "100",
-      game_group: "GameGroup",
-      game_name: "XPTO2",
-      game_version: "25",
-      machine: "20485861",
-      vlt: "0",
-      name: "Juan",
-    };
-    for (var i = 0; i < amount; i += 1) {
-      data.id = (i + 1).toString();
-      result.push(Object.assign({}, data));
-    }
-    return result;
-  };
+  const toDay = new Date();
+  const [payChecks, setPayChecks] = useState([]);
+  const [period, setPeriod] = useState(
+    toDay.getFullYear() +
+      "-" +
+      (toDay.getMonth() + 1).toString().padStart(2, "0")
+  );
 
-  interface headers {
-    id: number;
-    coin: string;
-    game_group: string;
-    game_name: string;
-    game_version: string;
-    machine: string;
-    vlt: string;
-    name: string;
-  }
+  useEffect(() => {
+    axios
+      .get(
+        `${URL_API}paychecks?cuil=${user.id}&period=${period.replace("-", "")}`
+      )
+      .then((response) => {
+        setPayChecks(response.data);
+      });
+    console.log(payChecks, "2");
+  }, [period]);
 
-  var headers = [
-    "id",
-    "coin",
-    "game_group",
-    "game_name",
-    "game_version",
-    "machine",
-    "vlt",
-    "name",
-  ];
+  const jobPaycheck: any = payChecks.filter((e: any) => {
+    let jobFilter = job.jobName;
+    let jobFiltrado = e.jobName === jobFilter;
+    return jobFiltrado;
+  });
 
-  var doc = new jsPDF();
-  doc.text("Paycheck", 95, 20);
-  doc.table(50, 30, generateData(5), headers, { fontSize: 10 });
+  console.log(user, "2222");
+  console.log(jobPaycheck, "111111");
 
   return (
     <div id="paycheckPdf">
@@ -71,24 +66,23 @@ export default function Paycheck(): JSX.Element {
                 {user.name} {user.lastName}
               </td>
               <th colSpan={1}>Cargo</th>
-              <td colSpan={3}>{user.trabajos}</td>
+              <td colSpan={3}>{job.jobName}</td>
               <th>Periodo</th>
-              <td>XXXXX</td>
+              <td>{jobPaycheck[0].period}</td>
               <th></th>
               <td></td>
             </tr>
             <tr>
               <th>CUIL</th>
-              <td colSpan={3}>{user.cuil}</td>
+              <td colSpan={3}>{user.id}</td>
               <th colSpan={1}>Escalafon</th>
-              <td colSpan={3}>{user.seniorityDate.split("T")[0]}</td>
+              <td colSpan={3}>{}</td>
               <th>Fecha de pago</th>
-              <td>XXXXX</td>
+              <td>{jobPaycheck[0].period}</td>
               <th>Ingreso</th>
-              <td>XXXXX</td>
+              <td>{jobPaycheck[0].createdAt}</td>
             </tr>
           </thead>
-          {/* --------------------------------------------------- */}
           <tr className="myBackground">
             <th className="table-border">CODIGO</th>
             <th colSpan={6} className="table-border">
@@ -101,109 +95,78 @@ export default function Paycheck(): JSX.Element {
             <th className="table-border">NO REMUNERATIVOS</th>
             <th className="table-border">DEDUCTIVOS</th>
           </tr>
-          {/* --------------------------------------------------- */}
           <tr>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">101</td>
             <td className="myAlign" colSpan={6}>
               SUELDO BASCIO
             </td>
             <td colSpan={2} className="myAlign">
-              XXXXX
+              {jobPaycheck[0].baseWage$}
             </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">{jobPaycheck[0].baseWage$}</td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
           </tr>
           <tr>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">1836</td>
             <td className="myAlign" colSpan={6}>
               ANTIGUEDAD
             </td>
-            <td colSpan={2} className="myAlign">
-              XXXXX
-            </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
+            <td colSpan={2} className="myAlign"></td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
           </tr>
           <tr>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">304</td>
             <td className="myAlign" colSpan={6}>
-              ESTADO DOCENTE
+              SINDICATO
             </td>
             <td colSpan={2} className="myAlign">
-              XXXXX
+              {jobPaycheck[0].unionDeductions$}
             </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
+            <td className="myAlign">{jobPaycheck[0].unionDeductions$}</td>
           </tr>
           <tr>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign" colSpan={6}>
-              BONIFICACION COMPENSATORIO
-            </td>
-            <td colSpan={2} className="myAlign">
-              XXXXX
-            </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-          </tr>
-          <tr>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">1023</td>
             <td className="myAlign" colSpan={6}>
               ADICIONAL REMUNERATIVO
             </td>
             <td colSpan={2} className="myAlign">
-              XXXXX
+              {jobPaycheck[0].additionals$}
             </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">{jobPaycheck[0].additionals$}</td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
           </tr>
           <tr>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">201</td>
             <td className="myAlign" colSpan={6}>
-              OBRA SOCIAL
+              HORAS EXTRAS
             </td>
             <td colSpan={2} className="myAlign">
-              XXXXX
+              {jobPaycheck[0].overTimeAdditionals$}
             </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">{jobPaycheck[0].overTimeAdditionals$}</td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
           </tr>
           <tr>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign">203</td>
             <td className="myAlign" colSpan={6}>
-              SUPLEMENTO POR CAPACITACION
+              DESCUENTO POR AUSENCIAS
             </td>
             <td colSpan={2} className="myAlign">
-              XXXXX
+              {jobPaycheck[0].underTimeDeductions$}
             </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
+            <td className="myAlign"></td>
+            <td className="myAlign"></td>
+            <td className="myAlign">{jobPaycheck[0].underTimeDeductions$}</td>
           </tr>
           <tr>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign" colSpan={6}>
-              JUBILACION - APORTE PERSONAL
-            </td>
-            <td colSpan={2} className="myAlign">
-              XXXXX
-            </td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-            <td className="myAlign">XXXXX</td>
-          </tr>
-          {/* --------------------------------------------------- */}
-          <tr>
-            <td className="myAlign" colSpan={7}></td>
-            <td colSpan={2} className="myAlign">
-              XXXXX
-            </td>
+            <td className="myAlign" colSpan={9}></td>
             <td className="myAlign"> XXXXX </td>
             <td className="myAlign"> XXXXX </td>
             <td className="myAlign"> XXXXX </td>
@@ -213,12 +176,9 @@ export default function Paycheck(): JSX.Element {
             <td className="table-border">TOTAL</td>
             <td className="table-border"> XXXXX </td>
           </tr>
-          {/* --------------------------------------------------- */}
           <tr>
-            <td colSpan={2}>Ultimo aporte:</td>
-            <td className="footer" colSpan={7}>
-              XXXXX
-            </td>
+            <td colSpan={2}></td>
+            <td className="footer" colSpan={7}></td>
             <td></td>
             <td></td>
             <td></td>
@@ -226,20 +186,16 @@ export default function Paycheck(): JSX.Element {
           <tr>
             <td colSpan={2}>Periodo:</td>
             <td className="footer" colSpan={7}>
-              XXXXX
+              {jobPaycheck[0].period}
             </td>
-            <td>
-              {/* indicado y segun la presente liquidacion dejando constancia de haber */}
-            </td>
+            <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
             <td colSpan={2}>Banco:</td>
-            <td className="footer" colSpan={7}>
-              XXXXX
-            </td>
-            <td>{/* recibido un duplicado de este recibo. */}</td>
+            <td className="footer" colSpan={7}></td>
+            <td></td>
             <td></td>
             <td></td>
           </tr>
@@ -255,7 +211,7 @@ export default function Paycheck(): JSX.Element {
             <td className="footer" colSpan={7}></td>
             <td colSpan={1}></td>
             <td className="footer-center">
-              . . . . . . . . . . . . . . . . . . . . . . . .{" "}
+              . . . . . . . . . . . . . . . . . . . . . . . .
             </td>
             <td></td>
           </tr>
@@ -270,10 +226,9 @@ export default function Paycheck(): JSX.Element {
       </div>
       <button
         className="button-download"
-        onClick={() =>
-          // console.log(window.print())}}
-          doc.save("pdfFFFFFFFF")
-        }
+        onClick={() => {
+          window.print();
+        }}
       >
         Descargar
       </button>
