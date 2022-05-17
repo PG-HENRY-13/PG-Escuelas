@@ -3,16 +3,19 @@ import { json } from "stream/consumers";
 import { WageConcept } from "../models/WageConcept";
 import { userInfo } from "os";
 import { Paycheck } from "../models/Paycheck";
-import { Paycheck as PaycheckI } from "../../../src/redux/interfaces";
+// import { Paycheck as PaycheckI } from "../../../src/redux/interfaces";
 import { wagingJson } from "./excel";
 import { number } from "joi";
 import { UsersJobs } from "../models/UsersJobs";
-import { Job } from "../models/Job";
+import { User } from "../models/User";
 import fs from "fs";
+import axios from "axios";
+// import {URL_API} from "../../../src/.env.js"
 
-import excelToJson from "convert-excel-to-json";
+const URL_API = "http://localhost:3001/api/"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
+
 const router = Router();
-
+var contingenciesUrl: string = URL_API + "contingencies";
 //   CGO: "000000", // Cargo
 //   DENOMINACION: "CARGO INEXISTENTE", //nombre del cargo
 //   P001: 0, // codigo del basico
@@ -36,16 +39,19 @@ router.post(
   "/:cuil",
   async (req: Request, res: Response, next: NextFunction) => {
     const userCuil: string = req.params.cuil;
-    // console.log("ENTRA AL POST DEL USUARIO ", userCuil);
-    // console.log("LA WAGING JSON ES ", wagingJson);
     const period = "202205"; // ME TIENEN QUE PASAR FECHA EN EL BODY
     const currentYear = new Date().getFullYear();
     var UserJobsArray = await UsersJobs.findAll({
       where: { UserCuil: userCuil },
     });
-    var jobs = UserJobsArray.map((UserJobs) => UserJobs.getDataValue("JobId"));
+    var UserData = await User.findByPk(userCuil);
 
-    var monthAndYear: string = period;
+    var jobs = UserJobsArray.map((UserJobs) => UserJobs.getDataValue("JobId"));
+    console.log("JOBS ARE (outside if) , ", jobs);
+
+    var month: string = period.toString().split("").slice(-2).join("");
+    var year: string = period.toString().split("").slice(0, -2).join("");
+    var monthAndYear: string = month + "-" + year;
     var baseWage: number; //  + baseWage * 30
     var seniority: number; // + seniority * (currentYear - _fecha escalafon en ese job_)
     var underTimeDeductions: number; // not used
@@ -59,12 +65,30 @@ router.post(
     var jobId: string;
     var jobName: string;
 
-    if (UserJobsArray) {
+    if (UserJobsArray && UserData) {
       var resultado: string = "";
       //Una vez encontrado el usuario, analizamos su cargo
       // var paychecks: PaycheckI[] = [];
 
+      var contingencies: any = {};
+
+      const values: any = await Promise.all(
+        jobs?.map(async (job) => {
+          var jobStr: string = job.toString();
+          contingencies[jobStr] = (
+            await axios.post(contingenciesUrl + "/values", {
+              cuil: userCuil,
+              jobId: job,
+              date: monthAndYear,
+            })
+          ).data;
+        })
+      );
+
+      console.log("contingencies , ", contingencies);
+
       jobs?.map(async (job) => {
+        console.log("ENTERING JOB:  ", job);
         wagingJson?.map(
           (position: {
             CGO: string;
@@ -82,6 +106,7 @@ router.post(
           }) => {
             // recorre todos los objetos del array buscando...
             if (job == position.CGO) {
+              console.log("ENTRO AL IF position==job con ,", job);
               // compara si el job es el CGO del objeto y usa los valores.
               jobId = position.CGO;
               jobName = position.DENOMINACION;
@@ -100,11 +125,17 @@ router.post(
           }
         );
 
-        var daysAbsent = 0; //BUSCAR DE MODEL CONTINGENCIAS
-        var overTimeHours = 0; //BUSCAR DE MODEL CONTINGENCIAS
-        var underTimeHours = 0; //BUSCAR DE MODEL CONTINGENCIAS
-        var seniorityDateYear = currentYear; // TRAER DE USERJOBS
-        var seniorityYears = currentYear - seniorityDateYear;
+        var daysAbsentWithPermission = contingencies[jobId].excusedAbsences;
+        var daysAbsent = contingencies[jobId].unexcusedAbsences; //BUSCA DE MODEL CONTINGENCIAS
+        var overTimeHours = contingencies[jobId].extraHours; //BUSCA DE MODEL CONTINGENCIAS
+        var underTimeHours = contingencies[jobId].missedHours; //BUSCA DE MODEL CONTINGENCIAS
+        var seniorityDateYear = UserData?.seniorityDate.getFullYear(); // TRAER DE USERS
+        console.log(seniorityDateYear);
+        if (seniorityDateYear) {
+          var seniorityYears = currentYear - seniorityDateYear;
+        } else {
+          var seniorityYears = 0;
+        }
 
         var paycheck = {
           userCuil: userCuil,
@@ -115,6 +146,8 @@ router.post(
           additionals$: additionals,
           seniority$: seniority * seniorityYears,
           overTimeAdditionals$: overTimeHours * overTimeAdditional,
+          unexcusedAbsences: daysAbsent,
+          excusedAbsences: daysAbsentWithPermission,
           absencesDeductions$: -(absencesDeductions * daysAbsent),
           underTimeDeductions$: -(underTimeDeductions * underTimeHours),
           unionDeductions$:
@@ -122,19 +155,23 @@ router.post(
           baseWageCode,
           underTimeDeductionsCode,
           absencesDeductionsCode,
+          isSigned: false,
         };
 
-        try {
-          const [newPaycheck, created] = await Paycheck.findOrCreate({
-            where: {
-              userCuil: paycheck.userCuil,
-              jobId: paycheck.jobId,
-            },
-            defaults: {
-              ...paycheck,
-            },
-          });
-        } catch (err) {
+        const [newPaycheck, created] = await Paycheck.findOrCreate({
+          where: {
+            userCuil: paycheck.userCuil,
+            jobId: paycheck.jobId,
+          },
+          defaults: {
+            ...paycheck,
+          },
+        });
+        if (created) {
+          console.log("IF CREATED - creo 1 para", paycheck.jobId);
+        }
+        if (!created) {
+          console.log("IF  NOT CREATED - no hizo para", paycheck.jobId);
           resultado = `El recibo de sueldo de ${userCuil} para el trabajo ${jobName} de ${period} ya está creado`;
         }
         // paychecks.push(paycheck);
