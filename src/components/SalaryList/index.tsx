@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Filters from "../Filters";
 import SalaryListEach from "./SalaryListEach";
 import "../../styles/SalaryList.css";
-import { mapFinderOptions } from "sequelize/types/utils";
+// import { mapFinderOptions } from "sequelize/types/utils";
 import axios from "axios";
 import { URL_API } from "../../env";
 import Calculator from "../Calculator";

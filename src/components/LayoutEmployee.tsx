@@ -59,6 +59,11 @@ export default function LayoutEmployee(): JSX.Element {
               Recibo de sueldo
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/user/contact">
+              Contacto
+            </NavLink>
+          </li>
           <li className="nav-item close-session">
             <button className="btn btn-light" onClick={handleLogOut}>
               Cerrar Sesión
