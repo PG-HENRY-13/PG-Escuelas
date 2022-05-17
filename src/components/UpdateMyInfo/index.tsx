@@ -6,6 +6,9 @@ import { useParams } from "react-router-dom";
 import AssignJobs from "../AssignJobs/AssignJobs";
 import validate from "../NewAccount/validate";
 import "../../styles/UpdateUser.css";
+import axios from "axios";
+import { URL_API } from "../../env";
+import { toast } from "react-toastify";
 
 export default function UpdateMyInfo(): JSX.Element {
   let { cuil } = useParams();
@@ -54,8 +57,8 @@ export default function UpdateMyInfo(): JSX.Element {
       !changed
     )
       setDisabled(true);
-    else  setDisabled(false);
-  }, [error,changed]);
+    else setDisabled(false);
+  }, [error, changed]);
 
   useEffect(() => {
     setError(validate(data));
@@ -71,6 +74,21 @@ export default function UpdateMyInfo(): JSX.Element {
     setChanged(true);
     dispatch(updateFormUser({ ...data, [e.target.name]: e.target.value }));
   };
+
+
+  const handlerOnClickPwd = (e: React.MouseEvent) => {
+    e.preventDefault();
+    axios
+    .post(`${URL_API}login/forgotpwd`, { cuil: data.cuil })
+    .then((response) => {
+      toast.success('Correo enviado, revise su casilla');
+   
+    })
+    .catch((error) => {
+      var sp = document.getElementById("otro");
+      if (sp) sp.innerHTML = 'Ingrese el CUIL correcto';
+    });
+  }
 
   function submit(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -96,21 +114,17 @@ export default function UpdateMyInfo(): JSX.Element {
           </div>
           <div className="form-group">
             <label className="col-sm-2 control-label">
-              Restear contraseña:
+           
             </label>
             <br />
-            <input
-              type="checkbox"
+            <button className="btn btn-primary"
               // className="form-control"
               name="password"
               // value={data.password}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  dispatch(updateFormUser({ ...data, password: "123456" }));
-                  //send email
-                }
-              }}
-            ></input>
+              onClick={
+                handlerOnClickPwd
+              }
+            >Resetear contraseña</button>
             {/* <span className="err">{error.password}</span> */}
           </div>
           <div className="form-group">
@@ -156,7 +170,6 @@ export default function UpdateMyInfo(): JSX.Element {
               <option value="masc">Masculino</option>
             </select>
           </div>
-          
         </div>
         <div className="form-button-container">
           <button disabled={disabled} className="button" type="submit">

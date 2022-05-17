@@ -6,8 +6,8 @@ import { UsersJobs } from "../models/UsersJobs";
 const { Op } = require("sequelize");
 
 export async function getExtraHours(
-  jobId: string,
   userCuil: string,
+  jobId: string,
   date: string
 ) {
   const [month, year] = [...date.split("-")];
@@ -20,12 +20,15 @@ export async function getExtraHours(
       "Contingencies.id",
       "userJob.UserCuil",
       "userJob.JobId",
-      "userJob->userData.cuil",
-      "userJob->jobData.id",
+      // "userJob->userData",
+      // "userJob->userData.cuil",
+      // "userJob->jobData.id",
     ],
     where: {
       contingencyType: "horas extras",
       state: "Atendida",
+      "$userJob.UserCuil$": userCuil,
+      "$userJob.JobId$": jobId,
       [Op.and]: [
         sequelize.fn('EXTRACT(MONTH from "date") =', Number(month)),
         sequelize.fn('EXTRACT(YEAR from "date") =', Number(year)),
@@ -34,24 +37,8 @@ export async function getExtraHours(
     include: [
       {
         model: UsersJobs,
-        include: [
-          {
-            model: User,
-            attributes: [],
-            where: {
-              cuil: userCuil,
-            },
-          },
-          {
-            model: Job,
-            // attributes: ["name"],
-            attributes: [],
-            where: {
-              id: jobId,
-            },
-          },
-        ],
-        attributes: [],
+        required: true,
+        attributes: ["UserCuil", "JobId"],
       },
     ],
   });
@@ -61,8 +48,8 @@ export async function getExtraHours(
 }
 
 export async function getMissedHours(
-  jobId: string,
   userCuil: string,
+  jobId: string,
   date: string
 ) {
   const [month, year] = [...date.split("-")];
@@ -75,15 +62,15 @@ export async function getMissedHours(
       "Contingencies.id",
       "userJob.UserCuil",
       "userJob.JobId",
-      "userJob->userData.cuil",
-      "userJob->jobData.id",
     ],
     where: {
+      state: "Rechazada",
+      "$userJob.UserCuil$": userCuil,
+      "$userJob.JobId$": jobId,
       [Op.or]: [
         { contingencyType: "llegada tarde" },
         { contingencyType: "retiro temprano" },
       ],
-      state: "Rechazada",
       [Op.and]: [
         sequelize.fn('EXTRACT(MONTH from "date") =', Number(month)),
         sequelize.fn('EXTRACT(YEAR from "date") =', Number(year)),
@@ -92,24 +79,8 @@ export async function getMissedHours(
     include: [
       {
         model: UsersJobs,
-        include: [
-          {
-            model: User,
-            attributes: [],
-            where: {
-              cuil: userCuil,
-            },
-          },
-          {
-            model: Job,
-            // attributes: ["name"],
-            attributes: [],
-            where: {
-              id: jobId,
-            },
-          },
-        ],
-        attributes: [],
+        required: true,
+        attributes: ["UserCuil", "JobId"],
       },
     ],
   });
@@ -119,23 +90,18 @@ export async function getMissedHours(
 }
 
 export async function getAbsences(
-  jobId: string,
   userCuil: string,
+  jobId: string,
   date: string
 ) {
   const [month, year] = [...date.split("-")];
 
   const absences: any = await Contingencies.findAll({
     attributes: ["state", "absenceDays", "createdAt"],
-    group: [
-      "Contingencies.id",
-      "userJob.UserCuil",
-      "userJob.JobId",
-      "userJob->userData.cuil",
-      "userJob->jobData.id",
-    ],
     where: {
       contingencyType: "ausencia",
+      "$userJob.UserCuil$": userCuil,
+      "$userJob.JobId$": jobId,
       [Op.or]: [{ state: "Atendida" }, { state: "Rechazada" }],
       [Op.and]: [
         sequelize.fn('EXTRACT(MONTH from "date") =', Number(month)),
@@ -145,25 +111,12 @@ export async function getAbsences(
     include: [
       {
         model: UsersJobs,
-        include: [
-          {
-            model: User,
-            attributes: [],
-            where: {
-              cuil: userCuil,
-            },
-          },
-          {
-            model: Job,
-            attributes: [],
-            where: {
-              id: jobId,
-            },
-          },
-        ],
+        required: true,
+        attributes: ["UserCuil", "JobId"],
       },
     ],
   });
+  console.log(absences[0]?.dataValues);
   let totalAbsences = {
     excusedAbsences: 0,
     unexcusedAbsences: 0,

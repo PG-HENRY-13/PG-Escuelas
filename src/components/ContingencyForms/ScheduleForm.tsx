@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { loadUser, sendContingency } from "../../redux/actions";
 import { ContingencyType, Job } from "../../redux/interfaces";
 export default function ScheduleForm(props: any): JSX.Element {
@@ -26,11 +27,11 @@ export default function ScheduleForm(props: any): JSX.Element {
       ...data,
       contingencyType: type,
       hasNotice: data.hasNotice === "true" ? true : false,
-      cuil: loggedUser.id,
+      cuil: props.hide ? props.cuil : loggedUser.id,
     };
     console.log("ESTO ES TO SEND: ---------", toSend);
     if (toSend.cuil) sendContingency(toSend);
-    else alert("Problema con el cuil");
+    else toast.error("Problema con el cuil");
     setData({
       ...data,
       hasNotice: "true",
@@ -65,15 +66,16 @@ export default function ScheduleForm(props: any): JSX.Element {
     date: "",
     hoursNumber: 0,
     implies: "",
-    jobId: "",
+    jobId: props.hide ? props.jobId : "",
   });
 
   useEffect(() => {
-    if (loggedUser.id) dispatch(loadUser(Number(loggedUser.id)) as any);
+    if (loggedUser.id && !props.hide)
+      dispatch(loadUser(Number(loggedUser.id)) as any);
   }, []);
 
   useEffect(() => {
-    if (loadedUser.jobs[0]?.id)
+    if (loadedUser.jobs[0]?.id && !props.hide)
       setData({ ...data, jobId: loadedUser.jobs[0].id });
   }, [loadedUser]);
 
@@ -83,7 +85,7 @@ export default function ScheduleForm(props: any): JSX.Element {
     if (e.target.name === "hoursNumber" && !isNaN(e.target.value))
       setData({ ...data, [e.target.name]: Number(e.target.value) });
     else if (e.target.name === "hoursNumber" && isNaN(e.target.value))
-      alert("Numeros solamente");
+      toast.error("Numeros solamente");
     else setData({ ...data, [e.target.name]: e.target.value });
   }
 
@@ -98,7 +100,7 @@ export default function ScheduleForm(props: any): JSX.Element {
   return (
     <div className="usersform-container">
       <form id="miForm" onSubmit={submit}>
-        <fieldset>
+        <fieldset hidden={props.hide}>
           <legend>Nivel de previsión de la novedad:*</legend>
           <div>
             <input
@@ -121,7 +123,7 @@ export default function ScheduleForm(props: any): JSX.Element {
             <label>Notificar</label>
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset hidden={props.hide}>
           <legend>Cargo:*</legend>
           <select
             className="form-select"

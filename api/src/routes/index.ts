@@ -8,8 +8,10 @@ import filterJobsRoutes from "./filterjobs";
 import excelRoutes from "./excel";
 import testRoutes from "./test";
 import mail from "./mail";
+import paychecksRoute  from "./paycheck";
 
 import contingenciesRoutes from "./contingencies";
+import salary from "./salary"
 
 import salaryRoute from "./salary";
 import loginRoute from "./login";
@@ -28,5 +30,5 @@ router.use("/mail", mail);
 
 router.use("/contingencies", contingenciesRoutes);
 router.use("/salary", salaryRoute);
-
+router.use('/paychecks',paychecksRoute)
 export default router;

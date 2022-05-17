@@ -10,11 +10,14 @@ import {
   Default,
   HasMany,
   BelongsTo,
+  Sequelize,
 } from "sequelize-typescript";
+const { Op } = require("sequelize");
 import { User } from "./User";
 import { Job } from "./Job";
 import { Paycheck } from "./Paycheck";
 import { Contingencies } from "./Contingencies";
+import { sequelize } from "../db";
 
 @Table
 export class UsersJobs extends Model<UsersJobs> {
@@ -31,7 +34,9 @@ export class UsersJobs extends Model<UsersJobs> {
   @Column
   JobId!: string;
 
-  @HasMany(() => Contingencies)
+  @HasMany(() => Contingencies, {
+    foreignKey: "UserCuil",
+  })
   contingencies!: Contingencies[];
 
   @BelongsTo(() => User)
@@ -63,4 +68,8 @@ export class UsersJobs extends Model<UsersJobs> {
   @Default("")
   @Column
   dedExcl!: string;
+
+  get getJobId() {
+    return this.UserCuil;
+  }
 }

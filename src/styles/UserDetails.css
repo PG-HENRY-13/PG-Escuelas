@@ -5,11 +5,10 @@
 }
 
 .user-detail-inside {
-  
   width: 900px;
   background-color: #e0e0e0;
   box-shadow: 15px 15px 30px #6e6e6e, -15px -15px 30px #e0e0e0;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
   border-radius: 20px;
 }
 
@@ -35,8 +34,7 @@
   transform: scale(1.1);
 }
 
-
-.detail-label{
+.detail-label {
   padding: 5px;
   padding-bottom: 25px;
   font-size: large;
@@ -46,33 +44,33 @@
   justify-content: center;
 }
 
-
-
-.detail-jobs-container{
+.detail-jobs-container {
   display: flex;
   justify-content: center;
   flex-wrap: no-wrap;
 }
 
-
-.edit-user-link{
+.edit-user-link {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 80px;
 }
 
-
-.salary-btn-container{
+.salary-btn-container {
   width: 500px;
-  margin-bottom: 120px;
+  margin-bottom: 50px;
 }
 
-.jobs-container{
+.jobs-container {
   margin-top: 15px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 
   width: 300px;
+}
+
+.btn-paycheck {
+  margin-left: 70%;
 }

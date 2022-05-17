@@ -23,11 +23,20 @@ import ScheduleForm from "./ContingencyForms/ScheduleForm";
 import ContingencyList from "./ContingencyList";
 import UserSalary from "./UserSalary";
 import Paycheck from "./Paycheck";
-import { ToastContainer } from "react-toastify";
 import { loadUserAuth } from "../redux/actions/authActions";
 import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
+import FormContainer from "./ContingencyForms/FormContainer";
+import SalaryList from "./SalaryList";
+import ForgotPwd from "./ForgotPwd";
+import ResetPwd from "./ResetPwd";
+import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Toast } from "react-toastify/dist/components";
+import ContingenciesRecord from "./ContingenciesRecord";
+import Paychecks from "./PayChecks";
+import ContactForm from "./ContactForm";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -39,112 +48,157 @@ export default function App(): JSX.Element {
   }, [dispatch]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      {userLogged.role === "empleado" ? (
-        <Route path="/user" element={<LayoutEmployee />}>
-          <Route index element={<News />} />
-          <Route
-            path=":cuil"
-            element={
-              <div className="container">
-                <UserDetails />
-              </div>
-            }
-          />
-          <Route
-            path={"updateuser/" + userLogged.id}
-            element={
-              <div className="container">
-                <UpdateMyInfo />
-              </div>
-            }
-          />
-          <Route
-            path="absenceReport"
-            element={
-              <div className="container">
-                <AbsenceForm />
-              </div>
-            }
-          />
-          <Route path="reschedule" element={<ScheduleForm />} />
-          <Route path="news" element={<News />} />
-          <Route
-            path="paycheck"
-            element={
-              <div className="container">
-                <Paycheck />
-              </div>
-            }
-          />
-        </Route>
-      ) : null}
-      {userLogged.role === "admin" ? (
-        <Route path="/admin" element={<LayoutAdmin />}>
-          <Route index element={<News />} />
-          <Route
-            path="createuser"
-            element={
-              <div className="container">
-                <NewAccount />
-              </div>
-            }
-          />
-          <Route
-            path="updateuser/:cuil"
-            element={
-              <div className="container">
-                <UpdateUser />
-              </div>
-            }
-          />
-          <Route
-            path="userlist/:cuil"
-            element={
-              <div className="container">
-                <UserDetails />
-              </div>
-            }
-          />
-          <Route
-            path="excel/upload"
-            element={
-              <div className="container login-container login-container-900">
-                <UploadExcelFile />
-                <LoadUsersWithExcel />
-              </div>
-            }
-          />
-          <Route
-            path="userlist"
-            element={
-              <div className="container">
-                <UserList />
-                <Calculator />
-              </div>
-            }
-          />
-          <Route
-            path="contingencies"
-            element={
-              <div className="container">
-                <ContingencyList />
-              </div>
-            }
-          />
-          <Route
-            path="salary/:cuil"
-            element={
-              <div>
-                <UserSalary />
-              </div>
-            }
-          />
-        </Route>
-      ) : null}
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+    <div>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/forgotpassword" element={<ForgotPwd />} />
+        <Route path="/resetpassword/:id/:token" element={<ResetPwd />} />
+        {userLogged.role === "empleado" ? (
+          <Route path="/user" element={<LayoutEmployee />}>
+            <Route index element={<News />} />
+            <Route
+              path=":cuil"
+              element={
+                <div className="container">
+                  <UserDetails />
+                </div>
+              }
+            />
+            <Route
+              path={"updateuser/" + userLogged.id}
+              element={
+                <div className="container">
+                  <UpdateMyInfo />
+                </div>
+              }
+            />
+            <Route
+              path="absenceReport"
+              element={
+                <div className="container">
+                  <AbsenceForm />
+                </div>
+              }
+            />
+            <Route path="reschedule" element={<ScheduleForm />} />
+            <Route path="news" element={<News />} />
+            <Route
+              path="paycheck"
+              element={
+                <div className="container">
+                  <Paycheck />
+                </div>
+              }
+            />
+            <Route
+              path="paychecks"
+              element={
+                <div className="container">
+                  <Paychecks />
+                </div>
+              }
+            />
+            <Route
+              path="contact"
+              element={
+                <div className="container">
+                  <ContactForm />
+                </div>
+              }
+            />
+          </Route>
+        ) : null}
+        {userLogged.role === "admin" ? (
+          <Route path="/admin" element={<LayoutAdmin />}>
+            <Route index element={<News />} />
+            <Route
+              path="createuser"
+              element={
+                <div className="container">
+                  <NewAccount />
+                </div>
+              }
+            />
+            <Route
+              path="updateuser/:cuil"
+              element={
+                <div className="container">
+                  <UpdateUser />
+                </div>
+              }
+            />
+            <Route
+              path="userlist/:cuil"
+              element={
+                <div className="container">
+                  <UserDetails />
+                </div>
+              }
+            />
+            <Route
+              path="excel/upload"
+              element={
+                <div className="container login-container login-container-900">
+                  <UploadExcelFile />
+                  <LoadUsersWithExcel />
+                </div>
+              }
+            />
+            <Route
+              path="userlist"
+              element={
+                <div className="container">
+                  <UserList />
+                  <Calculator />
+                </div>
+              }
+            />
+            <Route
+              path="contingencies/pending"
+              element={
+                <div className="container">
+                  <ContingencyList />
+                </div>
+              }
+            />
+            <Route
+              path="contingencies/record"
+              element={
+                <div className="container">
+                  <ContingenciesRecord />
+                </div>
+              }
+            />
+            <Route
+              path="contingencies/create"
+              element={
+                <div className="container">
+                  <FormContainer />
+                </div>
+              }
+            />
+            <Route
+              path="salary/:cuil"
+              element={
+                <div>
+                  <UserSalary />
+                </div>
+              }
+            />
+            <Route
+              path="salary"
+              element={
+                <div className="container">
+                  <SalaryList />
+                </div>
+              }
+            />
+          </Route>
+        ) : null}
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
+      </Routes>
+      <ToastContainer position="bottom-right" theme="colored" />
+    </div>
   );
 }
 
