@@ -35,6 +35,7 @@ import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toast } from "react-toastify/dist/components";
 import Paychecks from "./PayChecks";
+import ContactForm from "./ContactForm";
 
 
 export default function App(): JSX.Element {
@@ -94,6 +95,14 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <Paychecks />
+                </div>
+              }
+            />
+            <Route
+              path="contact"
+              element={
+                <div className="container">
+                  <ContactForm />
                 </div>
               }
             />

@@ -4,6 +4,7 @@ interface User {
     name: string;
     lastName: string;
     role: string;
+    emailAddress: string;
 }
 
 export const genToken = (user: User) => {
@@ -12,7 +13,8 @@ export const genToken = (user: User) => {
         id:user.cuil,
         name:user.name, 
         lastName:user.lastName,
-        role:user.role
+        role:user.role,
+        email:user.emailAddress
     },secretKey as string);
 
     return token;
