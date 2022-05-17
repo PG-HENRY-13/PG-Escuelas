@@ -29,7 +29,7 @@ import {
 
 import { URL_API } from "../../env.js";
 
-export const url = URL_API;
+export const url: string = URL_API;
 // export const url = "http://localhost:3001/api/";
 
 export const userUrl = url + "user";
