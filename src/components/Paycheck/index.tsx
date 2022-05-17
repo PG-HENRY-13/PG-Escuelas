@@ -16,7 +16,7 @@ export default function Paycheck(): JSX.Element {
     if (cuil) dispatch(loadUser(Number(cuil)) as any);
   }, []);
 
-  /*  var generateData = function (amount: any) {
+  var generateData = function (amount: any) {
     var result = [];
     var data: any = {
       coin: "100",
@@ -58,7 +58,7 @@ export default function Paycheck(): JSX.Element {
 
   var doc = new jsPDF();
   doc.text("Paycheck", 95, 20);
-  doc.table(50, 30, generateData(5), headers, { fontSize: 10 }); */
+  doc.table(50, 30, generateData(5), headers, { fontSize: 10 });
 
   return (
     <div id="paycheckPdf">
@@ -270,8 +270,10 @@ export default function Paycheck(): JSX.Element {
       </div>
       <button
         className="button-download"
-        onClick={() => window.print()}
-        /* onClick={() => doc.save("pdfFFFFFFFF")} */
+        onClick={() =>
+          // console.log(window.print())}}
+          doc.save("pdfFFFFFFFF")
+        }
       >
         Descargar
       </button>

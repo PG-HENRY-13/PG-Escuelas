@@ -229,6 +229,7 @@ export interface AuthStateInterface {
   lastName: string;
   id: string;
   role: string;
+  email:string;
   loginStatus: string;
   loginError: string;
   userLoded: boolean;

@@ -20,22 +20,14 @@
   transform: scale(1.04);
 }
 
-.nav-logo-center {
-  position: absolute;
-  left: 50%;
-
-  top: -15px;
-  margin-left: -50px !important; /* 50% of your logo width */
-  display: block;
-}
-
 .nav-logo {
-  width: 90px;
-  height: 90px;
+  width: 75px;
+  height: 30px;
+  transform: scale(1.1);
 }
 
 .nav-logo:hover {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 :root {
@@ -53,6 +45,23 @@
 .close-session {
   display: flex;
   color: white;
-  position:absolute;
-  right:10px
+  position: absolute;
+  right: 10px;
+}
+
+.button-close-session {
+  padding: 10px;
+  border: 0;
+  border-radius: 20px;
+  background-color: var(--main-button-color);
+  color: white;
+  width: 150px;
+}
+
+.button-close-session:hover {
+  background-color: #164b68;
+}
+
+.nav-item {
+  padding: 5px;
 }

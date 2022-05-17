@@ -28,12 +28,15 @@ import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
 import FormContainer from "./ContingencyForms/FormContainer";
+import SalaryList from "./SalaryList";
 import ForgotPwd from "./ForgotPwd";
 import ResetPwd from "./ResetPwd";
 import { ToastContainer, toast, Zoom, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toast } from "react-toastify/dist/components";
 import ContingenciesRecord from "./ContingenciesRecord";
+import Paychecks from "./PayChecks";
+import ContactForm from "./ContactForm";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -84,6 +87,22 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <Paycheck />
+                </div>
+              }
+            />
+            <Route
+              path="paychecks"
+              element={
+                <div className="container">
+                  <Paychecks />
+                </div>
+              }
+            />
+            <Route
+              path="contact"
+              element={
+                <div className="container">
+                  <ContactForm />
                 </div>
               }
             />
@@ -166,9 +185,17 @@ export default function App(): JSX.Element {
                 </div>
               }
             />
+            <Route
+              path="salary"
+              element={
+                <div className="container">
+                  <SalaryList />
+                </div>
+              }
+            />
           </Route>
         ) : null}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
       </Routes>
       <ToastContainer position="bottom-right" theme="colored" />
     </div>
