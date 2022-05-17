@@ -22,35 +22,36 @@ export default function ContingencyList(): JSX.Element {
   return (
     <div className="userlist-filter-container">
       <div>
-        <h1>Listado de contingencias</h1>
-        {loadedContingencies.length ? (
+        <h1>Contingencias pendientes</h1>
+        {loadedContingencies.filter((e: any) => e.state === "Pendiente")
+          .length ? (
           <div>
             {loadedContingencies?.map((e: any) => {
-              console.log(e);
-              return (
-                <ContingencyItem
-                  fullName={
-                    e.userJob?.userData.name +
-                    " " +
-                    e.userJob?.userData.lastName
-                  }
-                  reason={e.reason}
-                  contingencyType={e.contingencyType}
-                  date={e.date}
-                  CID={e.id}
-                  state={e.state}
-                  hasNotice={e.hasNotice}
-                  job={e.userJob?.jobData.name}
-                  substitute={e.substitute}
-                  endDate={e.endDate}
-                  hours={e.hoursNumber}
-                ></ContingencyItem>
-              );
+              if (e.state === "Pendiente")
+                return (
+                  <ContingencyItem
+                    fullName={
+                      e.userJob?.userData.name +
+                      " " +
+                      e.userJob?.userData.lastName
+                    }
+                    reason={e.reason}
+                    contingencyType={e.contingencyType}
+                    date={e.date}
+                    CID={e.id}
+                    state={e.state}
+                    hasNotice={e.hasNotice}
+                    job={e.userJob?.jobData.name}
+                    substitute={e.substitute}
+                    endDate={e.endDate}
+                    hours={e.hoursNumber}
+                  ></ContingencyItem>
+                );
             })}
           </div>
         ) : (
           <div className="na-title">
-            <h3>Sin contingencias que atender</h3>
+            <h3>Sin contingencias por atender</h3>
           </div>
         )}
       </div>

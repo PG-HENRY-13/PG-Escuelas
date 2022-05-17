@@ -6,39 +6,81 @@ import { useDispatch, useSelector } from "react-redux";
 import { Contingency } from "../../redux/interfaces";
 import { toast } from "react-toastify";
 
-export default function AbsenceForm(): JSX.Element {
+//hacer interface para las props
+
+export default function AbsenceForm(props: any): JSX.Element {
   const dispatch = useDispatch();
   function submit(e: React.SyntheticEvent) {
-    e.preventDefault();
-    let toSend: any = {
-      ...data,
-      hasNotice: data.hasNotice === "true" ? true : false,
-      cuil: loggedUser.id,
-    };
-    if (data.date && data.endDate) {
-      let day1 = new Date(data.date);
-      let day2 = new Date(data.endDate);
-      let difference = day2.getTime() - day1.getTime();
-      let days = difference / (1000 * 3600 * 24);
-      if (days > 0) toSend.absenceDays = days;
+    try {
+      e.preventDefault();
+      let toSend: any = {
+        ...data,
+        hasNotice: data.hasNotice === "true" ? true : false,
+        cuil: props.hide ? props.cuil : loggedUser.id,
+      };
+      if (data.date && data.endDate) {
+        let day1 = new Date(data.date);
+        let day2 = new Date(data.endDate);
+        day1.setDate(day1.getDate() + 1);
+        day2.setDate(day2.getDate() + 1);
+        if (day2.getTime() - day1.getTime() < 0) {
+          toast.error("Combinacion de fechas invalida");
+          throw new Error("Combinacion de fechas invalida");
+        } else if (day1.getMonth() === day2.getMonth()) {
+          let difference = day2.getTime() - day1.getTime();
+          let days = difference / (1000 * 3600 * 24);
+          if (days > 0) toSend.absenceDays = days;
+        } else if (day1.getMonth() + 1 === day2.getMonth()) {
+          const toSend2: any = {
+            ...data,
+            hasNotice: data.hasNotice === "true" ? true : false,
+            cuil: props.hide ? props.cuil : loggedUser.id,
+          };
+          let day0string = [
+            day2.getFullYear(),
+            (day2.getMonth() + 1).toString().padStart(2, "0"),
+            "01",
+          ].join("-");
+          let day0 = new Date(day0string);
+          day0.setDate(day0.getDate() + 1);
+          let difference2 = day2.getTime() - day0.getTime();
+          let days2 = difference2 / (1000 * 3600 * 24);
+          toSend2.absenceDays = days2;
+          toSend2.date = day0string;
+          console.log(toSend2);
+          let difference1 = day0.getTime() - day1.getTime();
+          let days = difference1 / (1000 * 3600 * 24);
+          toSend.absenceDays = days;
+          if (toSend.cuil) sendContingency(toSend2);
+        } else {
+          toast.error(
+            "No se puede solicitar faltas que difieran por mas de 1 mes"
+          );
+          throw new Error(
+            "No se puede solicitar faltas que duren mas de 2 meses"
+          );
+        }
+      }
+      if (!data.endDate) {
+        delete toSend.endDate;
+        toSend.absenceDays = 1;
+      }
+      console.log(toSend);
+      if (toSend.cuil) sendContingency(toSend);
+      else alert("Problema con el cuil");
+      setData({
+        ...data,
+        hasNotice: "true",
+        contingencyType: ContingencyType.Absence,
+        reason: "",
+        date: "",
+        endDate: "",
+        substitute: "",
+        jobId: "",
+      });
+    } catch (err) {
+      console.log(err);
     }
-    if (!data.endDate) {
-      delete toSend.endDate;
-      toSend.absenceDays = 1;
-    }
-    console.log(toSend);
-    if (toSend.cuil) sendContingency(toSend);
-    else toast.error("Problema con el cuil");
-    setData({
-      ...data,
-      hasNotice: "true",
-      contingencyType: ContingencyType.Absence,
-      reason: "",
-      date: "",
-      endDate: "",
-      substitute: "",
-      jobId: "",
-    });
   }
 
   const loggedUser = useSelector((state: any) => {
@@ -55,15 +97,16 @@ export default function AbsenceForm(): JSX.Element {
     date: "",
     endDate: "",
     substitute: "",
-    jobId: "",
+    jobId: props.hide ? props.jobId : "",
   });
 
   useEffect(() => {
-    if (loggedUser.id) dispatch(loadUser(Number(loggedUser.id)) as any);
+    if (loggedUser.id && !props.hide)
+      dispatch(loadUser(Number(loggedUser.id)) as any);
   }, []);
 
   useEffect(() => {
-    if (loadedUser.jobs[0]?.id)
+    if (loadedUser.jobs[0]?.id && !props.hide)
       setData({ ...data, jobId: loadedUser.jobs[0].id });
   }, [loadedUser]);
 
@@ -73,7 +116,7 @@ export default function AbsenceForm(): JSX.Element {
   return (
     <div className="usersform-container">
       <form id="miForm" onSubmit={submit}>
-        <fieldset>
+        <fieldset hidden={props.hide}>
           <legend>Nivel de previsión de la novedad:*</legend>
           <div>
             <input
@@ -98,7 +141,7 @@ export default function AbsenceForm(): JSX.Element {
             <label htmlFor="notify">Notificar</label>
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset hidden={props.hide}>
           <legend>Cargo:*</legend>
           <select
             className="form-select"
