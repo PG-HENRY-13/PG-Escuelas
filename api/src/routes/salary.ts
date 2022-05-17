@@ -10,9 +10,10 @@ import { UsersJobs } from "../models/UsersJobs";
 import { User } from "../models/User";
 import fs from "fs";
 import axios from "axios";
+import config from "../lib/config";
 // import {URL_API} from "../../../src/.env.js"
 
-const URL_API = "http://localhost:3001/api/"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
+export const URL_API = "http://" + config.host + ":" + config.port + "/api"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
 
 const router = Router();
 var contingenciesUrl: string = URL_API + "contingencies";
