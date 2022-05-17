@@ -36,9 +36,9 @@ export class Contingencies extends Model<Contingencies> {
   @Column
   UserCuil!: string;
 
-  // @ForeignKey(() => UsersJobs)
-  // @Column
-  // JobId!: string;
+  @ForeignKey(() => UsersJobs)
+  @Column
+  JobId!: string;
 
   @Column
   date!: Date;
