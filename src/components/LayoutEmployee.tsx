@@ -69,7 +69,7 @@ export default function LayoutEmployee(): JSX.Element {
               Contacto
             </NavLink>
           </li>
-          <li className="nav-item close-session">
+          <li className="nav-item ">
             <button className="btn btn-light" onClick={handleLogOut}>
               Cerrar Sesión
             </button>

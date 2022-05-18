@@ -79,12 +79,12 @@ export default function LayoutAdmin(): JSX.Element {
               Salario
             </NavLink>
           </li>
-        </ul>
-        <form className="d-flex">
+        <li className="nav-item">
           <button className="btn btn-light" onClick={handleLogOut}>
             Cerrar Sesión
           </button>
-        </form>
+        </li>
+        </ul>
       </nav>
       <section>
         <Outlet />
