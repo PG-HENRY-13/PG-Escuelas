@@ -16,61 +16,40 @@ export default function SalaryList(): JSX.Element {
   const filter = searchParams.get("filter") ?? "";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [buttonText, setbuttonText] = React.useState("Ver mas +");
   const [userCuil, setuserCuil] = React.useState("");
   const [closebutton, setclosebutton] = React.useState("Cerrar");
+  const [selected_date, setselected_date] = React.useState("");
 
-  const [cuils, setcuils] = React.useState<string[]>([]);
 
-  interface Provider {
-    cuil: string;
-    r: number;
-    n: number;
-    a: number;
-    de: number;
-    s: number;
-    data: Array<{
-      jobId: number;
-      jobName: number;
-      baseWage$: number;
-      additionals$: number;
-      seniority$: number;
-      overTimeAdditionals$: number;
-      absencesDeductions$: number;
-      underTimeDeductions$: number;
-      unionDeductions$: number;
-      baseWageCode: number;
-      underTimeDeductionsCode: number;
-      absencesDeductionsCode: number;
-    }>;
-  }
-
-  const [concept, setconcept] = React.useState([
+  const [salarys, setsalarys] = React.useState([
     {
-      cuil: "",
-      r: 0,
-      n: 0,
-      a: 0,
-      de: 0,
-      s: 0,
-      data: [
-        {
-          jobId: 0,
-          jobName: 0,
-          baseWage$: 0,
-          additionals$: 0,
-          seniority$: 0,
-          overTimeAdditionals$: 0,
-          absencesDeductions$: 0,
-          underTimeDeductions$: 0,
-          unionDeductions$: 0,
-          baseWageCode: 0,
-          underTimeDeductionsCode: 0,
-          absencesDeductionsCode: 0,
-        },
-      ],
+      userCuil: 0,
+      jobId: 0,
+      period: 0,
+      jobName: 0,
+      baseWage$: 0,
+      additionals$: 0,
+      seniority$: 0,
+      overTimeAdditionals$: 0,
+      unexcusedAbsences: 0,
+      absencesDeductions$: 0,
+      excusedAbsences: 0,
+      underTimeDeductions$: 0,
+      unionDeductions$: 0,
+      baseWageCode: 0,
+      underTimeDeductionsCode: 0,
+      absencesDeductionsCode: 0,
+      isSigned: false,
     },
   ]);
+
+  useEffect(() => {
+    axios.get(`${URL_API}salary/${selected_date}`);
+  }, [salarys]);
+
+  
 
   const loadedUsers = useSelector((state: any) => {
     return state.usersState.users;
@@ -92,63 +71,7 @@ export default function SalaryList(): JSX.Element {
     }
   };
 
-  const calculateHandler = (
-    cuil: string,
-    data: Array<{
-      jobId: number;
-      jobName: number;
-      baseWage$: number;
-      additionals$: number;
-      seniority$: number;
-      overTimeAdditionals$: number;
-      absencesDeductions$: number;
-      underTimeDeductions$: number;
-      unionDeductions$: number;
-      baseWageCode: number;
-      underTimeDeductionsCode: number;
-      absencesDeductionsCode: number;
-    }>
-  ) => {
-    if (!cuils.includes(cuil)) {
-      let r = 0; //Remunerativos
-      let n = 0; //No Remunerativos
-      let a = 0; // Asignaciones
-      let de = 0; // Deducciones
-      let s = 0; // Salario total
-      data?.map((d) => {
-        r += Number(d.additionals$) + Number(d.overTimeAdditionals$);
-        n += Number(d.unionDeductions$); //ESTE CALCULO NO ES CORRECTO
-        a += Number(d.additionals$) + Number(d.overTimeAdditionals$); //ESTE CALCULO NO ES CORRECTO
-        de +=
-          Number(d.absencesDeductions$) +
-          Number(d.underTimeDeductions$) +
-          Number(d.underTimeDeductions$);
-        s += Number(d.baseWage$);
-      });
-      s = r - n + a - de;
-      concept.push({ cuil, r, n, a, de, s, data });
-    }
-  };
-
-  const submitHandler = async (cuil: string) => {
-    if (!cuils.includes(cuil)) {
-      const result = await axios.get(
-        `${URL_API}salary/${cuil}/${selected_date}`
-      );
-
-      let data = result.data;
-      if (data.length) {
-        calculateHandler(cuil, data);
-        cuils.push(cuil);
-      } else {
-        concept.map((c, i) => {
-          if (c.cuil === cuil) {
-            concept.splice(i, 1);
-          }
-        });
-      }
-    }
-  };
+  
 
   const date = new Date();
   var dd = String(date.getDate()).padStart(2, "0");
@@ -160,15 +83,11 @@ export default function SalaryList(): JSX.Element {
 
   var dateToSearch = date.getFullYear() + month;
 
-
-  
-
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     var split = e.target.value.split("-");
 
     setselected_date(split[0] + split[1]);
     settoday(e.target.value);
-    cuils.splice(0, cuils.length);
   };
 
   return (
@@ -249,9 +168,7 @@ export default function SalaryList(): JSX.Element {
                   : false;
               })
               ?.map((e: any) => {
-                {
-                  submitHandler(e.cuil);
-                }
+                
                 return (
                   <>
                     <tr>
@@ -270,16 +187,24 @@ export default function SalaryList(): JSX.Element {
                       <td>
                         {e.name} {e.lastName}
                       </td>
-                      {concept?.map((c) => {
+                      {salarys?.map((s) => {
                         return (
                           <>
-                            {c.cuil === e.cuil ? (
+                            {s.userCuil === e.cuil ? (
                               <>
-                                <td>{c.r.toFixed(2)}</td>
-                                <td>{c.n.toFixed(2)}</td>
-                                <td>{c.a.toFixed(2)}</td>
-                                <td>{c.de.toFixed(2)}</td>
-                                <td>{c.s.toFixed(2)}</td>
+                              {/* additionals$: 0,
+      seniority$: 0,
+      overTimeAdditionals$: 0,
+      unexcusedAbsences: 0,
+      absencesDeductions$: 0,
+      excusedAbsences: 0,
+      underTimeDeductions$: 0,
+      unionDeductions$: 0, */}
+                                <td>{s.additionals$.toFixed(2)}</td>
+                                <td>{toFixed(2)}</td>
+                                <td>{toFixed(2)}</td>
+                                <td>{toFixed(2)}</td>
+                                <td>{toFixed(2)}</td>
                               </>
                             ) : (
                               <></>

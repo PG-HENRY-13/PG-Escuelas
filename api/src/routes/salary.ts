@@ -199,51 +199,14 @@ router.post(
 );
 
 router.get(
-  "/:cuil/:period",
+  "/:period",
   async (req: Request, res: Response, next: NextFunction) => {
-    const cuil = req.params.cuil;
-    const period = req.params.period; //debe llegar asi "202205"
+   const period = req.params.period; //debe llegar asi "202205"
     let paychecks = await Paycheck.findAll({
-      where: { userCuil: cuil, period: period },
+      where: {period: period },
     });
 
     return res.send(paychecks);
-
-    // var array =[
-    //   {
-    //       jobId: 1012,
-    //       jobName: "profe",
-    //       baseWage$: 50070,
-    //       additionals$: 14881.98,
-    //       seniority$: 0,
-    //       overTimeAdditionals$: 0,
-    //       absencesDeductions$: 0,
-    //       underTimeDeductions$: 0,
-    //       unionDeductions$: 1001.4,
-    //       baseWageCode: 100,
-    //       underTimeDeductionsCode: 3779,
-    //       absencesDeductionsCode: 1226,
-
-    //   },
-    //   {
-    //       jobId: 1013,
-    //       jobName: "profe inicial",
-    //       baseWage$: 53574.899999999994,
-    //       additionals$: 14881.98,
-    //       seniority$: 0,
-    //       overTimeAdditionals$: 0,
-    //       absencesDeductions$: 0,
-    //       underTimeDeductions$: 0,
-    //       unionDeductions$: 1071.4979999999998,
-    //       baseWageCode: 107,
-    //       underTimeDeductionsCode: 3779,
-    //       absencesDeductionsCode: 219,
-
-    //   },
-
-    // ]
-
-    // return res.send(array)
   }
 );
 
