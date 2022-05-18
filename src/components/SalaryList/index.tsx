@@ -160,13 +160,8 @@ export default function SalaryList(): JSX.Element {
 
   var dateToSearch = date.getFullYear() + month;
 
-  const [selected_date, setselected_date] = React.useState(dateToSearch);
 
-  function useForceUpdate() {
-    const [value, setValue] = React.useState(0); // integer state
-    return () => setValue((value) => value + 1); // update the state to force render
-  }
-  const forceUpdate = useForceUpdate();
+  
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     var split = e.target.value.split("-");
@@ -198,9 +193,8 @@ export default function SalaryList(): JSX.Element {
           placeholder="Buscar"
           onChange={(e) => handleFilter(e.target.value)}
         />
-        <button className="salary-button" onClick={forceUpdate}>
-          <Calculator></Calculator>
-        </button>
+       <Calculator></Calculator>
+        
       </div>
       <div className="table-container">
         <table className="table table-hover">
