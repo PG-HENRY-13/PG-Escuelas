@@ -35,10 +35,7 @@ export default function Paycheck(): JSX.Element {
   function api() {
     axios
       .get(
-        `${URL_API}paychecks?cuil=${20042235281}&period=${period.replace(
-          "-",
-          ""
-        )}`
+        `${URL_API}paychecks?cuil=${user.id}&period=${period.replace("-", "")}`
       )
       .then((response) => {
         setPayChecks(response.data);
