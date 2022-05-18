@@ -20,6 +20,7 @@ export async function getExtraHours(
       "Contingencies.id",
       "userJob.UserCuil",
       "userJob.JobId",
+      "userJob.idAuto",
       // "userJob->userData",
       // "userJob->userData.cuil",
       // "userJob->jobData.id",
@@ -62,6 +63,7 @@ export async function getMissedHours(
       "Contingencies.id",
       "userJob.UserCuil",
       "userJob.JobId",
+      "userJob.idAuto",
     ],
     where: {
       state: "Rechazada",

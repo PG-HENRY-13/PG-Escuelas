@@ -66,6 +66,7 @@ export default function ContingencyItem(props: any): JSX.Element {
       </div>
       <div className="data-container">
         <h6>{`Usuario: ${props.fullName}`}</h6>
+        <h6>{`Cargo: ${props.job}`}</h6>
         <h6>{`Fecha: ${props.date.slice(0, -14)} ${
           props.endDate ? `al ${props.endDate.slice(0, -14)}` : ""
         }`}</h6>

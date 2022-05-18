@@ -19,16 +19,16 @@ import { DataTypes } from "sequelize/types";
 
 @Table
 export class Paycheck extends Model<PaycheckI> {
-  @BelongsTo(() => UsersJobs)
-  userJobs!: UsersJobs;
+  // @BelongsTo(() => UsersJobs)
+  // userJobs!: UsersJobs;
 
+  // @ForeignKey(() => UsersJobs)
   @PrimaryKey
-  @ForeignKey(() => UsersJobs)
   @Column
   userCuil!: string;
 
+  // @ForeignKey(() => UsersJobs)
   @PrimaryKey
-  @ForeignKey(() => UsersJobs)
   @Column
   jobId!: string;
 

@@ -10,6 +10,7 @@ import {
   getMissedHours,
   getAbsences,
 } from "../utils/searchFunctions";
+const { Op } = require("sequelize");
 
 const router = Router();
 
@@ -33,7 +34,7 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
         },
       ],
     });
-    console.log(contingencies);
+    console.log("LARGO DE LAS CONTINGENCIAS: " + contingencies?.length);
     return res.status(200).send(contingencies);
   } catch (err) {
     console.log(err);
@@ -42,20 +43,27 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.post("/", async (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body);
+  console.log("Esto me llega por body", req.body);
   const { cuil, jobId } = req.body;
+  console.log(typeof cuil, typeof jobId);
   try {
     const newCont = await Contingencies.create(req.body);
     console.log("---Nueva cont creada!!!!!!!---");
     const UserJob = await UsersJobs.findOne({
       where: {
-        UserCuil: cuil,
-        JobId: jobId,
+        [Op.and]: [{ UserCuil: cuil }, { JobId: jobId }],
       },
     });
-    await UserJob?.$add("contingencies", newCont);
-    // await newCont?.$set("userJob", UserJob);
-
+    console.log("EL USER JOB ES ESTE: ", UserJob);
+    console.log(
+      "--------------------------------------------------------------"
+    );
+    console.log("La nueva cont es: ", newCont);
+    // await UserJob?.$set("contingencies", newCont);
+    await newCont?.$set("userJob", UserJob);
+    console.log(
+      "----------------------------Paso las relaciones----------------------------------"
+    );
     const toSend = await Contingencies.findAll({
       include: [
         {
@@ -73,25 +81,11 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
             },
           ],
         },
-        // {
-        //   model: UsersJobs,
-        //   as: "userjobs2",
-        //   attributes: ["UserCuil", "JobId"],
-        //   include: [
-        //     {
-        //       model: User,
-        //       attributes: ["name", "lastName"],
-        //     },
-        //     {
-        //       model: Job,
-        //       attributes: ["name"],
-        //     },
-        //   ],
-        // },
       ],
     });
-    console.log("Exito");
 
+    console.log("Exito?????????????????????????????????????????????");
+    console.log("La contengiencia final es: ", toSend);
     return res.send(toSend);
   } catch (err) {
     console.log(err);
@@ -147,6 +141,38 @@ router.post(
       const absences = await getAbsences(cuil, jobId, date);
       console.log("Ausencias:" + absences);
       res.status(200).send({ ...absences, extraHours, missedHours });
+    } catch (err) {
+      console.log(err);
+      res.status(404).send("Error: " + err);
+    }
+  }
+);
+
+router.get(
+  "/:userCuil",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userCuil = req.params.userCuil;
+      const contingencies = await Contingencies.findAll({
+        where: { "$userJob.UserCuil$": userCuil },
+        include: [
+          {
+            model: UsersJobs,
+            attributes: ["UserCuil", "JobId"],
+            include: [
+              {
+                model: User,
+                attributes: ["name", "lastName"],
+              },
+              {
+                model: Job,
+                attributes: ["name"],
+              },
+            ],
+          },
+        ],
+      });
+      res.status(200).send(contingencies);
     } catch (err) {
       console.log(err);
       res.status(404).send("Error: " + err);

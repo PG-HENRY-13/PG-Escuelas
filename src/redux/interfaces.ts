@@ -180,6 +180,11 @@ export interface FetchContingenciesAction {
   payload: Contingency[];
 }
 
+export interface FetchUserContingenciesAction {
+  type: ActionTypes.fetchUserContingencies;
+  payload: Contingency[];
+}
+
 export interface DeleteContingencyAction {
   type: ActionTypes.deleteContingency;
   payload: number;
@@ -229,7 +234,7 @@ export interface AuthStateInterface {
   lastName: string;
   id: string;
   role: string;
-  email:string;
+  email: string;
   loginStatus: string;
   loginError: string;
   userLoded: boolean;

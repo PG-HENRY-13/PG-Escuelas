@@ -11,6 +11,7 @@ import {
   HasMany,
   BelongsTo,
   Sequelize,
+  AutoIncrement,
 } from "sequelize-typescript";
 const { Op } = require("sequelize");
 import { User } from "./User";
@@ -20,24 +21,26 @@ import { Contingencies } from "./Contingencies";
 import { sequelize } from "../db";
 
 @Table
-export class UsersJobs extends Model<UsersJobs> {
-  @HasMany(() => Paycheck)
-  paychecks!: Paycheck[];
+export class UsersJobs extends Model<any> {
+  // @HasMany(() => Paycheck)
+  // paychecks!: Paycheck[];
+
+  @HasMany(() => Contingencies)
+  contingencies?: Contingencies[];
 
   @PrimaryKey
+  @AutoIncrement
+  @Column
+  idAuto!: number;
+
   @ForeignKey(() => User)
   @Column
   UserCuil!: string;
 
-  @PrimaryKey
+  // @PrimaryKey
   @ForeignKey(() => Job)
   @Column
   JobId!: string;
-
-  @HasMany(() => Contingencies, {
-    foreignKey: "UserCuil",
-  })
-  contingencies!: Contingencies[];
 
   @BelongsTo(() => User)
   userData!: User;

@@ -20,6 +20,7 @@ import {
   ExportGobExcelToCalculatorAction,
   CalculateAllWagesAction,
   HandleContingencyAction,
+  FetchUserContingenciesAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -38,6 +39,7 @@ export enum ActionTypes {
   filterJobs,
   saveUsersFromExcelFile,
   fetchContingencies,
+  fetchUserContingencies,
   deleteContingency,
   loadUserSalary,
   signIn,
@@ -70,4 +72,5 @@ export type Action =
   | SignOutAction
   | ExportGobExcelToCalculatorAction
   | CalculateAllWagesAction
-  | HandleContingencyAction;
+  | HandleContingencyAction
+  | FetchUserContingenciesAction;
