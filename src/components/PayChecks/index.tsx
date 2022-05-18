@@ -55,6 +55,7 @@ export default function Paychecks(): JSX.Element {
     setPeriod(e.target.value);
   };
 
+  console.log(payChecks, "2");
   return (
     <div className="userlist-filter-container">
       <div className="na-title">
@@ -134,7 +135,14 @@ export default function Paychecks(): JSX.Element {
                     <td>{"$" + Number(e.underTimeDeductions$).toFixed(2)}</td>
                     <td>{"$" + Number(e.unionDeductions$).toFixed(2)}</td>
                     <td>
-                      <button className="btn btn-dark"onClick={()=>navigate('../paycheck')}>Ver recibo</button>
+                      <button
+                        className="btn btn-dark"
+                        onClick={() =>
+                          navigate("../paycheck" + "/" + e.jobName)
+                        }
+                      >
+                        Ver recibo
+                      </button>
                     </td>
                   </tr>
                 </>

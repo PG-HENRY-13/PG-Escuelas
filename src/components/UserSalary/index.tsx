@@ -15,6 +15,7 @@ export default function UserDetails(): JSX.Element {
   });
 
   const userConcepts = useSelector((state: any) => {
+    console.log(state.salaryState.userFormSalary, "2222");
     return state.salaryState.userFormSalary;
   });
 
