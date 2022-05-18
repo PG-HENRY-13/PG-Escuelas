@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@react-pdf/renderer": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -31,6 +34,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "script": "^0.1.4",
+    "sequelize": "^6.19.0",
     "util": "^0.12.4",
     "web-vitals": "^1.1.0",
     "webpack": "^5.72.1"
@@ -63,8 +67,6 @@
     "@types/node": "^17.0.32",
     "@types/react-redux": "^7.1.24",
     "@types/react-router-dom": "^5.3.3",
-
-   
     "typescript": "^4.6.4"
   }
 }

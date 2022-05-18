@@ -33,66 +33,97 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
   };
 
   return (
-    <div>
-      <div className="form-container-jobs">
-        <br />
-        <label className="na-title">Asignando cargos a {props.name}</label>
-        <select
-          className="form-select"
-          onChange={changeHandler}
-          name="jobId"
-          id="job"
+    <div className="row g-3">
+      <div className="form-floating  col-md-4">
+        <div className="form-floating">
+          <select
+            className="form-select"
+            defaultValue="otro"
+            onChange={changeHandler}
+            name="jobId"
+            id="job"
+          >
+            {jobs.map((job: Job) => {
+              return <option value={[job.name, job.id]}>{job.name}</option>;
+            })}
+          </select>
+          <label htmlFor="floatingSelectGrid">Asignar cargos</label>
+        </div>
+        <button
+          className="btn-dark"
+          onClick={(e) => {
+            e.preventDefault();
+            let tempJobs = [...loadedUser.jobs];
+            if (tempJobs.filter((j) => j.id === input.id).length > 0)
+              toast.error("El usuario ya posee este trabajo");
+            else {
+              dispatch(
+                updateFormUser({
+                  ...loadedUser,
+                  jobs: [...loadedUser.jobs, input],
+                })
+              );
+              props.setDisabled();
+            }
+          }}
         >
-          {jobs.map((job: Job) => {
-            return <option value={[job.name, job.id]}>{job.name}</option>;
-          })}
-        </select>
+          Asignar Cargo
+        </button>
       </div>
-      <br />
-      <button
-        className="button"
-        onClick={(e) => {
-          let tempJobs = [...loadedUser.jobs];
-          if (tempJobs.filter((j) => j.id === input.id).length > 0)
-            toast.error("El usuario ya posee este trabajo");
-          else {
-            dispatch(
-              updateFormUser({
-                ...loadedUser,
-                jobs: [...loadedUser.jobs, input],
-              })
+      <div className="form-floating  col-md-7 list-container-jobs">
+        <ul className="list-group-light">
+          {loadedUser.jobs?.map((job: Job) => {
+            return (
+              <div className="row g-2">
+                <div className="form-floating  col-md-11">
+                  <li className="list-group-item">{job.name}</li>
+                </div>
+                <div className="form-floating  col-md-1">
+                  <button
+                    className="btn-danger btn btn-xs btn-default"
+                    name={job.name}
+                    value={job.id}
+                    hidden={!props.removableJobs}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      let tempJobs = [...loadedUser.jobs];
+                      return dispatch(
+                        updateFormUser({
+                          ...loadedUser,
+                          jobs: tempJobs.filter((j) => j.id !== job.id),
+                        })
+                      );
+                    }}
+                  >
+                    Borrar
+                  </button>
+                </div>
+              </div>
             );
-            props.setDisabled();
-          }
-        }}
-      >
-        Asignar Cargo
-      </button>
-      <div>
-        {loadedUser.jobs?.map((job: Job) => {
-          return (
-            <div>
-              <span>{job.name}</span>
-              <button
-                className="button"
-                name={job.name}
-                value={job.id}
-                hidden={!props.removableJobs}
-                onClick={(e) => {
-                  let tempJobs = [...loadedUser.jobs];
-                  return dispatch(
-                    updateFormUser({
-                      ...loadedUser,
-                      jobs: tempJobs.filter((j) => j.id !== job.id),
-                    })
-                  );
-                }}
-              >
-                x
-              </button>
-            </div>
-          );
-        })}
+          })}
+        </ul>
+      </div>
+      <div className="col-md-12">
+        {/* <button
+          className="btn-dark"
+          onClick={(e) => {
+            e.preventDefault();
+            let tempJobs = [...loadedUser.jobs];
+            if (tempJobs.filter((j) => j.id === input.id).length > 0)
+              toast.error("El usuario ya posee este trabajo");
+            else {
+              dispatch(
+                updateFormUser({
+                  ...loadedUser,
+                  jobs: [...loadedUser.jobs, input],
+                })
+              );
+              props.setDisabled();
+            }
+          }}
+        >
+          Asignar Cargo
+        </button> */}
       </div>
     </div>
   );

@@ -55,6 +55,14 @@ export default function App(): JSX.Element {
         <Route path="/" element={<Login />} />
         <Route path="/forgotpassword" element={<ForgotPwd />} />
         <Route path="/resetpassword/:id/:token" element={<ResetPwd />} />
+        <Route
+          path="/user/paycheck/:jobName"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
         {userLogged.role === "empleado" ? (
           <Route path="/user" element={<LayoutEmployee />}>
             <Route index element={<News />} />
@@ -93,14 +101,6 @@ export default function App(): JSX.Element {
             <Route path="reschedule" element={<ScheduleForm />} />
             <Route path="news" element={<News />} />
             <Route
-              path="paycheck"
-              element={
-                <div className="container">
-                  <Paycheck />
-                </div>
-              }
-            />
-            <Route
               path="paychecks"
               element={
                 <div className="container">
@@ -126,6 +126,14 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <NewAccount />
+                </div>
+              }
+            />
+            <Route
+              path="userdetails/:cuil"
+              element={
+                <div className="container">
+                  <UserDetails />
                 </div>
               }
             />

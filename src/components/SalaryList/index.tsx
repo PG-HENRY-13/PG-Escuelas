@@ -175,7 +175,7 @@ export default function SalaryList(): JSX.Element {
                       {salarys?.map((s: any,index:number,array:Array<any>) => {
                         array.reduce((a,i)=>{
                           if (s.userCuil === i.userCuil){
-                            
+
                           }
                         })
                         return (
