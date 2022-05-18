@@ -8,13 +8,6 @@ import "../../styles/NewAccount.css";
 import { Link } from "react-router-dom";
 
 export default function NewAccount(): JSX.Element {
-  let today = new Date();
-  let date =
-    today.getFullYear().toString().padStart(4, "0") +
-    "-" +
-    (today.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    today.getDate().toString().padStart(2, "0");
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
   const data = useSelector((state: any) => {
@@ -30,7 +23,7 @@ export default function NewAccount(): JSX.Element {
     address: "Ingrese una direccion",
     phoneNumber: "Ingrese un número valido",
     emailAddress: "Ingrese una direccion de correo válida",
-    seniorityDate: 'Ingrese fecha de escalafón'
+    seniorityDate: "Ingrese fecha de escalafón",
   });
 
   useEffect(() => {
@@ -50,7 +43,6 @@ export default function NewAccount(): JSX.Element {
   }, [error]);
 
   useEffect(() => {
-   
     dispatch(updateFormUser("empty"));
     return () => {};
   }, []);
@@ -69,138 +61,162 @@ export default function NewAccount(): JSX.Element {
     dispatch(createUser(data) as any);
     dispatch(updateFormUser("empty"));
   }
-
+  // new-container
   return (
-    <div className="usersform-container">
+    <div className="card m-3 shadow-lg rounded-3 container-md card-body p-4 new-container">
       <div className="na-title">
-        <h1>Crear Nuevo Usuario</h1>
+        <h2>Crear Nuevo Usuario</h2>
       </div>
-      <form onSubmit={submit}>
-        <div className="form-container">
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Nombre:</label>
-            <input
-              className="form-control"
-              name="name"
-              value={data.name}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.name}</span>
-          </div>
+      <hr className="mt-0 mb-4"></hr>
+      <form className="row g-3" onSubmit={submit}>
+        <div className="form-floating mb-3 col-md-4">
+          <input
+            className="form-control"
+            name="name"
+            id="floatingName"
+            placeholder="Mario"
+            value={data.name}
+            onChange={changeHandler}
+          ></input>
+          <span className="err">{error.name}</span>
+          <label>Nombre:</label>
+        </div>
+        <div className="form-floating mb-3 col-md-4">
+          <input
+            className="form-control"
+            name="lastName"
+            id="floatingLastName"
+            placeholder="Gonzales"
+            value={data.lastName}
+            onChange={changeHandler}
+          ></input>
+          <label>Apellido:</label>
+          <span className="err">{error.lastName}</span>
+        </div>
 
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Apellido:</label>
-            <input
-              className="form-control"
-              name="lastName"
-              value={data.lastName}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.lastName}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Cuil:</label>
-            <input
-              className="form-control"
-              name="cuil"
-              value={data.cuil}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.cuil}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Contraseña:</label>
-            <input
-              className="form-control"
-              type="password"
-              name="password"
-              value={data.password}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.password}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">
-              Repita la contraseña:
-            </label>
-            <input
-              className="form-control"
-              type="password"
-              name="password2"
-              value={data.password2}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.password2}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">
-              Fecha de Escalafón:
-            </label>
-            <input
-              className="form-control"
-              type="date"
-              name="seniorityDate"
-              value={data.seniorityDate}
-              onChange={changeHandler}
-            ></input>
-              <span className="err">{error.seniorityDate}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Direccion:</label>
-            <input
-              className="form-control"
-              name="address"
-              value={data.address}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.address}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Teléfono:</label>
-            <input
-              className="form-control"
-              name="phoneNumber"
-              value={data.phoneNumber}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.phoneNumber}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-3 control-label">E-mail:</label>
-            <input
-              className="form-control"
-              name="emailAddress"
-              value={data.emailAddress}
-              onChange={changeHandler}
-            ></input>
-            <span className="err">{error.emailAddress}</span>
-          </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Género:</label>
+        <div className="form-floating mb-3 col-4">
+          <input
+            className="form-control"
+            name="cuil"
+            id="floatingCuil"
+            placeholder="00000000000"
+            value={data.cuil}
+            onChange={changeHandler}
+          ></input>
+          <label>Cuil:</label>
+          <span className="err">{error.cuil}</span>
+        </div>
+        <div className="form-floating mb-3 col-md-6">
+          <input
+            className="form-control"
+            type="password"
+            name="password"
+            id="floatingPassword"
+            placeholder="***"
+            value={data.password}
+            onChange={changeHandler}
+          ></input>
+          <label>Contraseña:</label>
+          <span className="err">{error.password}</span>
+        </div>
+        <div className="form-floating mb-3 col-md-6">
+          <input
+            className="form-control"
+            type="password"
+            name="password2"
+            id="floatingPassword2"
+            placeholder="***"
+            value={data.password2}
+            onChange={changeHandler}
+          ></input>
+          <label className="text-start">Repita la contraseña:</label>
+          <span className="err">{error.password2}</span>
+        </div>
+        <div className="form-floating mb-3 col-md-4">
+          <input
+            className="form-control"
+            name="address"
+            id="floatingAddress"
+            placeholder="House address"
+            value={data.address}
+            onChange={changeHandler}
+          ></input>
+          <label className="text-start">Direccion:</label>
+          <span className="err">{error.address}</span>
+        </div>
+        <div className="form-floating mb-3 col-md-5">
+          <input
+            className="form-control"
+            name="phoneNumber"
+            id="floatingPhone"
+            placeholder="221..."
+            value={data.phoneNumber}
+            onChange={changeHandler}
+          ></input>
+          <label className="text-start">Teléfono:</label>
+          <span className="err">{error.phoneNumber}</span>
+        </div>
+        <div className="form-floating col-md-12">
+          <input
+            className="form-control"
+            name="emailAddress"
+            id="floatingEmail"
+            placeholder="johnDoe@hotmail.com"
+            value={data.emailAddress}
+            onChange={changeHandler}
+          ></input>
+          <label className="text-start">E-mail:</label>
+          <span className="err">{error.emailAddress}</span>
+        </div>
+        <div className="form-floating col-md-5">
+          <div className="form-floating">
             <select
               className="form-select"
-              name="gender"
+              id="floatingSelectGrid"
+              aria-label="Floating label select example"
               onChange={selectHandler}
-              defaultValue="other"
+              defaultValue="otro"
             >
               <option value="otro">Sin especificar</option>
               <option value="fem">Femenino</option>
               <option value="masc">Masculino</option>
             </select>
+            <label htmlFor="floatingSelectGrid">Genero:</label>
           </div>
-          <div className="form-group">
-            <label className="col-sm-2 control-label">Rol:</label>
+        </div>
+        <div className="col-md-5">
+          <div className="form-floating">
             <select
               className="form-select"
-              name="role"
+              id="floatingSelectGrid2"
+              aria-label="Floating label select example"
               onChange={selectHandler}
-              defaultValue="employee"
+              defaultValue="empleado"
             >
               <option value="empleado">Empleado</option>
               <option value="admin">Admin</option>
-              <option value="gerente">Gerente</option>
             </select>
+            <label htmlFor="floatingSelectGrid">Perfil:</label>
           </div>
+        </div>
+        <div className="form-floating mb-3 col-md-5">
+          <input
+            className="form-control"
+            type="date"
+            name="seniorityDate"
+            value={data.seniorityDate}
+            onChange={changeHandler}
+          ></input>
+          <label>Escalafón:</label>
+          <span className="err">{error.seniorityDate}</span>
+        </div>
+        <div className=" form-floating mb-3 col-md-12">
+          <AssignJobs
+            name={data.name}
+            cuil={data.cuil}
+            removableJobs={true}
+            setDisabled={setDisabled}
+          ></AssignJobs>
         </div>
         <div className="form-button-container">
           <button disabled={disabled} className="button" type="submit">
@@ -208,20 +224,14 @@ export default function NewAccount(): JSX.Element {
           </button>
         </div>
       </form>
-      <AssignJobs
-        name={data.name}
-        cuil={data.cuil}
-        removableJobs={true}
-        setDisabled={setDisabled}
-      ></AssignJobs>
-      <Link
+      {/* <Link
         to="/admin/excel/upload"
         className="form-button-container mini-button-container"
       >
         <button className="button minibtn" type="submit">
           Crear Multiples usuarios con Excel
         </button>
-      </Link>
+      </Link> */}
     </div>
   );
 }
