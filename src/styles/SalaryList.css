@@ -12,16 +12,17 @@
   margin-bottom: 200px;
 }
 
-.salary-button{
-  border: 0;
-  background-color: var(--main-nav-color);
+.btn{
   color: white;
-  padding: 8px;
-  margin-left: 5%;
+ 
 }
 
-.salary-button:hover{
-  background-color: #0f0f0f;
+.btn-container{
+ margin-left: 20px;
+}
+
+.btn:hover{
+  color: rgb(255, 255, 255);
   
 }
 

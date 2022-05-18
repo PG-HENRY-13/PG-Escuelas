@@ -168,6 +168,7 @@ router.post(
             absencesDeductions * daysAbsent -
             underTimeDeductions * underTimeHours -
             (baseWage * 30 + seniority * seniorityYears) * unionDeductions,
+         
         };
 
         const [newPaycheck, created] = await Paycheck.findOrCreate({
@@ -201,11 +202,13 @@ router.post(
 router.get(
   "/:period",
   async (req: Request, res: Response, next: NextFunction) => {
-   const period = req.params.period; //debe llegar asi "202205"
+    const period = req.params.period; //debe llegar asi "202205"
     let paychecks = await Paycheck.findAll({
-      where: {period: period },
+      where: { period: period },
     });
 
+    
+    
     return res.send(paychecks);
   }
 );

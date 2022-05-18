@@ -21,6 +21,7 @@ const initialState: SalaryStoreState = {
   },
   paychecks: [],
   paychecksByCuil: [],
+  paychecksPeriod: [],
 };
 
 export const salaryReducer = (
@@ -36,6 +37,9 @@ export const salaryReducer = (
 
     case ActionTypes.fetchPaychecksByCuil:
       return { ...state, paychecksByCuil: action.payload };
+
+      case ActionTypes.fetchPaychecksPeriod:
+        return { ...state, paychecksPeriod: action.payload };
 
     default:
       return state;

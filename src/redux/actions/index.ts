@@ -29,6 +29,8 @@ import {
   Paycheck as PaycheckI,
   FetchAllPaychecksAction,
   FetchPaychecksByCuilAction,
+  fetchPaychecksPeriodAction,
+  getGhostStateAction
 } from "../interfaces";
 
 import { URL_API } from "../../env.js";
@@ -304,6 +306,16 @@ export const fetchAllPaychecks = () => {
   };
 };
 
+export const fetchPaychecksPeriod = (period : any) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<PaycheckI[]>(wageUrl + period);
+    dispatch<fetchPaychecksPeriodAction>({
+      type: ActionTypes.fetchPaychecksPeriod,
+      payload: response.data,
+    });
+  };
+};
+
 export const fetchPaychecksByCuil = () => {
   return async (dispatch: Dispatch) => {
     const response = await axios.get<any[]>(wageUrl + "paychecksByCuil");
@@ -313,6 +325,17 @@ export const fetchPaychecksByCuil = () => {
     });
   };
 };
+
+
+export const getGhostState = (state : boolean)=>{
+  return async (dispatch: Dispatch) => {
+    dispatch<getGhostStateAction>({
+      type: ActionTypes.getGhostState,
+      payload: state,
+    });
+  }}
+
+
 
 /// CONTINGENCIES ACTIONS
 

@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { StoreState, User } from "../../redux/interfaces";
-import { fetchUsers, loadUser, loadUserSalary } from "../../redux/actions";
+import {
+  fetchUsers,
+  loadUser,
+  loadUserSalary,
+  fetchPaychecksPeriod,
+  getGhostState,
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Filters from "../Filters";
@@ -11,6 +17,7 @@ import axios from "axios";
 import { URL_API } from "../../env";
 import Calculator from "../Calculator";
 
+
 export default function SalaryList(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get("filter") ?? "";
@@ -20,40 +27,30 @@ export default function SalaryList(): JSX.Element {
   const [buttonText, setbuttonText] = React.useState("Ver mas +");
   const [userCuil, setuserCuil] = React.useState("");
   const [closebutton, setclosebutton] = React.useState("Cerrar");
-  const [selected_date, setselected_date] = React.useState("");
+  const [cuils, setcuils] = React.useState<string[]>([]);
+  const date = new Date();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var dateToSearch = date.getFullYear() + month;
+  const [selected_date, setselected_date] = React.useState(dateToSearch);
 
 
-  const [salarys, setsalarys] = React.useState([
-    {
-      userCuil: 0,
-      jobId: 0,
-      period: 0,
-      jobName: 0,
-      baseWage$: 0,
-      additionals$: 0,
-      seniority$: 0,
-      overTimeAdditionals$: 0,
-      unexcusedAbsences: 0,
-      absencesDeductions$: 0,
-      excusedAbsences: 0,
-      underTimeDeductions$: 0,
-      unionDeductions$: 0,
-      baseWageCode: 0,
-      underTimeDeductionsCode: 0,
-      absencesDeductionsCode: 0,
-      isSigned: false,
-    },
-  ]);
+  const salarys = useSelector((state: any) => {
+    return state.salaryState.paychecksPeriod;
+  });
 
-  useEffect(() => {
-    axios.get(`${URL_API}salary/${selected_date}`);
-  }, [salarys]);
 
-  
+  const buttonActive = useSelector((state: any) => {
+    return state.ghostState.value;
+  });
 
   const loadedUsers = useSelector((state: any) => {
     return state.usersState.users;
   });
+
+  useEffect(() => {
+    dispatch(fetchPaychecksPeriod(selected_date) as any);
+    dispatch(getGhostState(false) as any);
+  }, [selected_date, buttonActive]);
 
   useEffect(() => {
     dispatch(fetchUsers() as any);
@@ -71,17 +68,10 @@ export default function SalaryList(): JSX.Element {
     }
   };
 
-  
-
-  const date = new Date();
   var dd = String(date.getDate()).padStart(2, "0");
   var mm = String(date.getMonth() + 1).padStart(2, "0");
   var yyyy = date.getFullYear();
   var [today, settoday] = React.useState(yyyy + "-" + mm + "-" + dd);
-
-  var month = ("0" + (date.getMonth() + 1)).slice(-2);
-
-  var dateToSearch = date.getFullYear() + month;
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     var split = e.target.value.split("-");
@@ -89,6 +79,8 @@ export default function SalaryList(): JSX.Element {
     setselected_date(split[0] + split[1]);
     settoday(e.target.value);
   };
+
+  
 
   return (
     <div className="userlist-filter-container">
@@ -168,14 +160,13 @@ export default function SalaryList(): JSX.Element {
                   : false;
               })
               ?.map((e: any) => {
-                
                 return (
                   <>
                     <tr>
                       <td>{e.cuil}</td>{" "}
                       <td>
                         <button
-                          id="userlist-button"
+                          className="btn bg-dark"
                           onClick={(event: React.MouseEvent<HTMLElement>) => {
                             ChangeClass(event, e.cuil);
                           }}
@@ -187,41 +178,42 @@ export default function SalaryList(): JSX.Element {
                       <td>
                         {e.name} {e.lastName}
                       </td>
-                      {salarys?.map((s) => {
+                      
+                      {salarys?.map((s: any,index:number,array:Array<any>) => {
+                        array.reduce((a,i)=>{
+                          if (s.userCuil === i.userCuil){
+                            
+                          }
+                        })
                         return (
+                          
                           <>
-                            {s.userCuil === e.cuil ? (
+                            {s.userCuil === e.cuil? (
+                              
                               <>
-                              {/* additionals$: 0,
-      seniority$: 0,
-      overTimeAdditionals$: 0,
-      unexcusedAbsences: 0,
-      absencesDeductions$: 0,
-      excusedAbsences: 0,
-      underTimeDeductions$: 0,
-      unionDeductions$: 0, */}
-                                <td>{s.additionals$.toFixed(2)}</td>
-                                <td>{toFixed(2)}</td>
-                                <td>{toFixed(2)}</td>
-                                <td>{toFixed(2)}</td>
-                                <td>{toFixed(2)}</td>
+                                <td>{s.additionals$}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
                               </>
-                            ) : (
-                              <></>
-                            )}
+                            ) : null}
                           </>
                         );
+                        
                       })}
+                      
                     </tr>
 
                     <td colSpan={8}>
                       <div className="subList">
-                        {concept?.map((c) => {
+                        {salarys?.map((s: any) => {
                           return (
                             <>
-                              {c.cuil === userCuil && c.cuil === e.cuil ? (
+                              {s.userCuil === e.cuil &&
+                              userCuil === s.userCuil ? (
                                 <>
-                                  <SalaryListEach array={c.data} />
+                                  <SalaryListEach s={s} />
                                 </>
                               ) : null}
                             </>
