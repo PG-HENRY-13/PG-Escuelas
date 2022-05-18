@@ -176,6 +176,7 @@ export default function NewAccount(): JSX.Element {
               aria-label="Floating label select example"
               onChange={selectHandler}
               defaultValue="otro"
+              name="gender"
             >
               <option value="otro">Sin especificar</option>
               <option value="fem">Femenino</option>
@@ -192,6 +193,7 @@ export default function NewAccount(): JSX.Element {
               aria-label="Floating label select example"
               onChange={selectHandler}
               defaultValue="empleado"
+              name="role"
             >
               <option value="empleado">Empleado</option>
               <option value="admin">Admin</option>
