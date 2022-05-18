@@ -32,7 +32,7 @@ export default function Calculator(): JSX.Element {
   return (
     <div>
       
-        <button className="salary-button" onClick={submit}>Calcular salarios</button>
+        <button className="btn-dark" onClick={submit}>Calcular salarios</button>
       
     </div>
   );
