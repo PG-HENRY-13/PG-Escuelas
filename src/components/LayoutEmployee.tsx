@@ -52,6 +52,11 @@ export default function LayoutEmployee(): JSX.Element {
                   Cambio de horario
                 </NavLink>
               </li>
+              <li>
+                <NavLink className="dropdown-item" to="/user/record">
+                  Mi historial
+                </NavLink>
+              </li>
             </ul>
           </li>
           <li className="nav-item">

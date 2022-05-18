@@ -19,20 +19,25 @@ const initialState: SalaryStoreState = {
     totalSalary: 0,
     jobs: [],
   },
+  paychecks: [],
+  paychecksByCuil: [],
 };
 
-
 export const salaryReducer = (
-    state: SalaryStoreState = initialState,
-    action: Action
-  ): SalaryStoreState => {
-    switch (action.type) {
-      
-      case ActionTypes.loadUserSalary:
-        return { ...state, userFormSalary: action.payload };
-     
-      
-      default:
-        return state;
-    }
-  };
+  state: SalaryStoreState = initialState,
+  action: Action
+): SalaryStoreState => {
+  switch (action.type) {
+    case ActionTypes.loadUserSalary:
+      return { ...state, userFormSalary: action.payload };
+
+    case ActionTypes.fetchAllPaychecks:
+      return { ...state, paychecks: action.payload };
+
+    case ActionTypes.fetchPaychecksByCuil:
+      return { ...state, paychecksByCuil: action.payload };
+
+    default:
+      return state;
+  }
+};

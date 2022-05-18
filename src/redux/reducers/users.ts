@@ -85,6 +85,11 @@ export const usersReducer = (
         ...state,
         contingencies: action.payload,
       };
+    case ActionTypes.fetchUserContingencies:
+      return {
+        ...state,
+        contingencies: action.payload,
+      };
     case ActionTypes.deleteContingency:
       return {
         ...state,

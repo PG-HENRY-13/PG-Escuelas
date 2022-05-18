@@ -37,6 +37,8 @@ import { Toast } from "react-toastify/dist/components";
 import ContingenciesRecord from "./ContingenciesRecord";
 import Paychecks from "./PayChecks";
 import ContactForm from "./ContactForm";
+import UserContingenciesRecord from "./ContUserRecord";
+import PaycheckList from "./PaycheckList";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -85,6 +87,14 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <AbsenceForm />
+                </div>
+              }
+            />
+            <Route
+              path="record"
+              element={
+                <div className="container">
+                  <UserContingenciesRecord></UserContingenciesRecord>
                 </div>
               }
             />
@@ -141,6 +151,14 @@ export default function App(): JSX.Element {
                 <div className="container login-container login-container-900">
                   <UploadExcelFile />
                   <LoadUsersWithExcel />
+                </div>
+              }
+            />
+            <Route
+              path="paycheckList"
+              element={
+                <div className="container ">
+                  <PaycheckList />
                 </div>
               }
             />

@@ -180,6 +180,11 @@ export interface FetchContingenciesAction {
   payload: Contingency[];
 }
 
+export interface FetchUserContingenciesAction {
+  type: ActionTypes.fetchUserContingencies;
+  payload: Contingency[];
+}
+
 export interface DeleteContingencyAction {
   type: ActionTypes.deleteContingency;
   payload: number;
@@ -204,6 +209,8 @@ export interface Salary {
 export interface SalaryStoreState {
   salary: Salary;
   userFormSalary: UserFormSalary;
+  paychecks: Paycheck[];
+  paychecksByCuil: any[];
 }
 
 export interface UserFormSalary {
@@ -229,7 +236,7 @@ export interface AuthStateInterface {
   lastName: string;
   id: string;
   role: string;
-  email:string;
+  email: string;
   loginStatus: string;
   loginError: string;
   userLoded: boolean;
@@ -266,6 +273,16 @@ export interface Paycheck {
   baseWageCode: number;
   underTimeDeductionsCode: number;
   absencesDeductionsCode: number;
+}
+
+export interface FetchAllPaychecksAction {
+  type: ActionTypes.fetchAllPaychecks;
+  payload: Paycheck[];
+}
+
+export interface FetchPaychecksByCuilAction {
+  type: ActionTypes.fetchPaychecksByCuil;
+  payload: Paycheck[];
 }
 
 export interface ExportGobExcelToCalculatorAction {

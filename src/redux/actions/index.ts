@@ -25,10 +25,15 @@ import {
   CalculateAllWagesAction,
   ContingencyState,
   HandleContingencyAction,
+  FetchUserContingenciesAction,
+  Paycheck as PaycheckI,
+  FetchAllPaychecksAction,
+  FetchPaychecksByCuilAction,
 } from "../interfaces";
 
 import { URL_API } from "../../env.js";
 import { toast } from "react-toastify";
+import Paycheck from "../../components/Paycheck";
 
 export const url: string = URL_API;
 // export const url = "http://localhost:3001/api/";
@@ -288,6 +293,27 @@ export const loadUserSalary = (userCuil: number) => {
   };
 };
 
+/// PAYCHECK ACTIONS
+export const fetchAllPaychecks = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<PaycheckI[]>(wageUrl + "all");
+    dispatch<FetchAllPaychecksAction>({
+      type: ActionTypes.fetchAllPaychecks,
+      payload: response.data,
+    });
+  };
+};
+
+export const fetchPaychecksByCuil = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any[]>(wageUrl + "paychecksByCuil");
+    dispatch<FetchPaychecksByCuilAction>({
+      type: ActionTypes.fetchPaychecksByCuil,
+      payload: response.data,
+    });
+  };
+};
+
 /// CONTINGENCIES ACTIONS
 
 export const sendContingency = (data: Contingency) => {
@@ -314,6 +340,18 @@ export const fetchContingencies = () => {
   };
 };
 
+export const fetchUserContingencies = (cuil: string) => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<Contingency[]>(
+      contingenciesUrl + "/" + cuil
+    );
+    dispatch<FetchUserContingenciesAction>({
+      type: ActionTypes.fetchUserContingencies,
+      payload: response.data,
+    });
+  };
+};
+
 export const deleteContingency = (id: number) => {
   return async (dispatch: Dispatch) => {
     await axios
@@ -326,7 +364,6 @@ export const deleteContingency = (id: number) => {
         });
       })
       .catch((err) => {
-        console.log("entre");
         toast.error("Error al eliminar la contingencia");
       });
   };
@@ -334,13 +371,20 @@ export const deleteContingency = (id: number) => {
 
 export const handleContingency = (id: number, resolve: ContingencyState) => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.put(contingenciesUrl, {
-      id,
-      resolve,
-    });
-    dispatch<HandleContingencyAction>({
-      type: ActionTypes.handleContingency,
-      payload: { id, resolve },
-    });
+    await axios
+      .put(contingenciesUrl, {
+        id,
+        resolve,
+      })
+      .then(() => {
+        toast.success("Contingencia atendida correctamente");
+        dispatch<HandleContingencyAction>({
+          type: ActionTypes.handleContingency,
+          payload: { id, resolve },
+        });
+      })
+      .catch((err) => {
+        toast.error("Error al resolver la contingencia");
+      });
   };
 };

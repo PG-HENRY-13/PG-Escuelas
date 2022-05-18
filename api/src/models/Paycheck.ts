@@ -19,16 +19,16 @@ import { DataTypes } from "sequelize/types";
 
 @Table
 export class Paycheck extends Model<PaycheckI> {
-  @BelongsTo(() => UsersJobs)
-  userJobs!: UsersJobs;
+  // @BelongsTo(() => UsersJobs)
+  // userJobs!: UsersJobs;
 
+  // @ForeignKey(() => UsersJobs)
   @PrimaryKey
-  @ForeignKey(() => UsersJobs)
   @Column
   userCuil!: string;
 
+  // @ForeignKey(() => UsersJobs)
   @PrimaryKey
-  @ForeignKey(() => UsersJobs)
   @Column
   jobId!: string;
 
@@ -40,16 +40,22 @@ export class Paycheck extends Model<PaycheckI> {
   jobName!: string;
 
   @Column
-  baseWage$!: string;
+  baseWage$!: string; // SALARIO BASICO
 
   @Column
-  additionals$!: string;
+  additionals$!: string; // ADICIONALES NO REMUNERATIVOS
 
   @Column
-  seniority$!: string;
+  seniority$!: string; // ANTIGUEDAD MONTO $
 
   @Column
-  overTimeAdditionals$!: string;
+  seniorityYears!: string; // ANTIGUEDAD CANT AÑOS
+
+  @Column
+  overTimeHours!: string; // HORAS EXTRA CANTIDAD
+
+  @Column
+  overTimeAdditionals$!: string; // HORAS EXTRA EN MONTO $
 
   @Column
   unexcusedAbsences!: string; // LA CANTIDAD DE FALTAS INJUSTIFICADAS
@@ -61,22 +67,28 @@ export class Paycheck extends Model<PaycheckI> {
   excusedAbsences!: string; // LA CANTIDAD DE FALTAS JUSTIFICADAS, DESCUENTAN $0
 
   @Column
-  underTimeDeductions$!: string;
+  underTimeDeductions$!: string; // EL MONTO DESCONTADO POR HORAS REDUCIDAS
 
   @Column
-  unionDeductions$!: string;
+  underTimeHours$!: string; // LA CANTIDAD DE HORAS REDUCIDAS
 
   @Column
-  baseWageCode!: string;
+  unionDeductions$!: string; // DEDUCCION POR SINDICATO
 
   @Column
-  underTimeDeductionsCode!: string;
+  baseWageCode!: string; // CODIGO DE SALARIO BASE
 
   @Column
-  absencesDeductionsCode!: string;
+  underTimeDeductionsCode!: string; // CODIGO DE DEDUCCIONES POR HORAS REDUCIDAS
 
   @Column
-  isSigned!: boolean;
+  absencesDeductionsCode!: string; // CODIGO DE DEDUCCIONES POR FALTAS
+
+  @Column
+  totalAmount!: string; // CANTIDAD MONTO TOTAL A LIQUIDAR
+
+  @Column
+  isSigned!: boolean; // INDICA SI EL EMPLEADO FIRMO O NO
 
   @CreatedAt
   @Column
