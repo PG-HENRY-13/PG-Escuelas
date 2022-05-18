@@ -300,9 +300,7 @@ export default function SalaryList(): JSX.Element {
                           return (
                             <>
                               {c.cuil === userCuil && c.cuil === e.cuil ? (
-                                <>
-                                  <SalaryListEach array={c.data} />
-                                </>
+                                <>{/* <SalaryListEach array={c.data} /> */}</>
                               ) : null}
                             </>
                           );
