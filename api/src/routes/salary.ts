@@ -13,7 +13,7 @@ import axios from "axios";
 import config from "../lib/config";
 // import {URL_API} from "../../../src/.env.js"
 
-export const URL_API = config.http + config.host + ":" + config.port + "/api"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
+export const URL_API = config.http + config.host + ":" + config.port + "/api";
 
 const router = Router();
 var contingenciesUrl: string = URL_API + "/contingencies";
@@ -144,26 +144,37 @@ router.post(
           jobId,
           period,
           jobName,
-          baseWage$: baseWage * 30,
-          additionals$: additionals,
-          seniority$: seniority * seniorityYears,
-          overTimeAdditionals$: overTimeHours * overTimeAdditional,
+          baseWage$: baseWage * 30, //
+          additionals$: additionals, //
+          seniority$: seniority * seniorityYears, //
+          overTimeAdditionals$: overTimeHours * overTimeAdditional, //
           unexcusedAbsences: daysAbsent,
           excusedAbsences: daysAbsentWithPermission,
-          absencesDeductions$: -(absencesDeductions * daysAbsent),
-          underTimeDeductions$: -(underTimeDeductions * underTimeHours),
+          absencesDeductions$: -(absencesDeductions * daysAbsent), //
+          underTimeDeductions$: -(underTimeDeductions * underTimeHours), //
           unionDeductions$:
-            (baseWage * 30 + seniority * seniorityYears) * unionDeductions,
+            (baseWage * 30 + seniority * seniorityYears) * unionDeductions, //
           baseWageCode,
           underTimeDeductionsCode,
           absencesDeductionsCode,
           isSigned: false,
+          seniorityYears: seniorityYears,
+          overTimeHours: overTimeHours,
+          totalAmount:
+            baseWage * 30 +
+            additionals +
+            seniority * seniorityYears +
+            overTimeHours * overTimeAdditional -
+            absencesDeductions * daysAbsent -
+            underTimeDeductions * underTimeHours -
+            (baseWage * 30 + seniority * seniorityYears) * unionDeductions,
         };
 
         const [newPaycheck, created] = await Paycheck.findOrCreate({
           where: {
             userCuil: paycheck.userCuil,
             jobId: paycheck.jobId,
+            period: period,
           },
           defaults: {
             ...paycheck,
@@ -175,6 +186,7 @@ router.post(
         if (!created) {
           console.log("IF  NOT CREATED - no hizo para", paycheck.jobId);
           resultado = `El recibo de sueldo de ${userCuil} para el trabajo ${jobName} de ${period} ya está creado`;
+          newPaycheck.update({ ...paycheck });
         }
         paychecks.push(paycheck);
       });
