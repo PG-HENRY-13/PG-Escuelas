@@ -8,7 +8,7 @@ import {
 } from "../../redux/actions";
 import { connect } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
-import { filterRoles, filterJobs, fetchJobs } from "../../redux/actions";
+import { filterRoles, filterJobs, fetchJobs , getGhostState } from "../../redux/actions";
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -24,15 +24,19 @@ export default function Calculator(): JSX.Element {
 
   var cuils = users.map((user: User) => user.cuil);
 
+  
+
   const submit = async () => {
     await dispatch(exportGobExcelToCalculator(period) as any);
     await dispatch(calculateAllWages(cuils) as any);
+    await dispatch(getGhostState(true) as any);
+    
   };
 
   return (
     <div>
       
-        <button className="salary-button" onClick={submit}>Calcular salarios</button>
+        <button className="btn bg-dark" onClick={submit}>Calcular salarios</button>
       
     </div>
   );

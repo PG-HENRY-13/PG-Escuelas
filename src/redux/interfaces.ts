@@ -161,6 +161,11 @@ export interface ScheduleContingency extends Contingency {
   days?: string;
 }
 
+
+export interface GhostState{
+  value:boolean;
+}
+
 export enum ContingencyType {
   Absence = "ausencia",
   overtime = "horas extras",
@@ -211,7 +216,10 @@ export interface SalaryStoreState {
   userFormSalary: UserFormSalary;
   paychecks: Paycheck[];
   paychecksByCuil: any[];
+  paychecksPeriod: any[];
 }
+
+
 
 export interface UserFormSalary {
   basic_salary: number;
@@ -280,9 +288,20 @@ export interface FetchAllPaychecksAction {
   payload: Paycheck[];
 }
 
+export interface fetchPaychecksPeriodAction{
+  type: ActionTypes.fetchPaychecksPeriod;
+  payload: Paycheck[];
+}
+
 export interface FetchPaychecksByCuilAction {
   type: ActionTypes.fetchPaychecksByCuil;
   payload: Paycheck[];
+}
+
+
+export interface getGhostStateAction{
+  type: ActionTypes.getGhostState,
+  payload :boolean
 }
 
 export interface ExportGobExcelToCalculatorAction {

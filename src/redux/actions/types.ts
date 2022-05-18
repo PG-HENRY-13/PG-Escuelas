@@ -23,6 +23,8 @@ import {
   FetchUserContingenciesAction,
   FetchAllPaychecksAction,
   FetchPaychecksByCuilAction,
+  fetchPaychecksPeriodAction,
+  getGhostStateAction,
 } from "../interfaces";
 
 export enum ActionTypes {
@@ -52,6 +54,8 @@ export enum ActionTypes {
   handleContingency,
   fetchAllPaychecks,
   fetchPaychecksByCuil,
+  fetchPaychecksPeriod,
+  getGhostState
 }
 
 export type Action =
@@ -79,4 +83,6 @@ export type Action =
   | HandleContingencyAction
   | FetchUserContingenciesAction
   | FetchAllPaychecksAction
-  | FetchPaychecksByCuilAction;
+  | FetchPaychecksByCuilAction
+  | fetchPaychecksPeriodAction
+  | getGhostStateAction;
