@@ -76,11 +76,15 @@ export default function FormContainer(): JSX.Element {
             noOptionsMessage={() => "Usuario no encontrado"}
             onChange={(e: any) => setCuil(e.value)}
           ></Select>
-          <select onChange={(e) => setJobId(e.target.value)}>
-            {userData?.jobs.map((job: Job) => {
-              return <option value={job.id}>{job.name}</option>;
-            })}
-          </select>
+          {userData?.jobs.length && cuil ? (
+            <select onChange={(e) => setJobId(e.target.value)}>
+              {userData?.jobs.map((job: Job) => {
+                return <option value={job.id}>{job.name}</option>;
+              })}
+            </select>
+          ) : (
+            <h4> No se registran cargos del usuario</h4>
+          )}
         </div>
         <h4>Seleccionar tipo:</h4>
         <div className="form-container-select">

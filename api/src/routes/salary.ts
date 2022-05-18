@@ -13,10 +13,10 @@ import axios from "axios";
 import config from "../lib/config";
 // import {URL_API} from "../../../src/.env.js"
 
-export const URL_API = "http://" + config.host + ":" + config.port + "/api"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
+export const URL_API = config.http + config.host + ":" + config.port + "/api"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
 
 const router = Router();
-var contingenciesUrl: string = URL_API + "contingencies";
+var contingenciesUrl: string = URL_API + "/contingencies";
 //   CGO: "000000", // Cargo
 //   DENOMINACION: "CARGO INEXISTENTE", //nombre del cargo
 //   P001: 0, // codigo del basico
@@ -87,7 +87,7 @@ router.post(
       );
 
       console.log("contingencies , ", contingencies);
-
+      var paychecks: any = [];
       jobs?.map(async (job) => {
         console.log("ENTERING JOB:  ", job);
         wagingJson?.map(
@@ -131,6 +131,7 @@ router.post(
         var overTimeHours = contingencies[jobId].extraHours; //BUSCA DE MODEL CONTINGENCIAS
         var underTimeHours = contingencies[jobId].missedHours; //BUSCA DE MODEL CONTINGENCIAS
         var seniorityDateYear = UserData?.seniorityDate.getFullYear(); // TRAER DE USERS
+
         console.log(seniorityDateYear);
         if (seniorityDateYear) {
           var seniorityYears = currentYear - seniorityDateYear;
@@ -175,12 +176,12 @@ router.post(
           console.log("IF  NOT CREATED - no hizo para", paycheck.jobId);
           resultado = `El recibo de sueldo de ${userCuil} para el trabajo ${jobName} de ${period} ya está creado`;
         }
-        // paychecks.push(paycheck);
+        paychecks.push(paycheck);
       });
       if (!resultado) {
         resultado = "Recibos de sueldo creados";
       }
-      res.json(resultado);
+      res.json(paychecks);
     }
   }
 );

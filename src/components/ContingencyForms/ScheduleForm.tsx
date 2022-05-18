@@ -49,17 +49,7 @@ export default function ScheduleForm(props: any): JSX.Element {
   const loadedUser = useSelector((state: any) => {
     return state.usersState.userForm;
   });
-  // const [data, setData] = useState({
-  //   hasNotice: "true",
-  //   type: "ola",
-  //   reason: "",
-  //   startingDate: "",
-  //   endingDate: "",
-  //   startingHour: "",
-  //   endingHour: "",
-  //   days: "",
-  //   implies: "",
-  // });
+
   const [data, setData] = useState({
     hasNotice: "true",
     reason: "",
@@ -79,8 +69,13 @@ export default function ScheduleForm(props: any): JSX.Element {
       setData({ ...data, jobId: loadedUser.jobs[0].id });
   }, [loadedUser]);
 
-  //const days: string[] = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
-  //Para el lunes 9 no se usa
+  const [disable, setDisable] = useState(true);
+  useEffect(() => {
+    if (data.date && data.reason && data.implies && data.hoursNumber)
+      setDisable(false);
+    else setDisable(true);
+  }, [data]);
+
   function changeHandler1(e: any) {
     if (e.target.name === "hoursNumber" && !isNaN(e.target.value))
       setData({ ...data, [e.target.name]: Number(e.target.value) });
@@ -88,14 +83,6 @@ export default function ScheduleForm(props: any): JSX.Element {
       toast.error("Numeros solamente");
     else setData({ ...data, [e.target.name]: e.target.value });
   }
-
-  // function daysHandler(e: any) {
-  //   const actualDays: string[] = data.days.split(" ");
-  //   if (actualDays[e.target.value] !== e.target.name)
-  //     actualDays.splice(Number(e.target.value), 0, e.target.name);
-  //   else actualDays.splice(Number(e.target.value), 1);
-  //   setData({ ...data, days: actualDays.join(" ") });
-  // }
 
   return (
     <div className="usersform-container">
@@ -138,7 +125,7 @@ export default function ScheduleForm(props: any): JSX.Element {
         </fieldset>
         <fieldset>
           <div>
-            <legend>Motivo:</legend>
+            <legend>Motivo:*</legend>
             <textarea
               onChange={changeHandler1}
               rows={4}
@@ -160,69 +147,7 @@ export default function ScheduleForm(props: any): JSX.Element {
             ></input>
           </div>
         </fieldset>
-        {props.type === "multiple" ? (
-          <div>
-            {/* <fieldset>
-              <div>
-                <legend>Fecha de retorno al horaio habitual:</legend>
-                <input
-                  className="form-control"
-                  type="date"
-                  name="endingDate"
-                  onChange={changeHandler1}
-                ></input>
-              </div>
-            </fieldset> */}
-            {/* <fieldset>
-              <div>
-                <legend>Dias:</legend>
-                {days.map((day, i) => {
-                  return (
-                    <div>
-                      <input
-                        value={i}
-                        name={day}
-                        type="checkbox"
-                        onChange={daysHandler}
-                      ></input>
-                      <label>{day}</label>
-                    </div>
-                  );
-                })}
-              </div>
-            </fieldset> */}
-          </div>
-        ) : (
-          ""
-        )}
-        {/* <fieldset>
-          <div>
-            <legend>Horario de Inicio de la Nueva Jornada :</legend>
-            <input
-              className="form-control"
-              type="time"
-              name="startingHour"
-              min="09:00"
-              max="18:00"
-              required
-              onChange={changeHandler1}
-            ></input>
-          </div>
-        </fieldset> */}
-        {/* <fieldset>
-          <div>
-            <legend>Horario de salida de la Nueva Jornada :</legend>
-            <input
-              className="form-control"
-              type="time"
-              name="endingHour"
-              min="09:00"
-              max="18:00"
-              onChange={changeHandler1}
-              required
-            ></input>
-          </div>
-        </fieldset> */}
+        {props.type === "multiple" ? <div></div> : ""}
         <fieldset>
           <legend>Esto implica:*</legend>
           <div>
@@ -264,19 +189,6 @@ export default function ScheduleForm(props: any): JSX.Element {
               de jornada manteniendo el de inicio)
             </label>
           </div>
-          <div>
-            <input
-              type="radio"
-              onChange={changeHandler1}
-              name="implies"
-              value="Modificacion de horarios"
-              checked={data.implies === "Modificacion de horarios"}
-            ></input>
-            <label>
-              Solo modificación de horario (en caso de la misma cantidad de
-              horas de su jornada habitual pero en diferente horario)
-            </label>
-          </div>
         </fieldset>
         <fieldset>
           <div>
@@ -290,7 +202,9 @@ export default function ScheduleForm(props: any): JSX.Element {
           </div>
         </fieldset>
         <br></br>
-        <button type="submit">Enviar</button>
+        <button disabled={disable} className="btn btn-dark" type="submit">
+          Enviar
+        </button>
       </form>
     </div>
   );

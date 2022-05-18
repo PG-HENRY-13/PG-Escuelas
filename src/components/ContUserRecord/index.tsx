@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/UserList.css";
-import { fetchContingencies } from "../../redux/actions";
+import {
+  fetchContingencies,
+  fetchUserContingencies,
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Contingency } from "../../redux/interfaces";
-import DeleteModal from "./DeleteModal";
 
-export default function ContingenciesRecord(): JSX.Element {
+export default function UserContingenciesRecord(): JSX.Element {
   const dispatch = useDispatch();
+  const cuil = useSelector((state: any) => {
+    return state.authState.id;
+  });
   const loadedContingencies = useSelector((state: any) => {
     return state.usersState.contingencies;
   });
 
   useEffect(() => {
-    dispatch(fetchContingencies() as any);
-  }, []);
-  useEffect(() => {}, [loadedContingencies]);
+    dispatch(fetchUserContingencies(cuil) as any);
+  }, [cuil]);
 
-  const [nameFilter, setNameFilter] = useState("");
   const [index, setIndex] = useState(1);
-  const [ID, setID] = useState(0);
-  const WARNING =
-    "Eliminar una contingecia tiene un impacto directo sobre el recibo de sueldo del usuario, esta seguro que desea continuar?";
+
   function indexHandler(e: any) {
     console.log(e.target.value);
     setIndex(Number(e.target.value));
@@ -32,16 +31,6 @@ export default function ContingenciesRecord(): JSX.Element {
       <div className="na-title">
         <h1>Historial de contingencias</h1>
       </div>
-      <div className="userlist-search-container">
-        <h4>Busqueda por nombre</h4>
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Buscar"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
-        />
-      </div>
       <table className="table table-size">
         {
           <thead>
@@ -51,12 +40,6 @@ export default function ContingenciesRecord(): JSX.Element {
               </th>
               <th data-type="numeric">
                 Tipo <span className="resize-handle"></span>
-              </th>
-              <th data-type="text-short">
-                Nombre <span className="resize-handle"></span>
-              </th>
-              <th data-type="text-short">
-                Apellido <span className="resize-handle"></span>
               </th>
               <th data-type="text-short">
                 Cargo <span className="resize-handle"></span>
@@ -75,21 +58,6 @@ export default function ContingenciesRecord(): JSX.Element {
         }
         <tbody>
           {loadedContingencies
-            .filter((e: any) => {
-              const Fullname =
-                e.userJob?.userData.name.toLowerCase() +
-                " " +
-                e.userJob?.userData.lastName.toLowerCase();
-              const ReverseFullname =
-                e.userJob?.userData.lastName.toLowerCase() +
-                " " +
-                e.userJob?.userData.name.toLowerCase();
-              return Fullname.includes(nameFilter.toLocaleLowerCase())
-                ? e
-                : ReverseFullname.includes(nameFilter.toLocaleLowerCase())
-                ? e
-                : false;
-            })
             .filter(
               (e: any, i: number) => index * 10 - 10 <= i && i < index * 10
             )
@@ -102,8 +70,6 @@ export default function ContingenciesRecord(): JSX.Element {
                       {e.contingencyType.charAt(0).toUpperCase() +
                         e.contingencyType.slice(1)}
                     </td>
-                    <td>{e.userJob?.userData.name}</td>
-                    <td>{e.userJob?.userData.lastName}</td>
                     <td>
                       {e.userJob?.jobData.name.charAt(0).toUpperCase() +
                         e.userJob?.jobData.name.slice(1)}
@@ -111,16 +77,6 @@ export default function ContingenciesRecord(): JSX.Element {
                     <td>{e.date.slice(0, -14)}</td>
                     <td>{e.hoursNumber ? e.hoursNumber : "N/A"}</td>
                     <td>{e.absenceDays ? e.absenceDays : "N/A"}</td>
-                    <td>
-                      <button
-                        id="userlist-button"
-                        data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop"
-                        onClick={() => setID(e.id)}
-                      >
-                        Eliminar
-                      </button>
-                    </td>
                   </tr>
                 </>
               );
@@ -175,7 +131,6 @@ export default function ContingenciesRecord(): JSX.Element {
           </li>
         </ul>
       </nav>
-      <DeleteModal contId={ID} warning={WARNING}></DeleteModal>
     </div>
   );
 }
