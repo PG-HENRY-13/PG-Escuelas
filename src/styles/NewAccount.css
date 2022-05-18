@@ -60,3 +60,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.new-container {
+  width: 50%;
+}
