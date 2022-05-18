@@ -209,6 +209,8 @@ export interface Salary {
 export interface SalaryStoreState {
   salary: Salary;
   userFormSalary: UserFormSalary;
+  paychecks: Paycheck[];
+  paychecksByCuil: any[];
 }
 
 export interface UserFormSalary {
@@ -271,6 +273,16 @@ export interface Paycheck {
   baseWageCode: number;
   underTimeDeductionsCode: number;
   absencesDeductionsCode: number;
+}
+
+export interface FetchAllPaychecksAction {
+  type: ActionTypes.fetchAllPaychecks;
+  payload: Paycheck[];
+}
+
+export interface FetchPaychecksByCuilAction {
+  type: ActionTypes.fetchPaychecksByCuil;
+  payload: Paycheck[];
 }
 
 export interface ExportGobExcelToCalculatorAction {
