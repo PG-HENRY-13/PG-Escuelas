@@ -49,12 +49,15 @@ export default function Paycheck(): JSX.Element {
     return jobFiltrado;
   });
 
+  const antiguedad = "4807.6";
+
   function sumar() {
     if (jobPaycheck) {
       var a = parseFloat(jobPaycheck[0].baseWage$);
       var b = parseFloat(jobPaycheck[0].additionals$);
       var c = parseFloat(jobPaycheck[0].overTimeAdditionals$);
-      var suma = a + b + c;
+      var d = parseFloat(antiguedad);
+      var suma = a + b + c + d;
       return suma;
     }
   }
@@ -75,7 +78,8 @@ export default function Paycheck(): JSX.Element {
       var c = parseFloat(jobPaycheck[0].overTimeAdditionals$);
       var d = parseFloat(jobPaycheck[0].unionDeductions$);
       var e = parseFloat(jobPaycheck[0].absencesDeductions$);
-      var total = a + b + c - d - e;
+      var f = parseFloat(antiguedad);
+      var total = a + b + c - d - e + f;
       return total;
     }
   }
@@ -93,7 +97,7 @@ export default function Paycheck(): JSX.Element {
                     {user.name} {user.lastName}
                   </td>
                   <th colSpan={1}>Cargo</th>
-                  <td colSpan={3}>{job.jobName}</td>
+                  <td colSpan={4}>{job.jobName}</td>
                   <th>Periodo</th>
                   <td>{jobPaycheck[0].period}</td>
                   <th></th>
@@ -102,10 +106,9 @@ export default function Paycheck(): JSX.Element {
                 <tr>
                   <th>CUIL</th>
                   <td colSpan={3}>{user.id}</td>
-                  <th colSpan={1}>Escalafon</th>
-                  <td colSpan={3}>{}</td>
                   <th>Fecha de pago</th>
                   <td>{jobPaycheck[0].period}</td>
+                  <td colSpan={3}>{}</td>
                   <th>Ingreso</th>
                   <td>{jobPaycheck[0].createdAt}</td>
                 </tr>
@@ -139,8 +142,10 @@ export default function Paycheck(): JSX.Element {
                 <td className="myAlign" colSpan={6}>
                   ANTIGUEDAD
                 </td>
-                <td colSpan={2} className="myAlign"></td>
-                <td className="myAlign"></td>
+                <td colSpan={2} className="myAlign">
+                  {antiguedad}
+                </td>
+                <td className="myAlign">{antiguedad}</td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
               </tr>
@@ -224,22 +229,28 @@ export default function Paycheck(): JSX.Element {
                 <td></td>
               </tr>
               <tr>
-                <td colSpan={2}>Banco:</td>
-                <td className="footer" colSpan={7}></td>
+                <td colSpan={1}></td>
+                <td className="footer" colSpan={8}>
+                  Recibi en concepto de mis haberes correspondientes al periodo
+                </td>
                 <td></td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colSpan={2}></td>
-                <td className="footer" colSpan={7}></td>
+                <td colSpan={1}></td>
+                <td className="footer" colSpan={8}>
+                  de arriba indicado y segun la presente liquidacion dejando
+                </td>
                 <td>.</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colSpan={2}></td>
-                <td className="footer" colSpan={7}></td>
+                <td colSpan={1}></td>
+                <td className="footer" colSpan={8}>
+                  constancia de haber recibido un duplicado de este recibo.
+                </td>
                 <td colSpan={1}></td>
                 <td className="footer-center">
                   . . . . . . . . . . . . . . . . . . . . . . . .
