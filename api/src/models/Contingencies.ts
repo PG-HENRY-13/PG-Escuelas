@@ -39,10 +39,6 @@ export class Contingencies extends Model<Contingencies> {
   @Column
   idAuto!: number;
 
-  @ForeignKey(() => UsersJobs)
-  @Column
-  JobId!: string;
-
   // @ForeignKey(() => UsersJobs)
   // @Column(DataType.JSONB)
   // JobId!: object;
