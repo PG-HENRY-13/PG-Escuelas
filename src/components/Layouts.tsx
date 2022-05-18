@@ -20,6 +20,12 @@ export default function LayoutAdmin(): JSX.Element {
     <main>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+        <li className="nav-item">
+            <NavLink className="nav-link" to={"/admin/userdetails/" + userLogged.id}>
+              Mi perfil -{" "}
+              <span>{userLogged.name + " " + userLogged.lastName}</span>
+            </NavLink>
+          </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/admin/createuser">
               Crear Usuario Nuevo
