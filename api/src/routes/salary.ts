@@ -247,4 +247,38 @@ router.get(
   }
 );
 
+router.get("/all", async (req: Request, res: Response, next: NextFunction) => {
+  let paychecks = await Paycheck.findAll();
+
+  return res.json(paychecks);
+});
+
+const groupBy = (array: any[], key: string) => {
+  return array.reduce((result, currentValue) => {
+    (result[currentValue[key]] = result[currentValue[key]] || []).push(
+      currentValue
+    );
+    return result;
+  }, {});
+};
+
+const arrayfy = (objectByKey: any) => {
+  var array = [];
+  for (const key in objectByKey) {
+    array.push(objectByKey[key]);
+  }
+  return array;
+};
+
+router.get(
+  "/paychecksByCuil",
+  async (req: Request, res: Response, next: NextFunction) => {
+    let paychecks = await Paycheck.findAll();
+    const byUserCuil: any[] = groupBy(paychecks, "userCuil");
+    const arrayByUserCuil = arrayfy(byUserCuil);
+
+    return res.json(arrayByUserCuil);
+  }
+);
+
 export default router;
