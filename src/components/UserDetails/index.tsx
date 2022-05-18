@@ -26,8 +26,8 @@ export default function UserDetails(): JSX.Element {
       </div>
       <div className="card text-center p-4 ">
         <div className="row">
-          <div className="col fs-3  text-start">Cuil:</div>
-          <div className="col fs-4 text-end">{userToUpdate.cuil}</div>
+          <div className="col fs-1  text-start">Cuil:</div>
+          <div className="col fs-2 text-end">{userToUpdate.cuil}</div>
         </div>
         <div className="row">
           <div className="col fs-1  text-start">Nombre:</div>
