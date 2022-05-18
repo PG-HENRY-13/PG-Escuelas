@@ -189,18 +189,24 @@ export default function SalaryList(): JSX.Element {
         onChange={changeHandler}
       ></input>
 
-      <div className="userlist-search-container">
-        <h4 className="search-h4">Busqueda por nombre</h4>
-        <input
-          className="form-control"
-          type="text"
-          value={filter}
-          placeholder="Buscar"
-          onChange={(e) => handleFilter(e.target.value)}
-        />
-        <button className="salary-button" onClick={forceUpdate}>
-          <Calculator></Calculator>
-        </button>
+      <div className="container mt-3">
+        <div className="row mb-3">
+          <h4 className="h4">Busqueda por nombre</h4>
+        </div>
+        <div className="row mb-3">
+          <div className="col-sm-5">
+            <input
+              className="form-control"
+              type="text"
+              value={filter}
+              placeholder="Buscar"
+              onChange={(e) => handleFilter(e.target.value)}
+            />
+          </div>
+          <div className="col-sm-5">
+            <Calculator />
+          </div>
+        </div>
       </div>
       <div className="table-container">
         <table className="table table-hover">

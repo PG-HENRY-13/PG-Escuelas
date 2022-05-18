@@ -26,10 +26,14 @@ import {
   ContingencyState,
   HandleContingencyAction,
   FetchUserContingenciesAction,
+  Paycheck as PaycheckI,
+  FetchAllPaychecksAction,
+  FetchPaychecksByCuilAction,
 } from "../interfaces";
 
 import { URL_API } from "../../env.js";
 import { toast } from "react-toastify";
+import Paycheck from "../../components/Paycheck";
 
 export const url: string = URL_API;
 // export const url = "http://localhost:3001/api/";
@@ -284,6 +288,27 @@ export const loadUserSalary = (userCuil: number) => {
     }); ///CAMBIAR EL ANY
     dispatch<LoadUserSalaryAction>({
       type: ActionTypes.loadUserSalary,
+      payload: response.data,
+    });
+  };
+};
+
+/// PAYCHECK ACTIONS
+export const fetchAllPaychecks = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<PaycheckI[]>(wageUrl + "all");
+    dispatch<FetchAllPaychecksAction>({
+      type: ActionTypes.fetchAllPaychecks,
+      payload: response.data,
+    });
+  };
+};
+
+export const fetchPaychecksByCuil = () => {
+  return async (dispatch: Dispatch) => {
+    const response = await axios.get<any[]>(wageUrl + "paychecksByCuil");
+    dispatch<FetchPaychecksByCuilAction>({
+      type: ActionTypes.fetchPaychecksByCuil,
       payload: response.data,
     });
   };
