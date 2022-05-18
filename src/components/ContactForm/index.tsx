@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { EMAIL_SUPPORT, URL_API } from "../../env";
 import validate from "../NewAccount/validate";
+import "../../styles/Contact.css";
 
 export default function ContactForm(): JSX.Element {
   const userLogged = useSelector((state: any) => state.authState);
@@ -48,13 +49,14 @@ export default function ContactForm(): JSX.Element {
       .catch((err) => {
         toast.error("Ocurrió un error al enviar el email");
       });
-      setData({...data,
-        message:''
-      })
+    setData({ ...data, message: "" });
   };
 
   return (
-    <div className="container w-50 py-4 ">
+    <div
+      className="container w-50 py-4 card mt-3 shadow-lg"
+      style={{ backgroundColor: "#283845" }}
+    >
       {/* <!-- Bootstrap 5 starter form --> */}
       <form
         name="contactForm"
@@ -63,10 +65,10 @@ export default function ContactForm(): JSX.Element {
       >
         {/* <!-- Name input --> */}
         <div className="mb-3">
-          <label className="form-label">Mi nombre</label>
+          <label className="form-label fs-2 text-uppercase ">Mi nombre</label>
           <input
             onChange={handleChanges}
-            className="form-control"
+            className="form-control  w-75 mx-auto"
             name="name"
             type="text"
             placeholder={data.name}
@@ -79,12 +81,12 @@ export default function ContactForm(): JSX.Element {
         </div>
 
         {/* <!-- Email address input --> */}
-        <div className="mb-3">
-          <label className="form-label">Mi dirección de email</label>
+        <div className="mb-3 ">
+          <label className="form-label fs-2 text-uppercase">E-mail</label>
           <input
             onChange={handleChanges}
             value={data.emailAddress}
-            className="form-control"
+            className="form-control w-75 mx-auto"
             name="emailAddress"
             type="email"
             placeholder="Email Address"
@@ -96,16 +98,16 @@ export default function ContactForm(): JSX.Element {
           >
             El email es requeridO.
           </div>
-          <div className="invalid-feedback">El email es inválido</div>
+          <div className="invalid-feedback ">El email es inválido</div>
         </div>
 
         {/* <!-- Message input --> */}
         <div className="mb-3">
-          <label className="form-label">Mensaje</label>
+          <label className="form-label fs-2 text-uppercase">Mensaje</label>
           <textarea
             onChange={handleChanges}
             value={data.message}
-            className="form-control"
+            className="form-control w-75 mx-auto"
             name="message"
             placeholder="Message"
           ></textarea>
@@ -132,7 +134,7 @@ export default function ContactForm(): JSX.Element {
         <div className="d-grid">
           <button
             disabled={disabled}
-            className="btn btn-dark btn-lg"
+            className="btn btn-light btn-lg w-75 mx-auto mb-3"
             name="submitButton"
             type="submit"
           >
