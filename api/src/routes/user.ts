@@ -43,6 +43,9 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
     if (!user.role) {
       user.role = "empleado";
     }
+    if (!user.gender) {
+      user.gender = "otro";
+    }
     // user.password = await encryptPwd( req.body.password);
     user.password = await encryptPwd(req.body.password);
     // console.log("llegue al user");

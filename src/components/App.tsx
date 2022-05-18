@@ -130,6 +130,14 @@ export default function App(): JSX.Element {
               }
             />
             <Route
+              path="userdetails/:cuil"
+              element={
+                <div className="container">
+                  <UserDetails />
+                </div>
+              }
+            />
+            <Route
               path="updateuser/:cuil"
               element={
                 <div className="container">

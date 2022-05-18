@@ -1,5 +1,9 @@
-.form-container-jobs{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+.form-container-jobs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.list-container-jobs {
+  padding-top: 3%;
 }
