@@ -75,7 +75,7 @@ export default function LayoutAdmin(): JSX.Element {
           </li>
         </ul>
         <form className="d-flex">
-          <button className="button-close-session" onClick={handleLogOut}>
+          <button className="btn btn-light" onClick={handleLogOut}>
             Cerrar Sesión
           </button>
         </form>
