@@ -57,7 +57,7 @@ export default function Login(): JSX.Element {
             />
             <span className="err">{error.cuil}</span>
           </div>
-          <div className="mb-3">
+          <div className="mb-5">
             <label htmlFor="exampleInputPassword1" className="form-label">
               Contraseña
             </label>
@@ -71,10 +71,12 @@ export default function Login(): JSX.Element {
             <span className="err">{error.password}</span>
           </div>
 
-          <button type="submit" className="button">
-            Ingresar
-          </button>
-          <Link to="/forgotpassword"> Olvidé mi contraseña</Link>
+          <div className="container">
+            <button type="submit" className="btn btn-dark">
+              Ingresar
+            </button>
+            <Link to="/forgotpassword"> Olvidé mi contraseña</Link>
+          </div>
         </form>
       </div>
     </div>
