@@ -56,7 +56,15 @@ export default function App(): JSX.Element {
         <Route path="/forgotpassword" element={<ForgotPwd />} />
         <Route path="/resetpassword/:id/:token" element={<ResetPwd />} />
         <Route
-          path="/user/paycheck/:jobName"
+          path="/user/paycheck/:jobName/:cuil"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
+        <Route
+          path="/admin/paycheck/:jobName/:cuil"
           element={
             <div className="container">
               <Paycheck />

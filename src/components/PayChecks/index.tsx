@@ -138,7 +138,9 @@ export default function Paychecks(): JSX.Element {
                       <button
                         className="btn btn-dark"
                         onClick={() =>
-                          navigate("../paycheck" + "/" + e.jobName)
+                          navigate(
+                            "../paycheck" + "/" + e.jobName + "/" + e.userCuil
+                          )
                         }
                       >
                         Ver recibo
