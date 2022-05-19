@@ -26,6 +26,7 @@ export default function ResetPwd(): JSX.Element {
   });
 
   useEffect(() => {
+    localStorage.removeItem('token');
     id && dispatch(fetchUser(id) as any);
 
     axios

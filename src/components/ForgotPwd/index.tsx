@@ -35,8 +35,9 @@ export default function ForgotPwd(): JSX.Element {
         navigate('/')
       })
       .catch((error) => {
-        var sp = document.getElementById("otro");
-        if (sp) sp.innerHTML = 'Ingrese un CUIL correcto';
+        // var sp = document.getElementById("otro");
+        // if (sp) sp.innerHTML = 'Ingrese un CUIL correcto';
+        toast.error('El usuario no existe');
       });
   };
 
