@@ -47,9 +47,9 @@ export default function UserList(): JSX.Element {
       </div>
       <Filters />
       <div className="userlist-search-container">
-        <h4>Busqueda por nombre</h4>
+        <h4>Busqueda por nombre </h4>
         <input
-          className="form-control"
+          className="form-control "
           type="text"
           value={filter}
           placeholder="Buscar"
@@ -65,9 +65,7 @@ export default function UserList(): JSX.Element {
             <th data-type="any">
               Detalles <span className="resize-handle"></span>
             </th>
-            <th data-type="any">
-              Salario <span className="resize-handle"></span>
-            </th>
+            
             <th data-type="text-short">
               Nombre <span className="resize-handle"></span>
             </th>
@@ -121,14 +119,7 @@ export default function UserList(): JSX.Element {
                         Detalles
                       </button>
                     </td>
-                    <td>
-                      <button
-                        id="userlist-button"
-                        onClick={() => putUserinStateSalary(e.cuil)}
-                      >
-                        Salario
-                      </button>
-                    </td>
+                    
                     <td>{e.name}</td>
                     <td>{e.lastName}</td>
                     <td>{e.phoneNumber}</td>

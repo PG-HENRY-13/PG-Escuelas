@@ -131,10 +131,12 @@ export default function AddNews(): JSX.Element {
                   </div>
                 </div>
               </div>
-              <News />
+              
             </div>
           </div>
         </div>
+        
+        <News />
       </div>
     </section>
   );

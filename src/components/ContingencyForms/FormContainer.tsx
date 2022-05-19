@@ -128,7 +128,14 @@ export default function FormContainer(): JSX.Element {
                       </div>
                     </div>
                   </div>
-                  {cuil && jobId ? (
+
+                 
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          {cuil && jobId ? (
                     type === "ausencia" ? (
                       <AbsenceForm
                         hide={true}
@@ -145,11 +152,6 @@ export default function FormContainer(): JSX.Element {
                   ) : (
                     ""
                   )}
-                  
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

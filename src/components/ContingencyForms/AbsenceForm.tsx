@@ -126,7 +126,7 @@ export default function AbsenceForm(props: any): JSX.Element {
   }, [data]);
 
   return (
-    <section className="vh-100 ">
+    <section className="vh-100 mb-4">
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center h-100 ">
           <div className="col col-lg-9 mb-4 mb-lg-0 ">
