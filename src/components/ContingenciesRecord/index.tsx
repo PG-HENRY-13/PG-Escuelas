@@ -47,7 +47,7 @@ export default function ContingenciesRecord(): JSX.Element {
           <thead>
             <tr>
               <th data-type="numeric">
-                Estado <span className="resize-handle"></span>
+                Estado<span className="resize-handle"></span>
               </th>
               <th data-type="numeric">
                 Tipo <span className="resize-handle"></span>
@@ -127,8 +127,9 @@ export default function ContingenciesRecord(): JSX.Element {
             })}
         </tbody>{" "}
       </table>
+      
       <nav aria-label="Page navigation example">
-        <ul className="pagination">
+        <ul className="pagination justify-content-center">
           <li className="page-item">
             <button className="page-link" onClick={() => setIndex(1)}>
               Primero
@@ -177,5 +178,6 @@ export default function ContingenciesRecord(): JSX.Element {
       </nav>
       <DeleteModal contId={ID} warning={WARNING}></DeleteModal>
     </div>
+    
   );
 }

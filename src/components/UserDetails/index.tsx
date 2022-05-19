@@ -8,6 +8,7 @@ import { Job } from "../../redux/interfaces";
 import Back_Logo from "../../styles/img/Back_Logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEdit } from "@fortawesome/free-solid-svg-icons";
+
 const iconEdit = (
   <FontAwesomeIcon icon={faEdit} size="2x" style={{ color: "black" }} />
 );
@@ -25,13 +26,13 @@ export default function UserDetails(): JSX.Element {
   }, []);
 
   return (
-    <section className="vh-100">
+    <section className="vh-100 ">
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center h-100 ">
-          <div className="col col-lg-6 mb-4 mb-lg-0 ">
+          <div className="col col-lg-9 mb-4 mb-lg-0 ">
             <div className="card m-3 shadow-lg ">
               <div className="row g-0 " >
-                <div className="col-md-4 gradient-custom text-center mb-0 p-4" style={{backgroundColor:"#B8B08D"}}>
+                <div className="col-md-4 gradient-custom text-center mb-0 p-4" style={{backgroundColor:"#728187"}}>
                  
                   <FontAwesomeIcon
                     icon={faUser}
@@ -65,12 +66,12 @@ export default function UserDetails(): JSX.Element {
                         className="d-flex flex-column text-decoration-none "
                       >
                         {iconEdit}
-                        <h6 className="text-decoration-none">Editar Usuario</h6>
+                        <h6 style={{marginTop:15}} className="text-decoration-none link-dark">Editar Usuario</h6>
                       </Link>
                     )}
                   </div>
                 </div>
-                <div className="col-md-8" style={{backgroundColor:"#F2D492"}}>
+                <div className="col-md-8" style={{backgroundColor:"#faf9f9"}}>
                   <div className="card-body p-4">
                     <h4>Información </h4>
                     <hr className="mt-0 mb-4" />
