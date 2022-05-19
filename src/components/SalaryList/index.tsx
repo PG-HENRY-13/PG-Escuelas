@@ -50,10 +50,17 @@ export default function SalaryList(): JSX.Element {
     );
   }, [loadedUsersFromStore, paychecksByCuil]);
 
+  function indexHandler(e: any) {
+    console.log(e.target.value);
+    setIndex(Number(e.target.value));
+  }
+  const [index, setIndex] = useState(1);
+
   //-------------------------------------------------------------------------------------------
 
   const handleFilter = (e: string) => {
     setSearchParams({ filter: e });
+    setIndex(1);
   };
 
   const ChangeClass = (event: any, cuil: string) => {
@@ -91,9 +98,9 @@ export default function SalaryList(): JSX.Element {
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     var split = e.target.value.split("-");
-
     setselected_date(split[0] + split[1]);
     settoday(e.target.value);
+    console.log(e.target.value.split("-"));
     cuils.splice(0, cuils.length);
   };
 
@@ -103,12 +110,12 @@ export default function SalaryList(): JSX.Element {
         <h1>Salarios</h1>
       </div>
       <Filters />
-      <input
+      {/* <input
         type="date"
         id="datepicker"
         value={today}
         onChange={changeHandler}
-      ></input>
+      ></input> */}
 
       <div className="userlist-search-container">
         <h4 className="search-h4">Busqueda por nombre</h4>
@@ -171,6 +178,9 @@ export default function SalaryList(): JSX.Element {
                   ? user
                   : false;
               })
+              .filter(
+                (e: any, i: number) => index * 10 - 10 <= i && i < index * 10
+              )
               ?.map((user: any) => {
                 return (
                   <>
@@ -261,6 +271,56 @@ export default function SalaryList(): JSX.Element {
               })}
           </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            <li className="page-item">
+              <button className="page-link" onClick={() => setIndex(1)}>
+                Primero
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={(e) => setIndex(index - 1)}
+                disabled={!(index - 1)}
+                aria-label="Previous"
+              >
+                <span aria-hidden="true">&laquo;</span>
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                value={index}
+                onClick={indexHandler}
+              >
+                {index}
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                onClick={(e) => setIndex(index + 1)}
+                disabled={
+                  index === Math.ceil(loadedUsers?.length / 10) ||
+                  !loadedUsers?.length
+                }
+                aria-label="Next"
+              >
+                <span aria-hidden="true">&raquo;</span>
+              </button>
+            </li>
+            <li className="page-item">
+              <button
+                className="page-link"
+                disabled={!loadedUsers?.length}
+                onClick={() => setIndex(Math.ceil(loadedUsers?.length / 10))}
+              >
+                Ultimo
+              </button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
