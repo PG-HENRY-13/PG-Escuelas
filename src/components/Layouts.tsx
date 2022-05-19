@@ -18,7 +18,7 @@ export default function LayoutAdmin(): JSX.Element {
 
   return (
     <main>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-dark" style={{ backgroundColor: "#272E35" }}>
         <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
           <li className="nav-item">
             <NavLink
@@ -87,7 +87,11 @@ export default function LayoutAdmin(): JSX.Element {
             </NavLink>
           </li>
           <li className="nav-item">
-            <button className="btn btn-light" onClick={handleLogOut}>
+          <button
+              className="btn"
+              style={{ backgroundColor: "#21272B" }}
+              onClick={handleLogOut}
+            >
               Cerrar Sesión
             </button>
           </li>

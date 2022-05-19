@@ -65,3 +65,10 @@
 .nav-item {
   padding: 5px;
 }
+
+.btn{
+  color: white;
+}
+.btn:hover{
+  color: white;
+}

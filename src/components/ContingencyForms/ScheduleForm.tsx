@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { loadUser, sendContingency } from "../../redux/actions";
 import { ContingencyType, Job } from "../../redux/interfaces";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserClock, faEdit } from "@fortawesome/free-solid-svg-icons";
 export default function ScheduleForm(props: any): JSX.Element {
   const dispatch = useDispatch();
   function submit(e: React.SyntheticEvent) {
@@ -85,127 +87,217 @@ export default function ScheduleForm(props: any): JSX.Element {
   }
 
   return (
-    <div className="usersform-container">
-      <form id="miForm" onSubmit={submit}>
-        <fieldset hidden={props.hide}>
-          <legend>Nivel de previsión de la novedad:*</legend>
-          <div>
-            <input
-              type="radio"
-              name="hasNotice"
-              value={"true"}
-              checked={data.hasNotice === "true"}
-              onChange={(e) => setData({ ...data, hasNotice: e.target.value })}
-            ></input>
-            <label>Solicitar permiso</label>
+    <section className="vh-100 ">
+      <div className="container py-5 h-100">
+        <div className="row d-flex justify-content-center h-100 ">
+          <div className="col col-lg-9 mb-4 mb-lg-0 ">
+            <div className="card m-3 shadow-lg ">
+              <div className="row g-0 ">
+                <div
+                  className="col-md-4 gradient-custom text-center mb-0 p-4"
+                  style={{ backgroundColor: "#728187" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faUserClock}
+                    size="5x"
+                    className="img-fluid my-5"
+                  />
+                  <h5>
+                    {loadedUser.name} {loadedUser.lastName}
+                  </h5>
+                  <p>
+                    {" "}
+                    {loadedUser.role === "empleado"
+                      ? "Empleado"
+                      : loadedUser.role === "admin"
+                      ? "Admin"
+                      : "Gerente"}
+                  </p>
+
+                  <div></div>
+                </div>
+                <div
+                  className="col-md-8"
+                  style={{ backgroundColor: "#faf9f9" }}
+                >
+                  <div className="card-body p-4">
+                    <form className="mt-0 mb-4" id="miForm" onSubmit={submit}>
+                      <div className="row">
+                        <div className="card-body p-3">
+                          <fieldset hidden={props.hide}>
+                            <h4>Nivel de previsión de la novedad: *</h4>
+                            <hr className="mt-0 mb-4" />
+                            <div className="form-check mb-3">
+                              <input
+                                type="radio"
+                                name="hasNotice"
+                                value={"true"}
+                                checked={data.hasNotice === "true"}
+                                className="form-check-input"
+                                onChange={(e) =>
+                                  setData({
+                                    ...data,
+                                    hasNotice: e.target.value,
+                                  })
+                                }
+                              ></input>
+                              <label>Solicitar permiso</label>
+                            </div>
+
+                            <div className="form-check">
+                              <input
+                                type="radio"
+                                name="hasNotice"
+                                value={"false"}
+                                checked={data.hasNotice === "false"}
+                                className="form-check-input"
+                                onChange={(e) =>
+                                  setData({
+                                    ...data,
+                                    hasNotice: e.target.value,
+                                  })
+                                }
+                              ></input>
+                              <label>Notificar</label>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3">
+                          <fieldset hidden={props.hide}>
+                            <h4>Cargo: *</h4>
+                            <hr className="mt-0 mb-4" />
+                            <select
+                              className="form-select"
+                              onChange={changeHandler1}
+                              name="jobId"
+                              id="job"
+                            >
+                              {loadedUser.jobs?.map((job: Job) => {
+                                return (
+                                  <option value={job.id}>{job.name}</option>
+                                );
+                              })}
+                            </select>
+                          </fieldset>
+                        </div>
+                        <div className="card-body p-3">
+                          <fieldset>
+                            <div>
+                              <h4>Motivo: *</h4>
+                              <hr className="mt-0 mb-4" />
+                              <textarea
+                                onChange={changeHandler1}
+                                rows={4}
+                                cols={60}
+                                name="reason"
+                                className="form-control p-5"
+                                style={{ height: 100 }}
+                                value={data.reason}
+                              ></textarea>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3">
+                          <fieldset>
+                            <div>
+                              <h4>Fecha: *</h4>
+                              <hr className="mt-0 mb-4" />
+                              <input
+                                className="form-control mb-3"
+                                type="date"
+                                name="date"
+                                onChange={changeHandler1}
+                                value={data.date}
+                              ></input>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3">
+                          {props.type === "multiple" ? <div></div> : ""}
+                          <fieldset>
+                            <h4>Esto implica: *</h4>
+                            <hr className="mt-0 mb-4" />
+                            <div className="form-check mb-3">
+                              <input
+                                type="radio"
+                                onChange={changeHandler1}
+                                name="implies"
+                                value="Horas extra"
+                                className="form-check-input"
+                                checked={data.implies === "Horas extra"}
+                              ></input>
+                              <label className="form-check-label">
+                                Hora/s extra/s (en caso de exceder la cantidad
+                                de horas de su jornada habitual)
+                              </label>
+                            </div>
+                            <div className="form-check mb-3">
+                              <input
+                                type="radio"
+                                onChange={changeHandler1}
+                                name="implies"
+                                className="form-check-input"
+                                value="Llegada tarde"
+                                checked={data.implies === "Llegada tarde"}
+                              ></input>
+                              <label className="form-check-label">
+                                Llegada tarde (en caso de modificar su horario
+                                de inicio de jornada manteniendo el de
+                                finalización)
+                              </label>
+                            </div>
+                            <div className="form-check mb-3">
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                onChange={changeHandler1}
+                                name="implies"
+                                value="Retiro anticipado"
+                                checked={data.implies === "Retiro anticipado"}
+                              ></input>
+                              <label className="form-check-label">
+                                Retiro Anticipado (en caso de modificar su
+                                horario de finalización de jornada manteniendo
+                                el de inicio)
+                              </label>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3 mb-3">
+                          <fieldset>
+                            <div>
+                              <h4>Cantidad de horas extra/perdidas: *</h4>
+                              <hr className="mt-0 mb-4" />
+                              <input
+                                className="form-control"
+                                name="hoursNumber"
+                                onChange={changeHandler1}
+                                value={data.hoursNumber}
+                              ></input>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <button
+                          disabled={disable}
+                          className="btn btn-dark p-3"
+                          type="submit"
+                        >
+                          Enviar
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <input
-              type="radio"
-              name="hasNotice"
-              value={"false"}
-              checked={data.hasNotice === "false"}
-              onChange={(e) => setData({ ...data, hasNotice: e.target.value })}
-            ></input>
-            <label>Notificar</label>
-          </div>
-        </fieldset>
-        <fieldset hidden={props.hide}>
-          <legend>Cargo:*</legend>
-          <select
-            className="form-select"
-            onChange={changeHandler1}
-            name="jobId"
-            id="job"
-          >
-            {loadedUser.jobs?.map((job: Job) => {
-              return <option value={job.id}>{job.name}</option>;
-            })}
-          </select>
-        </fieldset>
-        <fieldset>
-          <div>
-            <legend>Motivo:*</legend>
-            <textarea
-              onChange={changeHandler1}
-              rows={4}
-              cols={60}
-              name="reason"
-              value={data.reason}
-            ></textarea>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div>
-            <legend>Fecha:*</legend>
-            <input
-              className="form-control"
-              type="date"
-              name="date"
-              onChange={changeHandler1}
-              value={data.date}
-            ></input>
-          </div>
-        </fieldset>
-        {props.type === "multiple" ? <div></div> : ""}
-        <fieldset>
-          <legend>Esto implica:*</legend>
-          <div>
-            <input
-              type="radio"
-              onChange={changeHandler1}
-              name="implies"
-              value="Horas extra"
-              checked={data.implies === "Horas extra"}
-            ></input>
-            <label>
-              Hora/s extra/s (en caso de exceder la cantidad de horas de su
-              jornada habitual)
-            </label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              onChange={changeHandler1}
-              name="implies"
-              value="Llegada tarde"
-              checked={data.implies === "Llegada tarde"}
-            ></input>
-            <label>
-              Llegada tarde (en caso de modificar su horario de inicio de
-              jornada manteniendo el de finalización)
-            </label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              onChange={changeHandler1}
-              name="implies"
-              value="Retiro anticipado"
-              checked={data.implies === "Retiro anticipado"}
-            ></input>
-            <label>
-              Retiro Anticipado (en caso de modificar su horario de finalización
-              de jornada manteniendo el de inicio)
-            </label>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div>
-            <legend>Cantidad de horas extra/perdidas:*</legend>
-            <input
-              className="form-control"
-              name="hoursNumber"
-              onChange={changeHandler1}
-              value={data.hoursNumber}
-            ></input>
-          </div>
-        </fieldset>
-        <br></br>
-        <button disabled={disable} className="btn btn-dark" type="submit">
-          Enviar
-        </button>
-      </form>
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }

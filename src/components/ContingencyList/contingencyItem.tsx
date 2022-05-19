@@ -21,7 +21,7 @@ export default function ContingencyItem(props: any): JSX.Element {
         <h5>Estado: {props.state}</h5>
         <div className="btn-container">
           <button
-            className="btn btn-outline-dark btn-space"
+            className="btn btn-dark btn-space"
             disabled={props.state !== ContingencyState.pending}
             onClick={(e) =>
               dispatch(
@@ -35,7 +35,7 @@ export default function ContingencyItem(props: any): JSX.Element {
             Aprobar
           </button>
           <button
-            className="btn btn-outline-dark btn-space"
+            className="btn btn-dark btn-space"
             disabled={props.state !== ContingencyState.pending}
             onClick={(e) =>
               dispatch(
@@ -49,7 +49,7 @@ export default function ContingencyItem(props: any): JSX.Element {
             Rechazar
           </button>
           <button
-            className="btn btn-outline-dark btn-space"
+            className="btn btn-dark btn-space"
             disabled={props.state !== ContingencyState.pending}
             onClick={(e) =>
               dispatch(
