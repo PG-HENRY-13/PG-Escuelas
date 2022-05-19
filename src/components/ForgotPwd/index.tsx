@@ -60,9 +60,14 @@ export default function ForgotPwd(): JSX.Element {
             <span className="err">{error.cuil}</span>
             <span id="otro"></span>
           </div>
-          <button type="submit" className="button">
-            Enviar
-          </button>
+          <div className="container mt-5">
+            <button type="submit" className="btn btn-dark w-50">
+              Enviar
+            </button>
+            <button type="button" className="btn btn-dark w-50" onClick={(e)=>{navigate('/')}}>
+              Cancelar
+            </button>
+          </div>
         </form>
       </div>
     </div>
