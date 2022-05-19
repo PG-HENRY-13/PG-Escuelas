@@ -9,6 +9,7 @@ import excelRoutes from "./excel";
 import testRoutes from "./test";
 import mail from "./mail";
 import paychecksRoute from "./paycheck";
+import newsRoutes from "./news";
 
 import contingenciesRoutes from "./contingencies";
 import salary from "./salary";
@@ -31,4 +32,6 @@ router.use("/mail", mail);
 router.use("/contingencies", contingenciesRoutes);
 router.use("/salary", salaryRoute);
 router.use("/paychecks", paychecksRoute);
+
+router.use('/news', newsRoutes);
 export default router;

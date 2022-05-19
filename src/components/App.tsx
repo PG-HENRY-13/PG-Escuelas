@@ -39,6 +39,7 @@ import Paychecks from "./PayChecks";
 import ContactForm from "./ContactForm";
 import UserContingenciesRecord from "./ContUserRecord";
 import PaycheckList from "./PaycheckList";
+import AddNews from "./AddNews";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -224,6 +225,14 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <SalaryList />
+                </div>
+              }
+            />
+            <Route
+              path="addnews"
+              element={
+                <div className="container">
+                  <AddNews />
                 </div>
               }
             />
