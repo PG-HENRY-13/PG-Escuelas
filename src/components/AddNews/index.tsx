@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { URL_API } from "../../env";
 import validate from "../NewAccount/validate";
 import "../../styles/Contact.css";
+import News from "../News";
 
 export default function AddNews(): JSX.Element {
   const userLogged = useSelector((state: any) => state.authState);
@@ -50,59 +51,57 @@ export default function AddNews(): JSX.Element {
   };
 
   return (
-    <div
-      className="container w-50 py-4 card mt-3 shadow-lg"
-      style={{ backgroundColor: "#B8B08D" }}
-    >
-      <label className="form-label fs-2 text-uppercase ">Crear novedades</label>
-
-      <form name="contactForm" onSubmit={handleOnSubmit}>
-        <div className="mb-3 ">
-          <label className="form-label fs-4 text-uppercase">Título</label>
-          <input
-            onChange={handleChanges}
-            value={data.title}
-            className="form-control w-75 mx-auto"
-            name="title"
-            type="text"
-            placeholder="Título"
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label fs-4 text-uppercase">Texto</label>
-          <textarea
-            onChange={handleChanges}
-            value={data.text}
-            className="form-control w-75 mx-auto"
-            name="text"
-            placeholder="Texto"
-          ></textarea>
-        </div>
-
-        <div className="d-none" id="submitSuccessMessage">
-          <div className="text-center mb-3">
-            El mensaje fue enviado correctamente
+    <div>
+      <div
+        className="container w-50 py-4 card mt-3 shadow-lg"
+        style={{ backgroundColor: "#B8B08D" }}
+      >
+        <label className="form-label fs-2 text-uppercase ">Crear novedades</label>
+        <form name="contactForm" onSubmit={handleOnSubmit}>
+          <div className="mb-3 ">
+            <label className="form-label fs-4 text-uppercase">Título</label>
+            <input
+              onChange={handleChanges}
+              value={data.title}
+              className="form-control w-75 mx-auto"
+              name="title"
+              type="text"
+              placeholder="Título"
+            />
           </div>
-        </div>
-
-        <div className="d-none" id="submitErrorMessage">
-          <div className="text-center text-danger mb-3">
-            Error al enviar el mensaje
+          <div className="mb-3">
+            <label className="form-label fs-4 text-uppercase">Texto</label>
+            <textarea
+              onChange={handleChanges}
+              value={data.text}
+              className="form-control w-75 mx-auto"
+              name="text"
+              placeholder="Texto"
+            ></textarea>
           </div>
-        </div>
-
-        <div className="d-grid">
-          <button
-            disabled={disabled}
-            className="btn btn-light btn-lg w-75 mx-auto mb-3"
-            name="submitButton"
-            type="submit"
-          >
-            Enviar
-          </button>
-        </div>
-      </form>
+          <div className="d-none" id="submitSuccessMessage">
+            <div className="text-center mb-3">
+              El mensaje fue enviado correctamente
+            </div>
+          </div>
+          <div className="d-none" id="submitErrorMessage">
+            <div className="text-center text-danger mb-3">
+              Error al enviar el mensaje
+            </div>
+          </div>
+          <div className="d-grid">
+            <button
+              disabled={disabled}
+              className="btn btn-light btn-lg w-75 mx-auto mb-3"
+              name="submitButton"
+              type="submit"
+            >
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+        <News/>
     </div>
   );
 }

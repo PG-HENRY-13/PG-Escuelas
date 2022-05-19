@@ -86,7 +86,7 @@ export default function Paychecks(): JSX.Element {
         <thead>
           <tr>
             <th data-type="numeric">
-              Período <span className="resize-handle"></span>
+              CUIL <span className="resize-handle"></span>
             </th>
             <th data-type="any">
               Cargo <span className="resize-handle"></span>
