@@ -152,6 +152,14 @@ export default function PaycheckList(): JSX.Element {
           );
         })}
       </table>
+      <button
+        onClick={() => {
+          console.log("Esta son todas: ", dBpaychecks);
+          console.log("Esta son las de cada user creo: ", paychecksByCuil);
+        }}
+      >
+        Tocame
+      </button>
     </div>
   );
 }

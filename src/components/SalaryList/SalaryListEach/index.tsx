@@ -10,18 +10,27 @@ import "../../../styles/SalaryList.css";
 // }
 interface Props {
   array: Array<{
-    jobId: number;
-    jobName: number;
-    baseWage$: number;
-    additionals$: number;
-    seniority$: number;
-    overTimeAdditionals$: number;
-    absencesDeductions$: number;
-    underTimeDeductions$: number;
-    unionDeductions$: number;
-    baseWageCode: number;
-    underTimeDeductionsCode: number;
-    absencesDeductionsCode: number;
+    absencesDeductions$: string;
+    absencesDeductionsCode: string;
+    additionals$: string;
+    baseWage$: string;
+    baseWageCode: string;
+    excusedAbsences: string;
+    isSigned: boolean;
+    jobId: string;
+    jobName: string;
+    overTimeAdditionals$: string;
+    overTimeHours: string;
+    period: string;
+    seniority$: string; //
+    seniorityYears: string; //
+    totalAmount: string;
+    underTimeDeductions$: string;
+    underTimeDeductionsCode: string;
+    underTimeHours$: string; //
+    unexcusedAbsences: string; //
+    unionDeductions$: string; //
+    userCuil: string; //
   }>;
 }
 export default function SalaryList({ array }: Props): JSX.Element {
@@ -44,7 +53,6 @@ export default function SalaryList({ array }: Props): JSX.Element {
                     <th data-type="text-short">
                       Antiguedad<span className="resize-handle"></span>
                     </th>
-                    {/* ACA VAN TODOS LOS DATOS A MOSTRAR */}
                     <th data-type="text-short">
                       Horas Extra<span className="resize-handle"></span>
                     </th>
@@ -56,6 +64,9 @@ export default function SalaryList({ array }: Props): JSX.Element {
                     </th>
                     <th data-type="text-short">
                       Sindicato<span className="resize-handle"></span>
+                    </th>
+                    <th data-type="text-short">
+                      Total<span className="resize-handle"></span>
                     </th>
                   </tr>
                 </thead>
@@ -69,6 +80,7 @@ export default function SalaryList({ array }: Props): JSX.Element {
                       <td>{Number(t.absencesDeductions$).toFixed(2)}</td>
                       <td>{Number(t.underTimeDeductions$).toFixed(2)}</td>
                       <td>{Number(t.unionDeductions$).toFixed(2)}</td>
+                      <td>{Number(t.totalAmount).toFixed(2)}</td>
                     </tr>
                   </>
                 </tbody>

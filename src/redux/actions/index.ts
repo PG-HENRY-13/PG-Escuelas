@@ -269,9 +269,11 @@ export const calculateAllWages = (cuils: any) => {
   return async (dispatch: Dispatch) => {
     var response;
     try {
-      cuils.map(async (cuil: string) => {
-        response = await axios.post<any>(wageUrl + cuil);
-      });
+      Promise.all(
+        cuils.map(async (cuil: string) => {
+          response = await axios.post<any>(wageUrl + cuil);
+        })
+      );
     } catch (err) {
       console.log("error, ", err);
     }
