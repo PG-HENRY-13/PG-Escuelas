@@ -55,11 +55,11 @@ export default function Paychecks(): JSX.Element {
     setPeriod(e.target.value);
   };
 
-  console.log(payChecks, "2");
   return (
     <div className="userlist-filter-container">
-      <div className="na-title">
-        <h1>Listado de Bonos de sueldo</h1>
+      <div className="na-title d-flex flex-column text-center">
+        <h1>Listado de </h1>
+        <h1 className="">BONOS DE SUELDO</h1>
       </div>
       <div className="userlist-search-container">
         <h4>Busqueda rápida</h4>
@@ -86,7 +86,7 @@ export default function Paychecks(): JSX.Element {
         <thead>
           <tr>
             <th data-type="numeric">
-              Período <span className="resize-handle"></span>
+              CUIL <span className="resize-handle"></span>
             </th>
             <th data-type="any">
               Cargo <span className="resize-handle"></span>
@@ -138,7 +138,9 @@ export default function Paychecks(): JSX.Element {
                       <button
                         className="btn btn-dark"
                         onClick={() =>
-                          navigate("../paycheck" + "/" + e.jobName)
+                          navigate(
+                            "../paycheck" + "/" + e.jobName + "/" + e.userCuil
+                          )
                         }
                       >
                         Ver recibo

@@ -13,7 +13,7 @@ import axios from "axios";
 import config from "../lib/config";
 // import {URL_API} from "../../../src/.env.js"
 
-export const URL_API = config.http + config.host + ":" + config.port + "/api"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
+export const URL_API = config.http + config.host  + config.port + "/api"; // POR ALGUNA RAZON EL IMPORT ME DA PROBLEMAS
 
 const router = Router();
 var contingenciesUrl: string = URL_API + "/contingencies";

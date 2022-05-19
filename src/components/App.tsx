@@ -39,6 +39,7 @@ import Paychecks from "./PayChecks";
 import ContactForm from "./ContactForm";
 import UserContingenciesRecord from "./ContUserRecord";
 import PaycheckList from "./PaycheckList";
+import AddNews from "./AddNews";
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -56,7 +57,15 @@ export default function App(): JSX.Element {
         <Route path="/forgotpassword" element={<ForgotPwd />} />
         <Route path="/resetpassword/:id/:token" element={<ResetPwd />} />
         <Route
-          path="/user/paycheck/:jobName"
+          path="/user/paycheck/:jobName/:cuil"
+          element={
+            <div className="container">
+              <Paycheck />
+            </div>
+          }
+        />
+        <Route
+          path="/admin/paycheck/:jobName/:cuil"
           element={
             <div className="container">
               <Paycheck />
@@ -120,7 +129,7 @@ export default function App(): JSX.Element {
         ) : null}
         {userLogged.role === "admin" ? (
           <Route path="/admin" element={<LayoutAdmin />}>
-            <Route index element={<News />} />
+            <Route index element={<AddNews />} />
             <Route
               path="createuser"
               element={
@@ -216,6 +225,14 @@ export default function App(): JSX.Element {
               element={
                 <div className="container">
                   <SalaryList />
+                </div>
+              }
+            />
+            <Route
+              path="addnews"
+              element={
+                <div className="container">
+                  <AddNews />
                 </div>
               }
             />

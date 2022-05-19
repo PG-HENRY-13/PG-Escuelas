@@ -1,73 +1,45 @@
-import React from "react";
-import "../../styles/News.css"
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { URL_API } from "../../env";
+import "../../styles/News.css";
+import New from "./New";
+
+interface NewI {
+  id: string;
+  title: string;
+  text: string;
+  createdAt: string;
+}
 
 export default function News() {
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${URL_API}news`)
+      .then((response) => {
+        setNews(response.data);
+      })
+      .catch((error) => {
+        toast.error("Ocurrió un error al cargar las news");
+      });
+  }, []);
+
   return (
-    <div className="news-container">
-      <div
-        id="carouselExampleIndicators"
-        className="carousel slide"
-        data-bs-ride="carousel"
-      >
-        <div className="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            className="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-        </div>
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <h1 className='text-center'>Novedad 1</h1>{" "}
-          </div>
-          <div className="carousel-item">
-            <h1 className='text-center'>Novedad 2</h1>
-            
-          </div>
-          <div className="carousel-item">
-            <h1 className='text-center'>Novedad 3</h1>
-          </div>
-        </div>
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+    <div className="container bootstrap snippets bootdeys">
+      <div className="row">
+        {news.map((n: NewI) => {
+          console.log(n);
+          return <New title={n.title} body={n.text} date={n.createdAt.split('T')[0]} />;
+        })}
       </div>
     </div>
+    // <div className="container ">
+    //   {news.map((n: NewI) => {
+    //     console.log(n);
+    //     return <New title={n.title} body={n.text} />;
+    //   })}
+    // </div>
   );
 }

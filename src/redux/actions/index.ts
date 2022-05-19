@@ -172,7 +172,7 @@ export const fetchJobs = () => {
 
 ///////SEGURO DAVID YA LO HIZO PERO ES PA PROBAR
 
-export const loadUser = (userCuil: number) => {
+export const loadUser = (userCuil: any) => {
   console.log("llega el load con userCuil ", userCuil);
   return async (dispatch: Dispatch) => {
     const response = await axios.get<any>(userUrl + "/" + userCuil, {

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "../../../styles/SalaryList.css";
+import { useNavigate } from "react-router-dom";
 
 // interface Props {
 //   array: Array<{jobId: number; jobName: number;
@@ -33,7 +34,9 @@ interface Props {
     userCuil: string; //
   }>;
 }
-export default function SalaryList({ array }: Props): JSX.Element {
+export default function SalaryListEach({ array }: Props): JSX.Element {
+  const navigate = useNavigate();
+
   return (
     <div className="subList">
       <div className="userlist-filter-container">
@@ -81,6 +84,18 @@ export default function SalaryList({ array }: Props): JSX.Element {
                       <td>{Number(t.underTimeDeductions$).toFixed(2)}</td>
                       <td>{Number(t.unionDeductions$).toFixed(2)}</td>
                       <td>{Number(t.totalAmount).toFixed(2)}</td>
+                      <td>
+                        <button
+                          className="btn btn-dark"
+                          onClick={() =>
+                            navigate(
+                              "../paycheck" + "/" + t.jobName + "/" + t.userCuil
+                            )
+                          }
+                        >
+                          Ver recibo
+                        </button>
+                      </td>
                     </tr>
                   </>
                 </tbody>
