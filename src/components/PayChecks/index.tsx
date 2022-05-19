@@ -57,8 +57,9 @@ export default function Paychecks(): JSX.Element {
 
   return (
     <div className="userlist-filter-container">
-      <div className="na-title">
-        <h1>Listado de Bonos de sueldo</h1>
+      <div className="na-title d-flex flex-column text-center">
+        <h1>Listado de </h1>
+        <h1 className="">BONOS DE SUELDO</h1>
       </div>
       <div className="userlist-search-container">
         <h4>Busqueda rápida</h4>
