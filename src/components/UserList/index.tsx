@@ -32,6 +32,7 @@ export default function UserList(): JSX.Element {
 
   const handleFilter = (e: string) => {
     setSearchParams({ filter: e });
+    setIndex(1);
   };
 
   const [index, setIndex] = useState(1);

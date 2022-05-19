@@ -15,10 +15,16 @@ export default function ContingenciesRecord(): JSX.Element {
   useEffect(() => {
     dispatch(fetchContingencies() as any);
   }, []);
+
   useEffect(() => {}, [loadedContingencies]);
 
   const [nameFilter, setNameFilter] = useState("");
   const [index, setIndex] = useState(1);
+
+  useEffect(() => {
+    setIndex(1);
+  }, [nameFilter]);
+
   const [ID, setID] = useState(0);
   const WARNING =
     "Modificar una contingecia tiene un impacto directo sobre el recibo de sueldo del usuario. La contingencia volvera al listado de contingencias pendientes, desea continuar?";
