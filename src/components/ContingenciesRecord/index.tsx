@@ -21,7 +21,7 @@ export default function ContingenciesRecord(): JSX.Element {
   const [index, setIndex] = useState(1);
   const [ID, setID] = useState(0);
   const WARNING =
-    "Eliminar una contingecia tiene un impacto directo sobre el recibo de sueldo del usuario, esta seguro que desea continuar?";
+    "Modificar una contingecia tiene un impacto directo sobre el recibo de sueldo del usuario. La contingencia volvera al listado de contingencias pendientes, desea continuar?";
   function indexHandler(e: any) {
     console.log(e.target.value);
     setIndex(Number(e.target.value));
@@ -90,6 +90,7 @@ export default function ContingenciesRecord(): JSX.Element {
                 ? e
                 : false;
             })
+            .filter((e: any) => e.state !== "Pendiente")
             .filter(
               (e: any, i: number) => index * 10 - 10 <= i && i < index * 10
             )
@@ -118,7 +119,7 @@ export default function ContingenciesRecord(): JSX.Element {
                         data-bs-target="#staticBackdrop"
                         onClick={() => setID(e.id)}
                       >
-                        Eliminar
+                        Modificar
                       </button>
                     </td>
                   </tr>
