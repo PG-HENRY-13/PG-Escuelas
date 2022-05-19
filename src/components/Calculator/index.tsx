@@ -35,7 +35,7 @@ export default function Calculator(): JSX.Element {
 
   return (
     <div>
-      <button className="btn-dark" onClick={submit}>
+      <button className="btn btn-dark p-3 col-md-12" onClick={submit}>
         Calcular salarios
       </button>
     </div>
