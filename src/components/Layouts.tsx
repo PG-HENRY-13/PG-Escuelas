@@ -29,6 +29,11 @@ export default function LayoutAdmin(): JSX.Element {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink className="nav-link" to="/admin/addnews">
+              Novedades
+            </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink className="nav-link" to="/admin/createuser">
               Crear Usuario Nuevo
             </NavLink>
