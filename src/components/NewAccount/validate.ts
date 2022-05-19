@@ -55,5 +55,10 @@ export default function validate(input: any) {
     if (input.message.length < 1)
       error.message = "Ingrese una dirección de correo válida";
   }
+  if (input.hasOwnProperty("text")) {
+    if (input.text.length < 1)
+      error.text = "Ingrese el texto";
+      if (input.text.length > 253) error.text = "El texto es muy extenso";
+  }
   return error;
 }
