@@ -129,7 +129,7 @@ export default function App(): JSX.Element {
         ) : null}
         {userLogged.role === "admin" ? (
           <Route path="/admin" element={<LayoutAdmin />}>
-            <Route index element={<News />} />
+            <Route index element={<AddNews />} />
             <Route
               path="createuser"
               element={
