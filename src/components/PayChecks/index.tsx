@@ -55,7 +55,6 @@ export default function Paychecks(): JSX.Element {
     setPeriod(e.target.value);
   };
 
-  console.log(payChecks, "2");
   return (
     <div className="userlist-filter-container">
       <div className="na-title d-flex flex-column text-center">

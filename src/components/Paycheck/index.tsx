@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import "../../styles/Paycheck.css";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { loadUser, updateFormUser } from "../../redux/actions";
-import { useState, useEffect } from "react";
 import {
   Link,
   useNavigate,
@@ -10,10 +10,12 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import { URL_API } from "../../env";
+import { fetchUsers } from "../../redux/actions";
 
 export default function Paycheck(): JSX.Element {
   const toDay = new Date();
   const user = useSelector((state: any) => state.authState);
+  console.log(user, "3");
   let job = useParams();
   const dispatch = useDispatch();
   const [payChecks, setPayChecks] = useState([]);
@@ -29,7 +31,7 @@ export default function Paycheck(): JSX.Element {
         api();
       });
   }, []);
-
+  console.log(payChecks, "PAYCHECKS");
   function api() {
     axios
       .get(
@@ -49,14 +51,14 @@ export default function Paycheck(): JSX.Element {
     return jobFiltrado;
   });
 
-  const antiguedad = "4807.6";
+  const gastos = "4807.6";
 
   function sumar() {
     if (jobPaycheck) {
       var a = parseFloat(jobPaycheck[0].baseWage$);
       var b = parseFloat(jobPaycheck[0].additionals$);
       var c = parseFloat(jobPaycheck[0].overTimeAdditionals$);
-      var d = parseFloat(antiguedad);
+      var d = parseFloat(gastos);
       var suma = a + b + c + d;
       return suma;
     }
@@ -78,7 +80,7 @@ export default function Paycheck(): JSX.Element {
       var c = parseFloat(jobPaycheck[0].overTimeAdditionals$);
       var d = parseFloat(jobPaycheck[0].unionDeductions$);
       var e = parseFloat(jobPaycheck[0].absencesDeductions$);
-      var f = parseFloat(antiguedad);
+      var f = parseFloat(gastos);
       var total = a + b + c - d - e + f;
       return total;
     }
@@ -100,8 +102,6 @@ export default function Paycheck(): JSX.Element {
                   <td colSpan={4}>{job.jobName}</td>
                   <th>Periodo</th>
                   <td>{jobPaycheck[0].period}</td>
-                  <th></th>
-                  <td></td>
                 </tr>
                 <tr>
                   <th>CUIL</th>
@@ -140,12 +140,12 @@ export default function Paycheck(): JSX.Element {
               <tr>
                 <td className="myAlign">1836</td>
                 <td className="myAlign" colSpan={6}>
-                  ANTIGUEDAD
+                  GASTOS INHERENTES A LA LABOR DOCENTE
                 </td>
                 <td colSpan={2} className="myAlign">
-                  {antiguedad}
+                  {gastos}
                 </td>
-                <td className="myAlign">{antiguedad}</td>
+                <td className="myAlign">{gastos}</td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
               </tr>
@@ -213,15 +213,8 @@ export default function Paycheck(): JSX.Element {
                 <td className="table-border">{total()}</td>
               </tr>
               <tr>
-                <td colSpan={2}></td>
-                <td className="footer" colSpan={7}></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colSpan={2}>Periodo:</td>
-                <td className="footer" colSpan={7}>
+                <td colSpan={1}>Periodo:</td>
+                <td className="footer" colSpan={8}>
                   {jobPaycheck[0].period}
                 </td>
                 <td></td>
@@ -258,8 +251,8 @@ export default function Paycheck(): JSX.Element {
                 <td></td>
               </tr>
               <tr>
-                <td colSpan={2}></td>
-                <td className="footer" colSpan={7}></td>
+                <td colSpan={1}></td>
+                <td className="footer" colSpan={8}></td>
                 <td colSpan={1}></td>
                 <td className="footer-center">Empleado</td>
                 <td></td>

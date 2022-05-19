@@ -20,10 +20,12 @@ export default function LayoutAdmin(): JSX.Element {
     <main>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-        <li className="nav-item">
-            <NavLink className="nav-link" to={"/admin/userdetails/" + userLogged.id}>
-              ADMIN -{" "}
-              <span>{userLogged.name + " " + userLogged.lastName}</span>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              to={"/admin/userdetails/" + userLogged.id}
+            >
+              ADMIN - <span>{userLogged.name + " " + userLogged.lastName}</span>
             </NavLink>
           </li>
           <li className="nav-item">
@@ -79,11 +81,11 @@ export default function LayoutAdmin(): JSX.Element {
               Salario
             </NavLink>
           </li>
-        <li className="nav-item">
-          <button className="btn btn-light" onClick={handleLogOut}>
-            Cerrar Sesión
-          </button>
-        </li>
+          <li className="nav-item">
+            <button className="btn btn-light" onClick={handleLogOut}>
+              Cerrar Sesión
+            </button>
+          </li>
         </ul>
       </nav>
       <section>
