@@ -30,7 +30,7 @@ export default function Calculator(): JSX.Element {
     await dispatch(calculateAllWages(cuils) as any);
     setTimeout(() => {
       dispatch(fetchPaychecksByCuil() as any);
-    }, 500);
+    }, 2000);
   };
 
   return (

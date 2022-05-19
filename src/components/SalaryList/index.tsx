@@ -197,10 +197,11 @@ export default function SalaryList(): JSX.Element {
                           <>
                             <td>
                               $
-                              {userPaychecks.reduce((acc: number, pay: any) => {
-                                return acc + Number(pay.baseWage$);
-                              }, 0)}
-                              $
+                              {userPaychecks
+                                .reduce((acc: number, pay: any) => {
+                                  return acc + Number(pay.baseWage$);
+                                }, 0)
+                                .toFixed(2)}
                             </td>
                             <td>
                               $
@@ -230,7 +231,6 @@ export default function SalaryList(): JSX.Element {
                                   return acc + Number(pay.unionDeductions$);
                                 }, 0)
                                 .toFixed(2)}
-                              $
                             </td>
                             <td>
                               $
