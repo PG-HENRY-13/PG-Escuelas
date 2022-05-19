@@ -36,7 +36,7 @@ export default function ForgotPwd(): JSX.Element {
       })
       .catch((error) => {
         var sp = document.getElementById("otro");
-        if (sp) sp.innerHTML = 'Ingrese el CUIL correcto';
+        if (sp) sp.innerHTML = 'Ingrese un CUIL correcto';
       });
   };
 
@@ -60,13 +60,15 @@ export default function ForgotPwd(): JSX.Element {
             <span className="err">{error.cuil}</span>
             <span id="otro"></span>
           </div>
-          <div className="container mt-5">
-            <button type="submit" className="btn btn-dark w-50">
+          <div className="d-flex justify-content-center mt-4">
+          <div className="d-flex justify-content-center mt-4">
+            <button type="submit" className="btn btn-dark w-50 m-lg-2">
               Enviar
             </button>
-            <button type="button" className="btn btn-dark w-50" onClick={(e)=>{navigate('/')}}>
+            <button type="button" className="btn btn-dark w-50 m-lg-2" onClick={(e)=>{navigate('/')}}>
               Cancelar
             </button>
+          </div>
           </div>
         </form>
       </div>

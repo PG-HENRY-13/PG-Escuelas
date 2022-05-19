@@ -43,7 +43,7 @@ export default function Login(): JSX.Element {
       <div className="login-container-inside">
         <h2 className="text-center">ACCESO CON CUIL</h2>
         <form onSubmit={submitHandler}>
-          <div className="mb-3">
+          <div className="mb-4">
             <label htmlFor="user" className="form-label">
               Ingrese número de CUIL:{" "}
             </label>
@@ -55,7 +55,7 @@ export default function Login(): JSX.Element {
               aria-describedby="emailHelp"
               onChange={handleChange}
             />
-            <span className="err">{error.cuil}</span>
+            <span className="err ">{error.cuil}</span>
           </div>
           <div className="mb-5">
             <label htmlFor="exampleInputPassword1" className="form-label">
@@ -71,11 +71,14 @@ export default function Login(): JSX.Element {
             <span className="err">{error.password}</span>
           </div>
 
-          <div className="container">
+          <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-dark">
               Ingresar
             </button>
-            <Link to="/forgotpassword"> Olvidé mi contraseña</Link>
+            
+          </div>
+          <div className="d-flex justify-content-center mt-3">
+          <Link className="link-dark" to="/forgotpassword" style={{textDecoration:0}}> Olvidé mi contraseña</Link>
           </div>
         </form>
       </div>

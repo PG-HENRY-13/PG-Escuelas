@@ -84,7 +84,7 @@ export default function UserContingenciesRecord(): JSX.Element {
         </tbody>{" "}
       </table>
       <nav aria-label="Page navigation example">
-        <ul className="pagination">
+        <ul className="pagination justify-content-center ">
           <li className="page-item">
             <button className="page-link" onClick={() => setIndex(1)}>
               Primero

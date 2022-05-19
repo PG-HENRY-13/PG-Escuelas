@@ -5,11 +5,15 @@ import { ContingencyType, Job } from "../../redux/interfaces";
 import { useDispatch, useSelector } from "react-redux";
 import { Contingency } from "../../redux/interfaces";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserLargeSlash} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 //hacer interface para las props
 
 export default function AbsenceForm(props: any): JSX.Element {
   const dispatch = useDispatch();
+  const role = useSelector((state: any) => state.authState.role);
   function submit(e: React.SyntheticEvent) {
     try {
       e.preventDefault();
@@ -122,106 +126,192 @@ export default function AbsenceForm(props: any): JSX.Element {
   }, [data]);
 
   return (
-    <div>
-      <div className="container">
-        <form onSubmit={submit}>
-          <div className="row">
-            <fieldset hidden={props.hide}>
-              <legend>Nivel de previsión de la novedad:*</legend>
-              <div>
-                <input
-                  id="request"
-                  type="radio"
-                  name="hasNotice"
-                  value={"true"}
-                  checked={data.hasNotice === "true"}
-                  onChange={(e) =>
-                    setData({ ...data, hasNotice: e.target.value })
-                  }
-                ></input>
-                <label htmlFor="request">Solicitar permiso</label>
+    <section className="vh-100 ">
+      <div className="container py-5 h-100">
+        <div className="row d-flex justify-content-center h-100 ">
+          <div className="col col-lg-9 mb-4 mb-lg-0 ">
+            <div className="card m-3 shadow-lg ">
+              <div className="row g-0 ">
+                <div
+                  className="col-md-4 gradient-custom text-center mb-0 p-4"
+                  style={{ backgroundColor: "#728187" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faUserLargeSlash}
+                    size="5x"
+                    className="img-fluid my-5"
+                  />
+                  <h5>
+                    {loadedUser.name} {loadedUser.lastName}
+                  </h5>
+                  <p>
+                    {" "}
+                    {loadedUser.role === "empleado"
+                      ? "Empleado"
+                      : loadedUser.role === "admin"
+                      ? "Admin"
+                      : "Gerente"}
+                  </p>
+                </div>
+
+                <div
+                  className="col-md-8"
+                  style={{ backgroundColor: "#faf9f9" }}
+                >
+                  <div className="card-body p-4">
+                    <form className="mt-0 mb-4" onSubmit={submit}>
+                      <div className="row">
+                        <div className="card-body p-3">
+                          <fieldset hidden={props.hide}>
+                            <h4>Nivel de previsión de la novedad: *</h4>
+                            <hr className="mt-0 mb-4" />
+                            <div className="form-check mb-3">
+                              <input
+                                id="request"
+                                type="radio"
+                                name="hasNotice"
+                                value={"true"}
+                                checked={data.hasNotice === "true"}
+                                className="form-check-input"
+                                onChange={(e) =>
+                                  setData({
+                                    ...data,
+                                    hasNotice: e.target.value,
+                                  })
+                                }
+                              ></input>
+                              <label
+                                htmlFor="request"
+                                className="form-check-label"
+                              >
+                                Solicitar permiso
+                              </label>
+                            </div>
+
+                            <div className="form-check">
+                              <input
+                                id="notify"
+                                type="radio"
+                                name="hasNotice"
+                                checked={data.hasNotice === "false"}
+                                value="false"
+                                className="form-check-input"
+                                onChange={(e) =>
+                                  setData({
+                                    ...data,
+                                    hasNotice: e.target.value,
+                                  })
+                                }
+                              ></input>
+                              <label
+                                htmlFor="notify"
+                                className="form-check-label"
+                              >
+                                Notificar
+                              </label>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3">
+                          <fieldset hidden={props.hide}>
+                            <h4>Cargo: *</h4>
+
+                            <hr className="mt-0 mb-4" />
+                            <select
+                              className="form-select"
+                              onChange={changeHandler1}
+                              name="jobId"
+                              id="job"
+                            >
+                              {loadedUser.jobs?.map((job: Job) => {
+                                return (
+                                  <option value={job.id}>{job.name}</option>
+                                );
+                              })}
+                            </select>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3">
+                          <fieldset>
+                            <div>
+                              <h4>Motivo: *</h4>
+                              <hr className="mt-0 mb-4" />
+                              <textarea
+                                onChange={changeHandler1}
+                                rows={4}
+                                cols={60}
+                                name="reason"
+                                className="form-control p-5"
+                                style={{ height: 100 }}
+                                value={data.reason}
+                              ></textarea>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body p-3 mb-4">
+                          <fieldset>
+                            <div>
+                              <h4>Dia/Inicio de ausencia:*</h4>
+                              <hr className="mt-0 mb-4" />
+                              <input
+                                className="form-control"
+                                type="date"
+                                name="date"
+                                value={data.date}
+                                onChange={changeHandler1}
+                              ></input>
+                            </div>
+                          </fieldset>
+                        </div>
+
+                        <div className="card-body mb-4 p-3">
+                          <fieldset>
+                            <div>
+                              <h4>Reincorporacion:</h4>
+                              <hr className="mt-0 mb-4" />
+                              <input
+                                className="form-control"
+                                type="date"
+                                value={data.endDate}
+                                name="endDate"
+                                onChange={changeHandler1}
+                              ></input>
+                            </div>
+                          </fieldset>
+                        </div>
+                        <div className="card-body mb-4 p-3">
+                          <fieldset>
+                            <div>
+                              <h4>Posible suplente:</h4>
+                              <hr className="mt-0 mb-4" />
+                              <input
+                                className="form-control"
+                                name="substitute"
+                                value={data.substitute}
+                                onChange={changeHandler1}
+                              ></input>
+                            </div>
+                          </fieldset>
+                        </div>
+                        <button
+                          disabled={disable}
+                          className="btn btn-dark p-3"
+                          type="submit"
+                        >
+                          Enviar
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
-              <div>
-                <input
-                  id="notify"
-                  type="radio"
-                  name="hasNotice"
-                  checked={data.hasNotice === "false"}
-                  value="false"
-                  onChange={(e) =>
-                    setData({ ...data, hasNotice: e.target.value })
-                  }
-                ></input>
-                <label htmlFor="notify">Notificar</label>
-              </div>
-            </fieldset>
-            <fieldset hidden={props.hide}>
-              <legend>Cargo:*</legend>
-              <select
-                className="form-select"
-                onChange={changeHandler1}
-                name="jobId"
-                id="job"
-              >
-                {loadedUser.jobs?.map((job: Job) => {
-                  return <option value={job.id}>{job.name}</option>;
-                })}
-              </select>
-            </fieldset>
+            </div>
           </div>
-          <fieldset>
-            <div>
-              <legend>Motivo:*</legend>
-              <textarea
-                onChange={changeHandler1}
-                rows={4}
-                cols={60}
-                value={data.reason}
-                name="reason"
-              ></textarea>
-            </div>
-          </fieldset>
-          <fieldset>
-            <div>
-              <legend>Dia/Inicio de ausencia:*</legend>
-              <input
-                className="form-control"
-                type="date"
-                name="date"
-                value={data.date}
-                onChange={changeHandler1}
-              ></input>
-            </div>
-          </fieldset>
-          <fieldset>
-            <div>
-              <legend>Reincorporacion:</legend>
-              <input
-                className="form-control"
-                type="date"
-                value={data.endDate}
-                name="endDate"
-                onChange={changeHandler1}
-              ></input>
-            </div>
-          </fieldset>
-          <fieldset>
-            <div>
-              <legend>Posible suplente:</legend>
-              <input
-                className="form-control"
-                name="substitute"
-                value={data.substitute}
-                onChange={changeHandler1}
-              ></input>
-            </div>
-          </fieldset>
-          <br></br>
-          <button disabled={disable} className="btn btn-dark" type="submit">
-            Enviar
-          </button>
-        </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

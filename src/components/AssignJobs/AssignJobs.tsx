@@ -50,7 +50,7 @@ export default function AssignJobs(props: JobAssing): JSX.Element {
           <label htmlFor="floatingSelectGrid">Asignar cargos</label>
         </div>
         <button
-          className="btn-dark"
+          className="btn btn-dark p-3 col-md-12"
           onClick={(e) => {
             e.preventDefault();
             let tempJobs = [...loadedUser.jobs];

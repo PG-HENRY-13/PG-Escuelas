@@ -28,11 +28,6 @@ export default function New(props: props) {
       </div>
     </div>
 
-    // <div className="card " style={{ width: "30rem" }}>
-    //   <div className="card-body">
-    //     <h2 className="card-title">{props.title}</h2>
-    //     <p className="card-text">{props.body}</p>
-    //   </div>
-    // </div>
+
   );
 }

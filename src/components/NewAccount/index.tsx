@@ -6,6 +6,8 @@ import validate from "./validate";
 import AssignJobs from "../AssignJobs/AssignJobs";
 import "../../styles/NewAccount.css";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function NewAccount(): JSX.Element {
   const dispatch = useDispatch();
@@ -63,13 +65,31 @@ export default function NewAccount(): JSX.Element {
   }
   // new-container
   return (
-    <div className="card m-3 shadow-lg rounded-3 container-md card-body p-4 new-container">
-      <div className="na-title">
-        <h2>Crear Nuevo Usuario</h2>
-      </div>
+    <section className="vh-100 ">
+      <div className="container py-5 h-100">
+        <div className="row d-flex justify-content-center h-100 ">
+          <div className="col col-lg-11 mb-4 mb-lg-0 ">
+            <div className="card m-3 shadow-lg ">
+              <div className="row g-0 ">
+                <div
+                  className="col-md-4 gradient-custom text-center mb-0 p-4"
+                  style={{ backgroundColor: "#728187" }}
+                >
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    size="5x"
+                    className="img-fluid my-5"
+                  />
+
+                  <div></div>
+                </div>
+    <div style={{ backgroundColor: "#faf9f9" }} className=" container-md card-body  new-container">
+      
+      <h4 className="form-label fs-2">Crear Nuevo Usuario</h4>
+     
       <hr className="mt-0 mb-4"></hr>
       <form className="row g-3" onSubmit={submit}>
-        <div className="form-floating mb-3 col-md-4">
+        <div className="form-floating mb-4 col-md-4">
           <input
             className="form-control"
             name="name"
@@ -81,7 +101,7 @@ export default function NewAccount(): JSX.Element {
           <span className="err">{error.name}</span>
           <label>Nombre:</label>
         </div>
-        <div className="form-floating mb-3 col-md-4">
+        <div className="form-floating mb-4 col-md-4">
           <input
             className="form-control"
             name="lastName"
@@ -94,7 +114,7 @@ export default function NewAccount(): JSX.Element {
           <span className="err">{error.lastName}</span>
         </div>
 
-        <div className="form-floating mb-3 col-4">
+        <div className="form-floating mb-4 col-4">
           <input
             className="form-control"
             name="cuil"
@@ -106,7 +126,7 @@ export default function NewAccount(): JSX.Element {
           <label>Cuil:</label>
           <span className="err">{error.cuil}</span>
         </div>
-        <div className="form-floating mb-3 col-md-6">
+        <div className="form-floating mb-4 col-md-6">
           <input
             className="form-control"
             type="password"
@@ -119,7 +139,7 @@ export default function NewAccount(): JSX.Element {
           <label>Contraseña:</label>
           <span className="err">{error.password}</span>
         </div>
-        <div className="form-floating mb-3 col-md-6">
+        <div className="form-floating mb-4 col-md-6">
           <input
             className="form-control"
             type="password"
@@ -132,7 +152,7 @@ export default function NewAccount(): JSX.Element {
           <label className="text-start">Repita la contraseña:</label>
           <span className="err">{error.password2}</span>
         </div>
-        <div className="form-floating mb-3 col-md-4">
+        <div className="form-floating mb-4 col-md-4">
           <input
             className="form-control"
             name="address"
@@ -142,7 +162,7 @@ export default function NewAccount(): JSX.Element {
             onChange={changeHandler}
           ></input>
           <label className="text-start">Direccion:</label>
-          <span className="err">{error.address}</span>
+          <span className="err ">{error.address}</span>
         </div>
         <div className="form-floating mb-3 col-md-5">
           <input
@@ -154,7 +174,7 @@ export default function NewAccount(): JSX.Element {
             onChange={changeHandler}
           ></input>
           <label className="text-start">Teléfono:</label>
-          <span className="err">{error.phoneNumber}</span>
+          <span className="err ">{error.phoneNumber}</span>
         </div>
         <div className="form-floating col-md-12">
           <input
@@ -221,7 +241,7 @@ export default function NewAccount(): JSX.Element {
           ></AssignJobs>
         </div>
         <div className="form-button-container">
-          <button disabled={disabled} className="button" type="submit">
+          <button disabled={disabled} className="btn btn-dark p-3 mt-4 col-md-12" type="submit">
             Crear Usuario
           </button>
         </div>
@@ -235,5 +255,11 @@ export default function NewAccount(): JSX.Element {
         </button>
       </Link> */}
     </div>
+    </div></div>
+            </div>
+          </div>
+        </div>
+    
+    </section>
   );
 }
