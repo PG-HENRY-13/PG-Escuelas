@@ -17,7 +17,10 @@ export default function LayoutEmployee(): JSX.Element {
   const cuil = useSelector((state: any) => state.authState.id);
   return (
     <main>
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+      <nav
+        className="navbar navbar-expand-sm"
+        style={{ backgroundColor: "#272E35" }}
+      >
         <ul className="navbar-nav">
           <li className="nav-item">
             <NavLink className="nav-link" to={"/user/" + cuil}>
@@ -69,8 +72,12 @@ export default function LayoutEmployee(): JSX.Element {
               Contacto
             </NavLink>
           </li>
-          <li className="nav-item ">
-            <button className="btn btn-light" onClick={handleLogOut}>
+          <li className="nav-item close-session ">
+            <button
+              className="btn"
+              style={{ backgroundColor: "#21272B" }}
+              onClick={handleLogOut}
+            >
               Cerrar Sesión
             </button>
           </li>
