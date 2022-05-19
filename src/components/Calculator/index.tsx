@@ -4,6 +4,7 @@ import "../../styles/UserList.css";
 import {
   calculateAllWages,
   exportGobExcelToCalculator,
+  fetchPaychecksByCuil,
   fetchUsers,
 } from "../../redux/actions";
 import { connect } from "react-redux";
@@ -27,13 +28,16 @@ export default function Calculator(): JSX.Element {
   const submit = async () => {
     await dispatch(exportGobExcelToCalculator(period) as any);
     await dispatch(calculateAllWages(cuils) as any);
+    setTimeout(() => {
+      dispatch(fetchPaychecksByCuil() as any);
+    }, 2000);
   };
 
   return (
     <div>
-      
-        <button className="btn-dark" onClick={submit}>Calcular salarios</button>
-      
+      <button className="btn-dark" onClick={submit}>
+        Calcular salarios
+      </button>
     </div>
   );
 }

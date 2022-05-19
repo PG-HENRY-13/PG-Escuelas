@@ -21,7 +21,6 @@ export default function Paycheck(): JSX.Element {
   });
   const dispatch = useDispatch();
   const [payChecks, setPayChecks] = useState([]);
-  const [user, setUser] = useState<{ [key: string]: any }>({});
   const [period, setPeriod] = useState(
     toDay.getFullYear() +
       "-" +
@@ -30,7 +29,7 @@ export default function Paycheck(): JSX.Element {
 
   useEffect(() => {
     if (job)
-      dispatch(loadUser(cuil) as any).then(() => {
+      dispatch(loadUser(Number(cuil)) as any).then(() => {
         api();
       });
   }, []);
@@ -92,6 +91,14 @@ export default function Paycheck(): JSX.Element {
     }
   }
 
+  let today = new Date();
+  let fecha =
+    today.getDate().toString().padStart(2, "0") +
+    "-" +
+    (today.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    today.getFullYear();
+
   return (
     <div>
       {jobPaycheck[0] ? (
@@ -115,8 +122,8 @@ export default function Paycheck(): JSX.Element {
                   <th>Fecha de pago</th>
                   <td>{jobPaycheck[0].period}</td>
                   <td colSpan={3}>{}</td>
-                  <th>Ingreso</th>
-                  <td colSpan={2}>{jobPaycheck[0].createdAt}</td>
+                  <th>Fecha</th>
+                  <td colSpan={2}>{fecha}</td>
                 </tr>
               </thead>
               <tr className="myBackground">
@@ -137,9 +144,11 @@ export default function Paycheck(): JSX.Element {
                   SUELDO BASCIO
                 </td>
                 <td colSpan={2} className="myAlign">
-                  {jobPaycheck[0].baseWage$}
+                  {Number(jobPaycheck[0].baseWage$).toFixed(2)}
                 </td>
-                <td className="myAlign">{jobPaycheck[0].baseWage$}</td>
+                <td className="myAlign">
+                  {Number(jobPaycheck[0].baseWage$)?.toFixed(2)}
+                </td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
               </tr>
@@ -161,11 +170,13 @@ export default function Paycheck(): JSX.Element {
                   SINDICATO
                 </td>
                 <td colSpan={2} className="myAlign">
-                  {jobPaycheck[0].unionDeductions$}
+                  {Number(jobPaycheck[0].unionDeductions$).toFixed(2)}
                 </td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
-                <td className="myAlign">{jobPaycheck[0].unionDeductions$}</td>
+                <td className="myAlign">
+                  {Number(jobPaycheck[0]?.unionDeductions$).toFixed(2)}
+                </td>
               </tr>
               <tr>
                 <td className="myAlign">1023</td>
@@ -173,9 +184,11 @@ export default function Paycheck(): JSX.Element {
                   ADICIONAL REMUNERATIVO
                 </td>
                 <td colSpan={2} className="myAlign">
-                  {jobPaycheck[0].additionals$}
+                  {Number(jobPaycheck[0].additionals$).toFixed(2)}
                 </td>
-                <td className="myAlign">{jobPaycheck[0].additionals$}</td>
+                <td className="myAlign">
+                  {Number(jobPaycheck[0].additionals$).toFixed(2)}
+                </td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
               </tr>
@@ -185,10 +198,10 @@ export default function Paycheck(): JSX.Element {
                   HORAS EXTRAS
                 </td>
                 <td colSpan={2} className="myAlign">
-                  {jobPaycheck[0].overTimeAdditionals$}
+                  {Number(jobPaycheck[0].overTimeAdditionals$).toFixed(2)}
                 </td>
                 <td className="myAlign">
-                  {jobPaycheck[0].overTimeAdditionals$}
+                  {Number(jobPaycheck[0].overTimeAdditionals$).toFixed(2)}
                 </td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
@@ -199,24 +212,24 @@ export default function Paycheck(): JSX.Element {
                   DESCUENTO POR AUSENCIAS
                 </td>
                 <td colSpan={2} className="myAlign">
-                  {jobPaycheck[0].absencesDeductions$}
+                  {Number(jobPaycheck[0].absencesDeductions$).toFixed(2)}
                 </td>
                 <td className="myAlign"></td>
                 <td className="myAlign"></td>
                 <td className="myAlign">
-                  {jobPaycheck[0].absencesDeductions$}
+                  {Number(jobPaycheck[0].absencesDeductions$).toFixed(2)}
                 </td>
               </tr>
               <tr>
                 <td className="myAlign" colSpan={9}></td>
-                <td className="myAlign">{sumar()}</td>
+                <td className="myAlign">{sumar()?.toFixed(2)}</td>
                 <td className="myAlign"></td>
-                <td className="myAlign">{restar()}</td>
+                <td className="myAlign">{restar()?.toFixed(2)}</td>
               </tr>
               <tr>
                 <td className="myAlign" colSpan={10}></td>
                 <td className="table-border">TOTAL</td>
-                <td className="table-border">{total()}</td>
+                <td className="table-border">{total()?.toFixed(2)}</td>
               </tr>
               <tr>
                 <td colSpan={1}>Periodo:</td>

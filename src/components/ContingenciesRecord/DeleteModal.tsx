@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/UserList.css";
-import { fetchContingencies } from "../../redux/actions";
+import { fetchContingencies, handleContingency } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Contingency } from "../../redux/interfaces";
+import { Contingency, ContingencyState } from "../../redux/interfaces";
 import { deleteContingency } from "../../redux/actions";
 
 export default function DeleteModal(props: any): JSX.Element {
   const dispatch = useDispatch();
 
   function onConfirm() {
-    dispatch(deleteContingency(props.contId) as any);
+    dispatch(
+      handleContingency(Number(props.contId), ContingencyState.pending) as any
+    );
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StoreState, User } from "../../redux/interfaces";
 import "../../styles/UserList.css";
 import { fetchUsers, loadUser, loadUserSalary } from "../../redux/actions";
@@ -33,6 +33,12 @@ export default function UserList(): JSX.Element {
   const handleFilter = (e: string) => {
     setSearchParams({ filter: e });
   };
+
+  const [index, setIndex] = useState(1);
+  function indexHandler(e: any) {
+    console.log(e.target.value);
+    setIndex(Number(e.target.value));
+  }
 
   return (
     <div className="userlist-filter-container">
@@ -99,6 +105,9 @@ export default function UserList(): JSX.Element {
                 ? user
                 : false;
             })
+            .filter(
+              (e: any, i: number) => index * 10 - 10 <= i && i < index * 10
+            )
             .map((e: any) => {
               return (
                 <>
@@ -134,6 +143,52 @@ export default function UserList(): JSX.Element {
             })}
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul className="pagination">
+          <li className="page-item">
+            <button className="page-link" onClick={() => setIndex(1)}>
+              Primero
+            </button>
+          </li>
+          <li className="page-item">
+            <button
+              className="page-link"
+              onClick={(e) => setIndex(index - 1)}
+              disabled={!(index - 1)}
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </button>
+          </li>
+          <li className="page-item">
+            <button className="page-link" value={index} onClick={indexHandler}>
+              {index}
+            </button>
+          </li>
+          <li className="page-item">
+            <button
+              className="page-link"
+              onClick={(e) => setIndex(index + 1)}
+              disabled={
+                index === Math.ceil(loadedUsers?.length / 10) ||
+                !loadedUsers?.length
+              }
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </button>
+          </li>
+          <li className="page-item">
+            <button
+              className="page-link"
+              disabled={!loadedUsers?.length}
+              onClick={() => setIndex(Math.ceil(loadedUsers?.length / 10))}
+            >
+              Ultimo
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
