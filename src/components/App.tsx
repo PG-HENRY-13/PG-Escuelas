@@ -23,7 +23,7 @@ import ScheduleForm from "./ContingencyForms/ScheduleForm";
 import ContingencyList from "./ContingencyList";
 import UserSalary from "./UserSalary";
 import Paycheck from "./Paycheck";
-import { loadUserAuth } from "../redux/actions/authActions";
+import { loadUserAuth, signOut } from "../redux/actions/authActions";
 import { stat } from "fs";
 import UpdateMyInfo from "./UpdateMyInfo";
 import Calculator from "./Calculator";
@@ -47,6 +47,12 @@ export default function App(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(!localStorage.getItem('token')) dispatch(signOut() as any);
+   
+  },[])
+
+  useEffect(() => {
+    
     dispatch(loadUserAuth() as any);
   }, [dispatch]);
 
@@ -238,7 +244,7 @@ export default function App(): JSX.Element {
             />
           </Route>
         ) : null}
-        {/* <Route path="*" element={<Navigate to="/" />} /> */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <ToastContainer position="bottom-right" theme="colored" />
     </div>
