@@ -13,12 +13,15 @@ import { URL_API } from "../../env";
 import { fetchUsers } from "../../redux/actions";
 
 export default function Paycheck(): JSX.Element {
+  let cuil = useParams().cuil;
   const toDay = new Date();
-  const user = useSelector((state: any) => state.authState);
-  console.log(user, "3");
   let job = useParams();
+  const loadedUser = useSelector((state: any) => {
+    return state.usersState.userForm;
+  });
   const dispatch = useDispatch();
   const [payChecks, setPayChecks] = useState([]);
+  const [user, setUser] = useState<{ [key: string]: any }>({});
   const [period, setPeriod] = useState(
     toDay.getFullYear() +
       "-" +
@@ -27,15 +30,18 @@ export default function Paycheck(): JSX.Element {
 
   useEffect(() => {
     if (job)
-      dispatch(loadUser(user.id) as any).then(() => {
+      dispatch(loadUser(cuil) as any).then(() => {
         api();
       });
   }, []);
-  console.log(payChecks, "PAYCHECKS");
+
   function api() {
     axios
       .get(
-        `${URL_API}paychecks?cuil=${user.id}&period=${period.replace("-", "")}`
+        `${URL_API}paychecks?cuil=${loadedUser.cuil}&period=${period.replace(
+          "-",
+          ""
+        )}`
       )
       .then((response) => {
         setPayChecks(response.data);
@@ -96,21 +102,21 @@ export default function Paycheck(): JSX.Element {
                 <tr>
                   <th>Nombre </th>
                   <td colSpan={3}>
-                    {user.name} {user.lastName}
+                    {loadedUser.name} {loadedUser.lastName}
                   </td>
                   <th colSpan={1}>Cargo</th>
                   <td colSpan={4}>{job.jobName}</td>
                   <th>Periodo</th>
-                  <td>{jobPaycheck[0].period}</td>
+                  <td colSpan={2}>{jobPaycheck[0].period}</td>
                 </tr>
                 <tr>
                   <th>CUIL</th>
-                  <td colSpan={3}>{user.id}</td>
+                  <td colSpan={3}>{loadedUser.cuil}</td>
                   <th>Fecha de pago</th>
                   <td>{jobPaycheck[0].period}</td>
                   <td colSpan={3}>{}</td>
                   <th>Ingreso</th>
-                  <td>{jobPaycheck[0].createdAt}</td>
+                  <td colSpan={2}>{jobPaycheck[0].createdAt}</td>
                 </tr>
               </thead>
               <tr className="myBackground">
